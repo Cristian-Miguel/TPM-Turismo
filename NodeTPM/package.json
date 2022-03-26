@@ -1,0 +1,14 @@
+{
+  "name": "backendtmp",
+  "version": "0.0.1",
+  "description": "proyecto back-end de la materia tecnologias de programacion para moviles",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Apolo Develoment",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.26.1"
+  }
+}
