@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:proyectotmp/src/reservas.dart';
+import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
+import 'package:proyectotmp/src/reservas.dart';
+import 'package:proyectotmp/src/mensajes.dart';
+import 'package:proyectotmp/src/perfil.dart';
 
 class BarraInferior extends StatefulWidget{
   @override
@@ -10,13 +13,19 @@ class BarraInferior extends StatefulWidget{
 }
 
 class _BarraInferior extends State<BarraInferior>{
+  int indexTap = 0;
   final List<Widget> widgetsChildren = [
-    Reservas(),
+    Descubrir(),
     Favoritos(),
+    Reservas(),
+    Mensajes(),
+    Perfil(),
   ];
 
   void onTapTapped(int index){
-
+    setState(() {
+      indexTap = index;
+    });
   }
 
   @override
@@ -36,10 +45,10 @@ class _BarraInferior extends State<BarraInferior>{
         //   IconButton(onPressed: (){}, icon: const Icon(Icons.menu), color: Colors.black, alignment: Alignment.center, )
         // ],
       ),
-      body: const Center(
-        child: Text('Hello World'),
-      ),
+      body: widgetsChildren[indexTap],
       bottomNavigationBar: BottomNavigationBar(
+          onTap: onTapTapped,
+          currentIndex: indexTap,
           type: BottomNavigationBarType.fixed,
           selectedItemColor: Colors.pinkAccent,
           iconSize: 25.0,
