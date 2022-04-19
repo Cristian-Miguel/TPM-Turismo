@@ -14,6 +14,7 @@ class BarraInferior extends StatefulWidget{
 
 class _BarraInferior extends State<BarraInferior>{
   int indexTap = 0;
+  //aqui checar interfaces por si se les ofrece
   final List<Widget> widgetsChildren = [
     Descubrir(),
     Favoritos(),
