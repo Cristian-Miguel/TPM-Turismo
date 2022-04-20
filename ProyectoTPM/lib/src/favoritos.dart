@@ -63,9 +63,7 @@ class _Favoritos extends State<Favoritos>{
                itemBuilder: (BuildContext context, int index){
                  return RaisedButton(
                    color: Colors.white,
-                   onPressed: ()  {
-                     print("Hola Raised Button");
-                   },
+                   onPressed: _onChangeFavorito,
                    child: Container(
                      height: Theme.of(context).textTheme.bodyText1!.fontSize! * 10.5,
                      margin: const EdgeInsets.only(left:0) ,
@@ -74,8 +72,6 @@ class _Favoritos extends State<Favoritos>{
                          Container(
                            height: 125,
                            width: 125,
-                           // color: Colors.white,
-                           // margin: const EdgeInsets.only(left:2, top: 16),
                            decoration: BoxDecoration(
                                color: Colors.yellow, //PARA PROBAR CONTAINER
                                borderRadius: BorderRadius.circular(10.0),
@@ -95,41 +91,36 @@ class _Favoritos extends State<Favoritos>{
                                ]
                            ),
                          ),
-                         Container(
-                           margin: const EdgeInsets.only(left:16),
-                           child: Column(
-                               mainAxisAlignment: MainAxisAlignment.center,
-                               children: <Widget> [
-                                 Container(
-                                   // height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5,
-                                   // width: 100,
-                                   // color: Colors.green,
-                                   // margin: const EdgeInsets.only(left:2, top: 18),
-                                   child: const Text(
-                                     "Conociendo Morelia",
-                                     // "${FavoritosData[index]["idApoyo"].toString()}.- ",
-                                     style: TextStyle(
-                                       fontSize: 22,
+                         Expanded(
+                             child: Container(
+                               margin: const EdgeInsets.only(left:16),
+                               child: Column(
+                                   mainAxisAlignment: MainAxisAlignment.center,
+                                   crossAxisAlignment: CrossAxisAlignment.start,
+                                   children: <Widget> [
+                                     Container(
+                                       child: const Text(
+                                         "Conociendo Morelia",
+                                         // "${FavoritosData[index]["idApoyo"].toString()}.- ",
+                                         style: TextStyle(
+                                           fontSize: 22,
+                                         ),
+                                       ),
                                      ),
-                                   ),
-                                 ),
-                                 Container(
-                                   // height: Theme.of(context).textTheme.bodyText1!.fontSize! * 2.5,
-                                   // width: 200,
-                                   // color: Colors.green,
-                                   // margin: const EdgeInsets.only(left:16, top: 16),
-                                   child: const Text(
-                                     "Disfrute de la magia de Patzcuaro,\n verdaderamente el \"secreto mejor\n guardado\" de todas las ciudades\n coloniales de Mexico",
-                                     // "${FavoritosData[index]["Descripcion"].toString()}",
-                                     style: TextStyle(
-                                       fontSize: 12,
+                                     Container(
+                                       child: const Text(
+                                         "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
+                                         // "${FavoritosData[index]["Descripcion"].toString()}",
+                                         style: TextStyle(
+                                           fontSize: 11,
+                                           color: Colors.black54
+                                         ),
+                                       ),
                                      ),
-                                   ),
-                                 ),
-                               ]
-                           ),
+                                   ]
+                               ),
+                             ),
                          ),
-
                        ],
                      ),
                    ),
@@ -141,6 +132,23 @@ class _Favoritos extends State<Favoritos>{
 
        ],
 
+    );
+  }
+
+  void _onChangeFavorito(){
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder:(context){
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Favorito'),
+                ),
+                body: const Center(
+                  child: Text('Pagina de Favorito'),
+                ),
+              );
+            }
+        )
     );
   }
 
