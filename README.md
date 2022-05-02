@@ -10,7 +10,7 @@ para empezar se necesitara clonar le repositorio
 una vez clonado, se necesitara entrar con un cmd a la direccion de la carpera NodeTPM
 y correr lo siguiente
 
-nmp install
+npm install
 
 Despues se necesita inicializar el default.json para la conexion con la base de datos
 esta se realiza con los siguientes comandos
