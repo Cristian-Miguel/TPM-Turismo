@@ -12,10 +12,12 @@ y correr lo siguiente
 
 npm install
 
-Crear un archivo llamado deafult.json en la carpta config con la siguiente informacion
-el puerto puede ser el que no cree conflicto como 4000 o 5000 por ejemplo
-JWT_Secret pongan cualquier string que quieran
-lo demas dependera de su base de datos
+Crear un archivo llamado deafult.json en la carpta config con la siguiente informacion:
+- El puerto puede ser el que no cree conflicto como 4000 o 5000 por ejemplo.
+- JWT_Secret pongan cualquier string que quieran.
+- Lo demas dependera de su base de datos.
+
+```json
 {
     "app": {
         "port": ,
@@ -29,6 +31,7 @@ lo demas dependera de su base de datos
         "database" : ""        
     }
 }
+```
 
 en la parte de fluttler en android studio se necesitara actualizar los paquetes y la direccion del
 sdk de flutter y dart
