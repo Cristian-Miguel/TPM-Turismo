@@ -12,12 +12,23 @@ y correr lo siguiente
 
 npm install
 
-Despues se necesita inicializar el default.json para la conexion con la base de datos
-esta se realiza con los siguientes comandos
-
-$ mkdir config
-
-$ vi config/default.json
+Crear un archivo llamado deafult.json en la carpta config con la siguiente informacion
+el puerto puede ser el que no cree conflicto como 4000 o 5000 por ejemplo
+JWT_Secret pongan cualquier string que quieran
+lo demas dependera de su base de datos
+{
+    "app": {
+        "port": ,
+        "JWT_SECRET" : ""
+    },
+    "db": {
+        "host"     : "",
+        "port"     : "",
+        "user"     : "",
+        "password" : "",
+        "database" : ""        
+    }
+}
 
 en la parte de fluttler en android studio se necesitara actualizar los paquetes y la direccion del
 sdk de flutter y dart
