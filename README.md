@@ -45,3 +45,9 @@ si llega haber algun problema con la conexion con mysql workbech ejecutar el sig
 ```sql
 ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Admin'
 ```
+
+Para correr el web server de node se necesita poner el siguiente comando
+
+```
+node src/index.js
+```
