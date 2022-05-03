@@ -9,7 +9,6 @@ module.exports = () => {
     password : server_config.get('db.password'),
     database : server_config.get('db.database'),
   }
-  
   return new Database(config)
 }
 
