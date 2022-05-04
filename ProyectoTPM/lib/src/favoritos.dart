@@ -18,9 +18,9 @@ class _Favoritos extends State<Favoritos>{
   //obtenemos los datos de la api
   getFavoritos() async{
     //para telefonos
-    var url = Uri.parse('http://10.0.2.2:4000/api/favoritos/listar');
+    // var url = Uri.parse('http://10.0.2.2:4000/api/favoritos/listar');
     // para web
-    // var url = Uri.parse('http://localhost:4000/api/favoritos/listar');
+    var url = Uri.parse('http://localhost:4000/api/favoritos/listar');
     var response = await http.get(url);
     // debugPrint(response.body);
     // var data = json.decode(response.body);
