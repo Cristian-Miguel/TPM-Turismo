@@ -20,13 +20,13 @@ class _Favoritos extends State<Favoritos>{
     //para telefonos
     // var url = Uri.parse('http://10.0.2.2:4000/api/favoritos/listar');
     // para web
-    var url = Uri.parse('http://localhost:4000/api/favoritos/listar');
+    var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
     var response = await http.get(url);
     // debugPrint(response.body);
     // var data = json.decode(response.body);
     // debugPrint();
     setState(() {
-      FavoritosData = List<Map<String, dynamic>>.from(json.decode(response.body)['rows']);
+      FavoritosData = List<Map<String, dynamic>>.from(json.decode(response.body)['hoteles']);
       // debugPrint(FavoritosData[0]["Descripcion"].toString());
     });
   }
@@ -77,7 +77,7 @@ class _Favoritos extends State<Favoritos>{
                                borderRadius: BorderRadius.circular(10.0),
                                image: const DecorationImage(
                                  image: NetworkImage(
-                                   "https://th.bing.com/th/id/OIP.a5I79QCQTC4Zs2grN163lgHaHa?pid=ImgDet&rs=1",
+                                     "${FavoritosData[index]["Imagen"].toString()}",
                                  ),
                                  fit: BoxFit.cover,
                                ),
