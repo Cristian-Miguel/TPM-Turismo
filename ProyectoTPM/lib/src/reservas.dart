@@ -16,19 +16,60 @@ class Reservas extends StatefulWidget{
 class _Reservas extends State<Reservas> {
 
   late List ReservasData = [];
+  late List ReservasH = [];
+  late List ReservasV = [];
+  late List ReservasR = [];
+  late List ReservasT = [];
+  late List ReservasP = [];
+
   int activeIndex= 0;
+
   //obtenemos los datos de la api
   getReservas() async {
     //para telefono
-    var url = Uri.parse('http://10.0.2.2:4000/favoritos/Hoteles');
+    var urlH = Uri.parse('http://10.0.2.2:4000/reservas/Hoteles');
+    var urlV = Uri.parse('http://10.0.2.2:4000/reservas/Viajes');
+    var urlR = Uri.parse('http://10.0.2.2:4000/reservas/Restaurantes');
+    var urlT = Uri.parse('http://10.0.2.2:4000/reservas/Tour');
+    var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
 
     // para web
     // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
-    var response = await http.get(url);
+    // var urlH = Uri.parse('http:/localhost:4000/reservas/Hoteles');
+    // var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
+    // var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
+    // var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
+    // var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
+
+    var responseH = await http.get(urlH);
+    var responseV = await http.get(urlV);
+    var responseR = await http.get(urlR);
+    var responseT = await http.get(urlT);
+    var responseP = await http.get(urlP);
+
+    if(json.decode(responseH.body)['row'].toString() != 'null'){
+      ReservasH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
+    }
+    if(json.decode(responseV.body)['row'].toString() != 'null'){
+      ReservasV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['row']);
+    }
+    if(json.decode(responseR.body)['row'].toString() != 'null'){
+      ReservasR = List<Map<String, dynamic>>.from(json.decode(responseR.body)['row']);
+    }
+    if(json.decode(responseT.body)['row'].toString() != 'null'){
+      ReservasT = List<Map<String, dynamic>>.from(json.decode(responseT.body)['row']);
+    }
+    if(json.decode(responseP.body)['row'].toString() != 'null'){
+      ReservasP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
+    }
 
     setState(() {
-      ReservasData =
-      List<Map<String, dynamic>>.from(json.decode(response.body)['rows']);
+      // ReservasData = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
+      ReservasData.addAll(ReservasH);
+      ReservasData.addAll(ReservasV);
+      ReservasData.addAll(ReservasR);
+      ReservasData.addAll(ReservasT);
+      ReservasData.addAll(ReservasP);
     });
 
   }
@@ -86,9 +127,9 @@ class _Reservas extends State<Reservas> {
                           decoration: BoxDecoration(
                               color: Colors.yellow, //PARA PROBAR CONTAINER
                               borderRadius: BorderRadius.circular(10.0),
-                              image: const DecorationImage(
+                              image: DecorationImage(
                                 image: NetworkImage(
-                                  "https://th.bing.com/th/id/OIP.a5I79QCQTC4Zs2grN163lgHaHa?pid=ImgDet&rs=1",
+                                  "${ReservasData[index]["Imagen"].toString()}",
                                 ),
                                 fit: BoxFit.cover,
                               ),
@@ -113,9 +154,10 @@ class _Reservas extends State<Reservas> {
                                           .start,
                                       children: <Widget>[
                                         Container(
-                                          child: const Text(
-                                            "Conociendo Morelia",
-                                            style: TextStyle(
+                                          child: Text(
+                                            // "Conociendo Morelia",
+                                            "${ReservasData[index]["Nombre"].toString()}",
+                                            style: const TextStyle(
                                               fontSize: 22,
                                             ),
                                           ),
@@ -137,9 +179,9 @@ class _Reservas extends State<Reservas> {
                                                       left: 5,
                                                       bottom: 5,
                                                       top: 2),
-                                                  child: const Text(
-                                                    "4.71 (300)",
-                                                    style: TextStyle(
+                                                  child: Text(
+                                                    "${ReservasData[index]["Calificacion"].toString()} (300)",
+                                                    style: const TextStyle(
                                                       fontSize: 10,
                                                     ),
                                                   )
@@ -150,10 +192,11 @@ class _Reservas extends State<Reservas> {
                                         Container(
                                             margin: const EdgeInsets.only(
                                                 bottom: 2),
-                                            child: const Text(
-                                              "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
+                                            child:  Text(
+                                              // "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
+                                              "${ReservasData[index]["Descripcion"].toString()}",
                                               textAlign: TextAlign.start,
-                                              style: TextStyle(
+                                              style:const TextStyle(
                                                   fontSize: 11,
                                                   color: Colors.black54
                                               ),
@@ -162,9 +205,10 @@ class _Reservas extends State<Reservas> {
                                         ),
 
                                         Container(
-                                          child: const Text(
-                                            "08/03/2022",
-                                            style: TextStyle(
+                                          child:  Text(
+                                            // "08/03/2022",
+                                            "${ReservasData[index]["FechaEntrada"].toString()}",
+                                            style: const TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w800,
                                             ),
@@ -172,9 +216,10 @@ class _Reservas extends State<Reservas> {
                                         ),
 
                                         Container(
-                                          child: const Text(
-                                            "\$352 MXN p/p",
-                                            style: TextStyle(
+                                          child:  Text(
+                                            "\$${ReservasData[index]["Costo"].toString()} MXN p/p",
+                                            // "\$352 MXN p/p",
+                                            style: const TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w800,
                                             ),
