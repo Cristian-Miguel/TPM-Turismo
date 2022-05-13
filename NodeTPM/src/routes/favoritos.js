@@ -6,29 +6,24 @@ router.get('/api/favoritos', (req, res) => {
     res.json('User List');
 });
 
-// router.get('/api/favoritos/listar', (req, res) => { 
-//         // Hoteles.Listar(req, res);
-//         Organizador.ListarFavoritos(req, res);
-// });
-
 router.get('/favoritos/Hoteles', (req, res) => { 
-    Organizador.Hoteles(req,res);
+    Organizador.FavHoteles(req,res);
 });
 
 router.get('/favoritos/Viajes', (req, res) => { 
-    Organizador.Viajes(req,res);
+    Organizador.FavViajes(req,res);
 });
 
 router.get('/favoritos/Restaurantes', (req, res) => { 
-    Organizador.Restaurantes(req,res);
+    Organizador.FavRestaurantes(req,res);
 });
 
 router.get('/favoritos/Tour', (req, res) => { 
-    Organizador.Tour(req,res);
+    Organizador.FavTour(req,res);
 });
 
 router.get('/favoritos/Paquete', (req, res) => { 
-    Organizador.Paquete(req,res);
+    Organizador.FavPaquete(req,res);
 });
 
 

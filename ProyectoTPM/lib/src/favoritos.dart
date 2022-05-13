@@ -14,20 +14,58 @@ class _Favoritos extends State<Favoritos>{
 
   // late Map data;
   late List FavoritosData = [];
+  late List FavoritosH = [];
+  late List FavoritosV = [];
+  late List FavoritosR = [];
+  late List FavoritosT = [];
+  late List FavoritosP = [];
 
   //obtenemos los datos de la api
   getFavoritos() async{
     //para telefonos
-    // var url = Uri.parse('http://10.0.2.2:4000/api/favoritos/listar');
+    var urlH = Uri.parse('http://10.0.2.2:4000/favoritos/Hoteles');
+    var urlV = Uri.parse('http://10.0.2.2:4000/favoritos/Viajes');
+    var urlR = Uri.parse('http://10.0.2.2:4000/favoritos/Restaurantes');
+    var urlT = Uri.parse('http://10.0.2.2:4000/favoritos/Tour');
+    var urlP = Uri.parse('http://10.0.2.2:4000/favoritos/Paquete');
+
     // para web
-    var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
-    var response = await http.get(url);
-    // debugPrint(response.body);
-    // var data = json.decode(response.body);
-    // debugPrint();
+    // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
+    var responseH = await http.get(urlH);
+    var responseV = await http.get(urlV);
+    var responseR = await http.get(urlR);
+    var responseT = await http.get(urlT);
+    var responseP = await http.get(urlP);
+
+    if(json.decode(responseH.body)['hoteles'].toString() != 'null'){
+      FavoritosH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['hoteles']);
+    }
+    if(json.decode(responseV.body)['viajes'].toString() != 'null'){
+      FavoritosV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['viajes']);
+    }
+    if(json.decode(responseR.body)['restaurantes'].toString() != 'null'){
+      FavoritosR = List<Map<String, dynamic>>.from(json.decode(responseR.body)['restaurantes']);
+    }
+    if(json.decode(responseT.body)['tour'].toString() != 'null'){
+      FavoritosT = List<Map<String, dynamic>>.from(json.decode(responseT.body)['tour']);
+    }
+    if(json.decode(responseP.body)['paquete'].toString() != 'null'){
+      FavoritosP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['paquete']);
+    }
+
+    FavoritosH.addAll(FavoritosT);
+
+    debugPrint(FavoritosH[5].toString());
+
+
     setState(() {
-      FavoritosData = List<Map<String, dynamic>>.from(json.decode(response.body)['hoteles']);
-      // debugPrint(FavoritosData[0]["Descripcion"].toString());
+      // FavoritosData = List<Map<String, dynamic>>.from(json.decode(responseH.body)['hoteles']);
+        FavoritosData.addAll(FavoritosH);
+        FavoritosData.addAll(FavoritosV);
+        FavoritosData.addAll(FavoritosR);
+        FavoritosData.addAll(FavoritosT);
+        FavoritosData.addAll(FavoritosP);
+
     });
   }
   //constructor tara inicializar el getFavoritos
@@ -73,12 +111,10 @@ class _Favoritos extends State<Favoritos>{
                            height: 125,
                            width: 125,
                            decoration: BoxDecoration(
-                               color: Colors.yellow, //PARA PROBAR CONTAINER
+                               color: Colors.yellow,  //PARA PROBAR CONTAINER
                                borderRadius: BorderRadius.circular(10.0),
-                               image: const DecorationImage(
-                                 image: NetworkImage(
-                                     "${FavoritosData[index]["Imagen"].toString()}",
-                                 ),
+                               image: DecorationImage(
+                                 image: NetworkImage("${FavoritosData[index]["Imagen"].toString()}"),
                                  fit: BoxFit.cover,
                                ),
                                boxShadow: const[
@@ -99,19 +135,19 @@ class _Favoritos extends State<Favoritos>{
                                    crossAxisAlignment: CrossAxisAlignment.start,
                                    children: <Widget> [
                                      Container(
-                                       child: const Text(
-                                         "Conociendo Morelia",
-                                         // "${FavoritosData[index]["idApoyo"].toString()}.- ",
-                                         style: TextStyle(
+                                       child: Text(
+                                         // "Conociendo Morelia",
+                                         "${FavoritosData[index]["Nombre"].toString()}",
+                                         style: const TextStyle(
                                            fontSize: 22,
                                          ),
                                        ),
                                      ),
                                      Container(
-                                       child: const Text(
-                                         "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
-                                         // "${FavoritosData[index]["Descripcion"].toString()}",
-                                         style: TextStyle(
+                                       child: Text(
+                                         // "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
+                                         "${FavoritosData[index]["Descripcion"].toString()}",
+                                         style:const  TextStyle(
                                            fontSize: 11,
                                            color: Colors.black54
                                          ),

@@ -20,10 +20,10 @@ class _Reservas extends State<Reservas> {
   //obtenemos los datos de la api
   getReservas() async {
     //para telefono
-    //var url = Uri.parse('http://10.0.2.2:4000/api/favoritos/listar');
+    var url = Uri.parse('http://10.0.2.2:4000/favoritos/Hoteles');
 
     // para web
-    var url = Uri.parse('http://localhost:4000/api/favoritos/listar');
+    // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
     var response = await http.get(url);
 
     setState(() {
