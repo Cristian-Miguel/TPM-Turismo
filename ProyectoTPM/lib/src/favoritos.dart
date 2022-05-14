@@ -30,33 +30,32 @@ class _Favoritos extends State<Favoritos>{
     var urlP = Uri.parse('http://10.0.2.2:4000/favoritos/Paquete');
 
     // para web
-    // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
+    // var urlH = Uri.parse('http:/localhost:4000/favoritos/Hoteles');
+    // var urlV = Uri.parse('http://localhost:4000/favoritos/Viajes');
+    // var urlR = Uri.parse('http://localhost:4000/favoritos/Restaurantes');
+    // var urlT = Uri.parse('http://localhost:4000/favoritos/Tour');
+    // var urlP = Uri.parse('http://localhost:4000/favoritos/Paquetes');
     var responseH = await http.get(urlH);
     var responseV = await http.get(urlV);
     var responseR = await http.get(urlR);
     var responseT = await http.get(urlT);
     var responseP = await http.get(urlP);
 
-    if(json.decode(responseH.body)['hoteles'].toString() != 'null'){
-      FavoritosH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['hoteles']);
+    if(json.decode(responseH.body)['row'].toString() != 'null'){
+      FavoritosH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
     }
-    if(json.decode(responseV.body)['viajes'].toString() != 'null'){
-      FavoritosV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['viajes']);
+    if(json.decode(responseV.body)['row'].toString() != 'null'){
+      FavoritosV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['row']);
     }
-    if(json.decode(responseR.body)['restaurantes'].toString() != 'null'){
-      FavoritosR = List<Map<String, dynamic>>.from(json.decode(responseR.body)['restaurantes']);
+    if(json.decode(responseR.body)['row'].toString() != 'null'){
+      FavoritosR = List<Map<String, dynamic>>.from(json.decode(responseR.body)['row']);
     }
-    if(json.decode(responseT.body)['tour'].toString() != 'null'){
-      FavoritosT = List<Map<String, dynamic>>.from(json.decode(responseT.body)['tour']);
+    if(json.decode(responseT.body)['row'].toString() != 'null'){
+      FavoritosT = List<Map<String, dynamic>>.from(json.decode(responseT.body)['row']);
     }
-    if(json.decode(responseP.body)['paquete'].toString() != 'null'){
-      FavoritosP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['paquete']);
+    if(json.decode(responseP.body)['row'].toString() != 'null'){
+      FavoritosP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
     }
-
-    FavoritosH.addAll(FavoritosT);
-
-    debugPrint(FavoritosH[5].toString());
-
 
     setState(() {
       // FavoritosData = List<Map<String, dynamic>>.from(json.decode(responseH.body)['hoteles']);

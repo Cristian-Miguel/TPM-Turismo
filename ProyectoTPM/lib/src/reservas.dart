@@ -207,7 +207,10 @@ class _Reservas extends State<Reservas> {
                                         Container(
                                           child:  Text(
                                             // "08/03/2022",
-                                            "${ReservasData[index]["FechaEntrada"].toString()}",
+                                            "${ReservasData[index]["FechaEntrada"].toString()[8]+ReservasData[index]["FechaEntrada"].toString()[9]}/"+
+                                            "${ReservasData[index]["FechaEntrada"].toString()[5]+ReservasData[index]["FechaEntrada"].toString()[6]}/"+
+                                            "${ReservasData[index]["FechaEntrada"].toString()[0]+ReservasData[index]["FechaEntrada"].toString()[1]+
+                                               ReservasData[index]["FechaEntrada"].toString()[2]+ReservasData[index]["FechaEntrada"].toString()[3]}",
                                             style: const TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w800,
