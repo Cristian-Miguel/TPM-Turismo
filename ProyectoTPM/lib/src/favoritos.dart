@@ -11,7 +11,6 @@ class Favoritos extends StatefulWidget{
 }
 
 class _Favoritos extends State<Favoritos>{
-
   // late Map data;
   late List FavoritosData = [];
   late List FavoritosH = [];
@@ -169,7 +168,6 @@ class _Favoritos extends State<Favoritos>{
 
     );
   }
-
   void _onChangeFavorito(){
     Navigator.of(context).push(
         MaterialPageRoute(

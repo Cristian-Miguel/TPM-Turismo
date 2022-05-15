@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
+import 'package:proyectotmp/src/home.dart';
 import 'package:proyectotmp/src/reservas.dart';
 import 'package:proyectotmp/src/mensajes.dart';
 import 'package:proyectotmp/src/perfil.dart';
@@ -14,55 +15,121 @@ class BarraInferior extends StatefulWidget{
 
 class _BarraInferior extends State<BarraInferior>{
   int indexTap = 0;
+  int indexPage = 0;
+  bool colorChange = false;
   //aqui checar interfaces por si se les ofrece
   final List<Widget> widgetsChildren = [
+    Home(),
     Descubrir(),
-    Favoritos(),
     Reservas(),
     Mensajes(),
     Perfil(),
+    Favoritos(),
   ];
 
-  void onTapTapped(int index){
+  void onTapTapped(int index,bool color){
     setState(() {
-      indexTap = index;
+      indexPage  = index;
+      indexTap = 0;
+      colorChange = color;
     });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: Drawer(
+        child: Column(
+          children: <Widget>[
+            const DrawerHeader(
+              child: Center(
+                child: Text(
+                  'Menu',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(color: Colors.white, fontSize: 25),
+                ),
+              ),
+              decoration: BoxDecoration(
+                color: Colors.black,
+              ),
+            ),
+            Text("Usuario"),
+            ListTile(
+              leading: Icon(Icons.home),
+              title: Text('Home'),
+              onTap: () =>{ }
+            ),
+            ListTile(
+                leading: Icon(Icons.favorite),
+                title: Text('Favoritos'),
+                onTap: () => {
+                  onTapTapped(5,true),
+                  Navigator.of(context).pop(),
+                }
+            ),
+            ListTile(
+              leading: Icon(Icons.border_color),
+              title: Text('Feedback'),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading: Icon(Icons.exit_to_app),
+              title: Text('Logout'),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+          ],
+        ),
+      ),
       appBar: AppBar(
-        title: ListTile(
-          onTap: (){
-            // showSearch(context: context, delegate: delegate);
-            IconButton(onPressed: (){}, icon: const Icon(Icons.search), color: Colors.pinkAccent, alignment: Alignment.center);
-          },
-          title: const Text('¿Qué quieres vivir?', style: TextStyle(color: Colors.black), ),
+        iconTheme: IconThemeData(color: Colors.black),
+        title: Container(
+          width: double.infinity,
+          height: 40,
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
+          ),
+          child: Center(
+            child: TextField(
+              textAlign: TextAlign.center,
+              decoration: InputDecoration(
+                  suffixIcon: IconButton(
+                    // icon: Icon(Icons.clear),
+                    icon: Icon(Icons.search),
+                    color: Colors.pinkAccent,
+                    onPressed: () {
+                      /* Clear the search field */
+                    },
+                  ),
+                  hintText: '¿Qué quieres vivir?...',
+                  border: InputBorder.none,
+              ),
+            ),
+          ),
         ),
         backgroundColor: Colors.white,
-        leading:  IconButton(onPressed: (){}, icon: const Icon(Icons.menu), color: Colors.black, alignment: Alignment.center),
-        // actions: [
-        //   IconButton(onPressed: (){}, icon: const Icon(Icons.menu), color: Colors.black, alignment: Alignment.center, )
-        // ],
       ),
-      body: widgetsChildren[indexTap],
+      body: colorChange ? widgetsChildren[indexPage] : widgetsChildren[indexTap],
       bottomNavigationBar: BottomNavigationBar(
-          onTap: onTapTapped,
+          onTap: (index) => {
+              setState(() {
+                indexTap = index;
+                colorChange = false;
+              })
+            },
           currentIndex: indexTap,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.pinkAccent,
+          selectedItemColor: colorChange ? Colors.black45 : Colors.pinkAccent,
           iconSize: 25.0,
           selectedFontSize: 14.0,
           unselectedFontSize: 12.0,
           items: const [
             BottomNavigationBarItem(
-              label: 'Descubrir',
-              icon: Icon(Icons.search),
+              label: 'Home',
+              icon: Icon(Icons.home),
             ),
             BottomNavigationBarItem(
-              label: 'Favoritos',
-              icon: Icon(Icons.favorite),
+              label: 'Descubrir',
+              icon: Icon(Icons.search),
             ),
             BottomNavigationBarItem(
               label: 'Reservas',
@@ -79,176 +146,6 @@ class _BarraInferior extends State<BarraInferior>{
           ]
       ),
     );
-
   }
+
 }
-
-//
-// class NeumorphicBottomNav extends StatefulWidget{
-//   final double bevel;
-//   final Offset blurOffset;
-//   final Color color;
-//   final EdgeInsets padding;
-//
-//   NeumorphicBottomNav({
-//       Key? key,
-//       this.bevel = 15.0,
-//       this.padding = const EdgeInsets.all(1.5)
-//   }) : blurOffset = Offset(bevel / 2, bevel / 2),
-//       color = Colors.grey.shade200,
-//       super(key: key);
-//   @override
-//   State<NeumorphicBottomNav> createState() => _NeumorphicBottomNav();
-// }
-//
-// class _NeumorphicBottomNav extends State<NeumorphicBottomNav>{
-//   final bool _isPressed = false;
-//
-//   @override
-//   Widget build(BuildContext context){
-//     final color = widget.color;
-//     double height = 56;
-//     const primaryColor = Colors.pinkAccent;
-//     const secundaryColor = Colors.black54;
-//     return Listener(
-//        child: AnimatedContainer(
-//           duration: const Duration(milliseconds: 150),
-//           padding: widget.padding,
-//           decoration: BoxDecoration(
-//           borderRadius: BorderRadius.only(
-//              topLeft: Radius.circular(widget.bevel),
-//              topRight: Radius.circular(widget.bevel),
-//            ),
-//            gradient: LinearGradient(
-//              begin: Alignment.topLeft,
-//              end: Alignment.bottomRight,
-//              colors: [
-//                _isPressed ? color : color.mix(Colors.black, .1),
-//                _isPressed ? color.mix(Colors.black, .05) : color,
-//                _isPressed ? color.mix(Colors.black, .05) : color,
-//                color.mix(Colors.white, _isPressed ? .2 : .5),
-//              ],
-//              stops: const [
-//                0.0,
-//                .3,
-//                .6,
-//                1.0,
-//              ]),
-//            boxShadow: _isPressed ? null :
-//                [
-//                  BoxShadow(
-//                    blurRadius:  widget.bevel,
-//                    offset: -widget.blurOffset,
-//                    color: color.mix(Colors.white, .6)
-//                  ),
-//                  BoxShadow(
-//                      blurRadius:  widget.bevel,
-//                      offset: -widget.blurOffset,
-//                      color: color.mix(Colors.black, .3),
-//                  ),
-//                ]
-//          ),
-//          child: BottomAppBar(
-//            color: Colors.transparent,
-//            elevation: 0,
-//            child: Stack(
-//              children: [
-//                SizedBox(
-//                  height:  height,
-//                  child: Row(
-//                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-//                     children: [
-//                         NavBarIcon(
-//                             text: 'Descubrir',
-//                             icon: Icons.search,
-//                             selected: true,
-//                             onPressed: (){
-//
-//                             },
-//                             defaultColor: secundaryColor,
-//                             selectedColor: primaryColor,
-//                         ),
-//                         NavBarIcon(
-//                             text: "Favoritos",
-//                             icon: Icons.favorite,
-//                             selected: false,
-//                             onPressed: (){},
-//                             defaultColor: secundaryColor,
-//                             selectedColor: primaryColor,
-//                        ),
-//                        NavBarIcon(
-//                             text: "Reservas",
-//                             icon: Icons.send,
-//                             selected: false,
-//                             onPressed: (){},
-//                             defaultColor: secundaryColor,
-//                             selectedColor: primaryColor,
-//                        ),
-//                        NavBarIcon(
-//                             text: "Mensajes",
-//                             icon: Icons.message,
-//                             selected: false,
-//                             onPressed: (){},
-//                             defaultColor: secundaryColor,
-//                             selectedColor: primaryColor,
-//                        ),
-//                        NavBarIcon(
-//                             text: "Perfil",
-//                             icon: Icons.account_circle_outlined,
-//                             selected: false,
-//                             onPressed: (){},
-//                             defaultColor: secundaryColor,
-//                             selectedColor: primaryColor,
-//                        ),
-//                     ],
-//                  ),
-//                )
-//              ],
-//            ),
-//          ),
-//        ),
-//     );
-//   }
-// }
-//
-// class NavBarIcon extends StatelessWidget{
-//   const NavBarIcon(
-//       {Key? key,
-//         required this.text,
-//         required this.icon,
-//         required this.selected,
-//         required this.onPressed,
-//         this.selectedColor = const Color( 0xffFF8527),
-//         this.defaultColor = Colors.black54
-//       }) : super(key: key);
-//   final String text;
-//   final IconData icon;
-//   final bool selected;
-//   final Function() onPressed;
-//   final Color defaultColor;
-//   final Color selectedColor;
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       mainAxisAlignment:  MainAxisAlignment.center,
-//       children: [
-//         IconButton(
-//           onPressed: onPressed,
-//           icon: Icon(
-//             icon,
-//             size: 25,
-//             color: selected ? selectedColor : defaultColor,
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-//
-// extension ColorUtils on Color{
-//   Color mix(Color another, double amount){
-//     return Color.lerp(this, another, amount)!;
-//   }
-// }
-
