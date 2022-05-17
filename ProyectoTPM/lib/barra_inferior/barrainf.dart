@@ -6,6 +6,9 @@ import 'package:proyectotmp/src/reservas.dart';
 import 'package:proyectotmp/src/mensajes.dart';
 import 'package:proyectotmp/src/perfil.dart';
 
+import '../src/EmpresaViews/Hotel.dart';
+import '../src/EmpresaViews/Viaje.dart';
+
 class BarraInferior extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
@@ -25,6 +28,8 @@ class _BarraInferior extends State<BarraInferior>{
     Mensajes(),
     Perfil(),
     Favoritos(),
+    Hotel(),
+    Viaje(),
   ];
 
   void onTapTapped(int index,bool color){
@@ -53,7 +58,17 @@ class _BarraInferior extends State<BarraInferior>{
                 color: Colors.black,
               ),
             ),
-            Text("Usuario"),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 20),
+              child: const Text(
+                "Usuario",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
@@ -67,10 +82,59 @@ class _BarraInferior extends State<BarraInferior>{
                   Navigator.of(context).pop(),
                 }
             ),
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 20),
+              child: const Text(
+                "Empresa",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
             ListTile(
-              leading: Icon(Icons.border_color),
-              title: Text('Feedback'),
+              leading: Icon(Icons.hotel),
+              title: Text('Agregar Hotel'),
+              onTap: () => {
+                onTapTapped(6,true),
+                Navigator.of(context).pop()
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.airplanemode_on_sharp),
+              title: Text('Agregar Viaje'),
+              onTap: () => {
+                onTapTapped(7,true),
+                Navigator.of(context).pop()
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.fastfood),
+              title: Text('Agregar Restaurante'),
               onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading: Icon(Icons.airport_shuttle_sharp),
+              title: Text('Agregar Tour'),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+              leading: Icon(Icons.backpack),
+              title: Text('Agregar Paquete'),
+              onTap: () => {Navigator.of(context).pop()},
+            ),
+
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 20),
+              child: const Text(
+                "General",
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),
@@ -86,7 +150,7 @@ class _BarraInferior extends State<BarraInferior>{
           width: double.infinity,
           height: 40,
           decoration: BoxDecoration(
-              color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
+              color: const Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
           ),
           child: Center(
             child: TextField(
@@ -97,7 +161,8 @@ class _BarraInferior extends State<BarraInferior>{
                     icon: Icon(Icons.search),
                     color: Colors.pinkAccent,
                     onPressed: () {
-                      /* Clear the search field */
+                      // FocusScope.of(context).dispose();
+                      // Navigator.of(context).pop();
                     },
                   ),
                   hintText: '¿Qué quieres vivir?...',
