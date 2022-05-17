@@ -18,7 +18,7 @@ List <ChatModel> messageData = [
 
   new ChatModel(
       name: "Maria Elena",
-      message: "Hola te paso informacion sobre...",
+      message: "Watssup!",
       time: "16:30",
       imageUrl: "https://th.bing.com/th/id/OIP.DqQp2MTPz9G8kcWeHoAj8gHaIv?pid=ImgDet&rs=1"
   ),
@@ -32,15 +32,15 @@ List <ChatModel> messageData = [
 
   new ChatModel(
       name: "Paola",
-      message: "Hola que tal neni, si...",
+      message: "Me encanta Michoacan",
       time: "12:30",
-      imageUrl: "https://difundir.org/wp-content/uploads/2019/04/3-50.jpg"
+      imageUrl: "https://th.bing.com/th/id/OIP.mP4GRW7Wkdw699kqm8KDwQHaE7?pid=ImgDet&rs=1"
   ),
 
   new ChatModel(
       name: "Karlos",
       message: "Si, te veo ahi",
       time: "11:16",
-      imageUrl: "https://get.pxhere.com/photo/man-person-people-hair-male-hairstyle-beard-face-nose-eyes-one-head-moustache-forehead-chin-facial-hair-818812.jpg"
+      imageUrl: "https://media.istockphoto.com/photos/portrait-of-a-handsome-latin-man-picture-id1160811064?k=6&m=1160811064&s=170667a&w=0&h=JVovmZJw66OeNRQjtMh6hpdof8xJxgzcwccPH9oc60U="
   )
 ];

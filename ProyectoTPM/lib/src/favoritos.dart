@@ -82,7 +82,6 @@ class _Favoritos extends State<Favoritos>{
            width: 500,
            color: Colors.white,
            padding: const EdgeInsets.only(left:16, top: 16),
-           // margin: const EdgeInsets.only(left:16, top: 16),
            child: const Text(
               "Favoritos",
               style: TextStyle(
@@ -134,7 +133,6 @@ class _Favoritos extends State<Favoritos>{
                                    children: <Widget> [
                                      Container(
                                        child: Text(
-                                         // "Conociendo Morelia",
                                          "${FavoritosData[index]["Nombre"].toString()}",
                                          style: const TextStyle(
                                            fontSize: 22,
@@ -143,7 +141,6 @@ class _Favoritos extends State<Favoritos>{
                                      ),
                                      Container(
                                        child: Text(
-                                         // "Disfrute de la magia de Patzcuaro, verdaderamente el \"secreto mejor guardado\" de todas las ciudades coloniales de Mexico.",
                                          "${FavoritosData[index]["Descripcion"].toString()}",
                                          style:const  TextStyle(
                                            fontSize: 11,

@@ -128,7 +128,7 @@ class _BarraInferior extends State<BarraInferior>{
             },
           currentIndex: indexTap,
           type: BottomNavigationBarType.fixed,
-          selectedItemColor: colorChange ? Colors.black45 : Colors.pinkAccent,
+          selectedItemColor: colorChange ? Colors.black54 : Colors.pinkAccent,
           iconSize: 25.0,
           selectedFontSize: 14.0,
           unselectedFontSize: 12.0,
