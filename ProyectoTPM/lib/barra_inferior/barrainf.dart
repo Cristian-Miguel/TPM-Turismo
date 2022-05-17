@@ -5,6 +5,7 @@ import 'package:proyectotmp/src/home.dart';
 import 'package:proyectotmp/src/reservas.dart';
 import 'package:proyectotmp/src/mensajes.dart';
 import 'package:proyectotmp/src/perfil.dart';
+import 'package:proyectotmp/src/LogIn.dart';
 
 class BarraInferior extends StatefulWidget{
   @override
@@ -25,6 +26,7 @@ class _BarraInferior extends State<BarraInferior>{
     Mensajes(),
     Perfil(),
     Favoritos(),
+    LogIn(),
   ];
 
   void onTapTapped(int index,bool color){
@@ -73,9 +75,17 @@ class _BarraInferior extends State<BarraInferior>{
               onTap: () => {Navigator.of(context).pop()},
             ),
             ListTile(
+                leading: Icon(Icons.login),
+                title: Text('Log In'),
+                onTap: () => {
+                  onTapTapped(6,true),
+                  Navigator.of(context).pop(),
+                }
+            ),
+            ListTile(
               leading: Icon(Icons.exit_to_app),
               title: Text('Logout'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {Navigator.pop(context,LogIn())},
             ),
           ],
         ),

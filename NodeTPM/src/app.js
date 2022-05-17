@@ -7,5 +7,6 @@ app.use(morgan('dev'));
 app.use(cors());
 app.use(require('./routes/favoritos'));
 app.use(require('./routes/reservas'));
+app.use(require('./routes/logIn'),express.json);
 
 module.exports = app;
