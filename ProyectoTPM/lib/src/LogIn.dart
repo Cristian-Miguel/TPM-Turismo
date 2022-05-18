@@ -36,7 +36,6 @@ class _LogIn extends State<LogIn>{
             ),
           ),
           TextButton(
-            //onPressed: _showDashboardScreen,
             onPressed: _getUser,
             child: Text('Iniciar Sesión'),
             style: ButtonStyle(

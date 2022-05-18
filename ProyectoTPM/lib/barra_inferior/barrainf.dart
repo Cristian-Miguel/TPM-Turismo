@@ -123,9 +123,11 @@ class _BarraInferior extends State<BarraInferior>{
                   onTapTapped(6,true),
                   Navigator.of(context).pop(),
                 }
-              leading: Icon(Icons.airport_shuttle_sharp),
-              title: Text('Agregar Tour'),
-              onTap: () => {Navigator.of(context).pop()},
+            ),
+            ListTile(
+                leading: Icon(Icons.airport_shuttle_sharp),
+                title: Text('Agregar Tour'),
+                onTap: () => {Navigator.of(context).pop()},
             ),
             ListTile(
               leading: Icon(Icons.backpack),

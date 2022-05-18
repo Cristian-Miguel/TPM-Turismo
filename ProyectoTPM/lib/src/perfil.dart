@@ -11,12 +11,8 @@ class Perfil extends StatefulWidget{
 }
 
 class _Perfil extends State<Perfil>{
-<<<<<<< HEAD
-
-=======
   final _emailInputTextController = TextEditingController();
   final _passwordInputTextController = TextEditingController();
->>>>>>> 85dab342b6fbf261b333685dbf7692d984367586
   @override
   Widget build(BuildContext context) {
     return Center(
