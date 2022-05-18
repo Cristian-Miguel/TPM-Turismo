@@ -1,0 +1,744 @@
+import 'package:flutter/material.dart';
+
+class Hotel extends StatefulWidget{
+  @override
+  State<StatefulWidget> createState(){
+    return _Hotel();
+  }
+}
+
+class _Hotel extends State<Hotel>{
+  final _nombreInputTextController = TextEditingController();
+  final _descripcionInputTextController = TextEditingController();
+  final _costoInputTextController = TextEditingController();
+  final _numerohabitacionInputTextController = TextEditingController();
+  final _estadoInputTextController = TextEditingController();
+  final _ciudadInputTextController = TextEditingController();
+  final _coloniaInputTextController = TextEditingController();
+  final _calleInputTextController = TextEditingController();
+  final _numeroInputTextController = TextEditingController();
+  final _codigopostalInputTextController = TextEditingController();
+  final _telefonoInputTextController = TextEditingController();
+  Object _tipohabitacionInputTextController = "";
+  Object _categoriaInputTextController = TextEditingController();
+
+  Object CatselectedValue = "Familiar";
+  List<DropdownMenuItem<String>> get CatdropdownItems{
+    const List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Familiar"),          value: "Familiar"),
+      DropdownMenuItem(child: Text("Urbano"),            value: "Urbano"),
+      DropdownMenuItem(child: Text("Monumento"),         value: "Monumento"),
+      DropdownMenuItem(child: Text("Low cost"),          value: "Low cost"),
+      DropdownMenuItem(child: Text("Balneario"),         value: "Balneario"),
+      DropdownMenuItem(child: Text("Albergue turistico"),value: "Albergue turistico"),
+      DropdownMenuItem(child: Text("De apartamento"),    value: "De apartamento"),
+      DropdownMenuItem(child: Text("De naturaleza"),     value: "De naturaleza"),
+      DropdownMenuItem(child: Text("De aeropuerto"),     value: "De aeropuerto"),
+      DropdownMenuItem(child: Text("Pasada"),            value: "Pasada"),
+    ];
+    return menuItems;
+  }
+
+  Object TipoHabselectedValue = "Quad";
+  List<DropdownMenuItem<String>> get TipoHabdropdownItems{
+    const List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Quad"),       value: "Quad"),
+      DropdownMenuItem(child: Text("Triple"),     value: "Triple"),
+      DropdownMenuItem(child: Text("Doble"),      value: "Doble"),
+      DropdownMenuItem(child: Text("Individual"), value: "Individual"),
+    ];
+    return menuItems;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Form(
+      onChanged: _updateControllers,
+        child:ListView(
+        scrollDirection: Axis.vertical,
+        children:<Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
+              child: const Text(
+                  "Agregar Hotel",
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.centerLeft,
+                  margin: const EdgeInsets.only(left: 28, top:10),
+                  child: const Text(
+                    "Nombre",
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                    ),
+                  ),
+                ),
+                Container(
+                  alignment: Alignment.centerLeft,
+                  padding: const EdgeInsets.only(left: 13, right: 13),
+                  margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(93, 93, 93, 0.1),
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  child: TextField(
+                    controller: _nombreInputTextController,
+                    textAlign: TextAlign.left,
+                    decoration: const InputDecoration(
+                      hintText: '...',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                )
+              ],
+            ),
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Descripción",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                height: Theme.of(context).textTheme.bodyText1!.fontSize! * 20,
+                alignment: Alignment.topLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13, top:8, bottom: 8),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  keyboardType: TextInputType.multiline,
+                  maxLines: 5,
+                  textAlign: TextAlign.left,
+                  controller: _descripcionInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Costo",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child:  TextField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  controller: _costoInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10, bottom: 10),
+                child: const Text(
+                  "Imagen",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 110,
+                    height: 110,
+                    // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                    margin: const EdgeInsets.only(left: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
+                          borderRadius: BorderRadius.circular(10.0),
+                          image: const DecorationImage(
+                            image: NetworkImage("https://th.bing.com/th/id/R.14e9e47f7f572b224536073376637abc?rik=NS%2fonGxy7fu35Q&riu=http%3a%2f%2fwww.agloval.com%2fwp-content%2fuploads%2f2017%2f04%2fcrystal_gris_claro.jpg&ehk=GrrIvNmGIJli3WVrOt7KZk5E%2fu2a4YQpBjwqt1C%2bkEQ%3d&risl=&pid=ImgRaw&r=0"),
+                            fit: BoxFit.cover,
+                          ),
+                      )
+                  ),
+                  Container(
+                      width: 110,
+                      height: 110,
+                      // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                      margin: const EdgeInsets.only(left: 10, right: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: const DecorationImage(
+                          image: AssetImage ('assets/Tirolesa.png'),
+                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                  ),
+                  Container(
+                      width: 110,
+                      height: 110,
+                      // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                      margin: const EdgeInsets.only( right: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 1.0), //PARA PROBAR CONTAINER
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: const DecorationImage(
+                          image: AssetImage ('assets/Tirolesa.png'),
+                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                  ),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                      width: 100,
+                      height: 100,
+                      // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                      margin: const EdgeInsets.only(left: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: const DecorationImage(
+                          image: AssetImage ('assets/Tirolesa.png'),
+                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                  ),
+                  Container(
+                      width: 100,
+                      height: 100,
+                      // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                      margin: const EdgeInsets.only(left: 10, right: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: const DecorationImage(
+                          image: AssetImage ('assets/Tirolesa.png'),
+                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                  ),
+                  Container(
+                      width: 100,
+                      height: 100,
+                      // color: const Color.fromRGBO(234, 234, 234, 1.0),
+                      margin: const EdgeInsets.only( right: 10, top:5, bottom: 5),
+                      decoration: BoxDecoration(
+                        color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
+                        borderRadius: BorderRadius.circular(10.0),
+                        image: const DecorationImage(
+                          image: AssetImage ('assets/Tirolesa.png'),
+                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                          fit: BoxFit.cover,
+                        ),
+                      )
+                  ),
+                ],
+              ),
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Tipo de habitacion",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            // color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
+                    ),
+                    dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                    value: TipoHabselectedValue,
+                    onChanged: (Object? value) {
+                      setState(() {
+                        TipoHabselectedValue = value!;
+                        _tipohabitacionInputTextController = value;
+                      });
+                    },
+                    items: TipoHabdropdownItems
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Categoria",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0
+                        ),
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          // color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
+                    ),
+                    dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                    value: CatselectedValue,
+                    onChanged: (Object? value) {
+                      setState(() {
+                        CatselectedValue = value!;
+                        _categoriaInputTextController = value;
+                      });
+                    },
+                    items: CatdropdownItems
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Número de habitaciones",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  controller: _numerohabitacionInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          const Divider(
+            color: Colors.black38,
+          ),
+
+          Container(
+            alignment: Alignment.centerLeft,
+            margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
+            child: const Text(
+              "Conforme a ubicación",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Estado",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: _estadoInputTextController,
+                  decoration:const  InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Ciudad",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: _ciudadInputTextController,
+                  decoration:const  InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Colonia",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: _coloniaInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Calle",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: _calleInputTextController,
+                  decoration:const  InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Número",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  controller: _numeroInputTextController,
+                  decoration:const  InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Código Postal",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  controller: _codigopostalInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Teléfono",
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  keyboardType: TextInputType.number,
+                  controller: _telefonoInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              )
+            ],
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.max,
+            children: <Widget>[
+              Container(
+                width: Theme.of(context).textTheme.bodyText1!.fontSize! * 10.5,
+                margin: const EdgeInsets.only(left:0, right: 6, top: 20, bottom: 20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                    primary: Colors.white54,
+                    onPrimary: Colors.white,
+                    // side: BorderSide(color: Colors.red, width: 1),
+                  ),
+                  onPressed: (){},
+                  child: const Text(
+                    'Cancelar',
+                    style: TextStyle(
+                      color: Colors.black87,
+                    ),
+                  ),
+                ),
+              ),
+              Container(
+                width: Theme.of(context).textTheme.bodyText1!.fontSize! * 14.5,
+                margin: const EdgeInsets.only(left:6, right: 0, top: 20, bottom: 20),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0),
+                    ),
+                    primary: Colors.pinkAccent,
+                    onPrimary: Colors.white,
+                    // side: BorderSide(color: Colors.red, width: 1),
+                  ),
+                  onPressed: _sendControllers,
+                  child: const Text(
+                    'Agregar',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+          ],
+    )
+    );
+  }
+
+  void _updateControllers(){
+    final controllers = [
+      _nombreInputTextController,
+      _descripcionInputTextController,
+      _costoInputTextController,
+      _tipohabitacionInputTextController,
+      _categoriaInputTextController,
+      _numerohabitacionInputTextController,
+      _estadoInputTextController,
+      _ciudadInputTextController,
+      _coloniaInputTextController,
+      _calleInputTextController,
+       _numeroInputTextController,
+      _codigopostalInputTextController,
+      _telefonoInputTextController,
+    ];
+  }
+
+  void _sendControllers(){
+    debugPrint(_nombreInputTextController.toString());
+
+  }
+
+
+}
