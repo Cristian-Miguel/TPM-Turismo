@@ -8,7 +8,7 @@ function login(res, sql){
 
         if (row.length == 0) {
             res.header("Access-Control-Allow-Origin", "*");
-            res.status(200).json({
+            res.status(404).json({
                 
             });
         } else {

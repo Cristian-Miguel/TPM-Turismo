@@ -9,6 +9,7 @@ import 'package:proyectotmp/src/LogIn.dart';
 
 import '../src/EmpresaViews/Hotel.dart';
 import '../src/EmpresaViews/Viaje.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 class BarraInferior extends StatefulWidget{
   @override
@@ -18,6 +19,7 @@ class BarraInferior extends StatefulWidget{
 }
 
 class _BarraInferior extends State<BarraInferior>{
+
   int indexTap = 0;
   int indexPage = 0;
   bool colorChange = false;

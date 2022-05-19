@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'barra_inferior/barrainf.dart';
+import 'package:flutter_session/flutter_session.dart';
 
 void main() {
   runApp(const MyApp());
@@ -31,14 +32,21 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
+  var session = FlutterSession();
 
   @override
   Widget build(BuildContext context) {
+    _startSession();
     return BarraInferior();
     //   Scaffold(
     //     bottomNavigationBar: NeumorphicBottomNav(),
     // );
+  }
+
+  void _startSession(){
+    session.set("isLogin", false);
+    session.set("user", '0');
+    session.set("idUser", 0);
   }
 }
 
