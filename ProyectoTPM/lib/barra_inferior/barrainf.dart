@@ -9,6 +9,9 @@ import 'package:proyectotmp/src/LogIn.dart';
 
 import '../src/EmpresaViews/Hotel.dart';
 import '../src/EmpresaViews/Viaje.dart';
+import '../src/EmpresaViews/Restaurante.dart';
+import '../src/EmpresaViews/Tour.dart';
+import '../src/EmpresaViews/Paquete.dart';
 import 'package:flutter_session/flutter_session.dart';
 
 class BarraInferior extends StatefulWidget{
@@ -31,9 +34,12 @@ class _BarraInferior extends State<BarraInferior>{
     Mensajes(),
     Perfil(),
     Favoritos(),
-    LogIn(),
     Hotel(),
     Viaje(),
+    Restaurante(),
+    Tour(),
+    Paquete(),
+    LogIn(),
   ];
 
   void onTapTapped(int index,bool color){
@@ -116,25 +122,27 @@ class _BarraInferior extends State<BarraInferior>{
             ListTile(
               leading: Icon(Icons.fastfood),
               title: Text('Agregar Restaurante'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {
+                onTapTapped(8,true),
+                Navigator.of(context).pop()
+              },
             ),
-            ListTile(
-                leading: Icon(Icons.login),
-                title: Text('Log In'),
-                onTap: () => {
-                  onTapTapped(6,true),
-                  Navigator.of(context).pop(),
-                }
-            ),
+
             ListTile(
                 leading: Icon(Icons.airport_shuttle_sharp),
                 title: Text('Agregar Tour'),
-                onTap: () => {Navigator.of(context).pop()},
+                onTap: () => {
+                  onTapTapped(9,true),
+                  Navigator.of(context).pop()
+                },
             ),
             ListTile(
               leading: Icon(Icons.backpack),
               title: Text('Agregar Paquete'),
-              onTap: () => {Navigator.of(context).pop()},
+              onTap: () => {
+                onTapTapped(10,true),
+                Navigator.of(context).pop()
+              },
             ),
 
             Container(
@@ -147,6 +155,14 @@ class _BarraInferior extends State<BarraInferior>{
                   fontWeight: FontWeight.w500,
                 ),
               ),
+            ),
+            ListTile(
+                leading: Icon(Icons.login),
+                title: Text('Log In'),
+                onTap: () => {
+                  onTapTapped(11,true),
+                  Navigator.of(context).pop(),
+                }
             ),
             ListTile(
               leading: Icon(Icons.exit_to_app),

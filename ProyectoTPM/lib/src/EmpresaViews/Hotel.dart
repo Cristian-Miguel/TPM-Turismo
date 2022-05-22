@@ -19,8 +19,18 @@ class _Hotel extends State<Hotel>{
   final _numeroInputTextController = TextEditingController();
   final _codigopostalInputTextController = TextEditingController();
   final _telefonoInputTextController = TextEditingController();
+  final _ImagenInputTextController = TextEditingController();
   Object _tipohabitacionInputTextController = "";
-  Object _categoriaInputTextController = TextEditingController();
+  Object _categoriaInputTextController = "";
+  var  imagen = 'https://th.bing.com/th/id/R.14e9e47f7f572b224536073376637abc?rik=NS%2fonGxy7fu35Q&riu=http%3a%2f%2fwww.agloval.com%2fwp-content%2fuploads%2f2017%2f04%2fcrystal_gris_claro.jpg&ehk=GrrIvNmGIJli3WVrOt7KZk5E%2fu2a4YQpBjwqt1C%2bkEQ%3d&risl=&pid=ImgRaw&r=0';
+  var imagenes = [
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+    'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
+  ];
 
   Object CatselectedValue = "Familiar";
   List<DropdownMenuItem<String>> get CatdropdownItems{
@@ -135,6 +145,7 @@ class _Hotel extends State<Hotel>{
               )
             ],
           ),
+
           Column(
             children: <Widget>[
               Container(
@@ -168,6 +179,7 @@ class _Hotel extends State<Hotel>{
               )
             ],
           ),
+
           Column(
             children: <Widget>[
               Container(
@@ -192,11 +204,28 @@ class _Hotel extends State<Hotel>{
                       decoration: BoxDecoration(
                           color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                           borderRadius: BorderRadius.circular(10.0),
-                          image: const DecorationImage(
-                            image: NetworkImage("https://th.bing.com/th/id/R.14e9e47f7f572b224536073376637abc?rik=NS%2fonGxy7fu35Q&riu=http%3a%2f%2fwww.agloval.com%2fwp-content%2fuploads%2f2017%2f04%2fcrystal_gris_claro.jpg&ehk=GrrIvNmGIJli3WVrOt7KZk5E%2fu2a4YQpBjwqt1C%2bkEQ%3d&risl=&pid=ImgRaw&r=0"),
+                          image: DecorationImage(
+                            image: NetworkImage(imagenes[0]),
                             fit: BoxFit.cover,
                           ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        // shape: new RoundedRectangleBorder(
+                        //       borderRadius: new BorderRadius.circular(10.0),
+                        //   ),
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                        // side: BorderSide(color: Colors.red, width: 1),
+                      ),
+                      onPressed: ()=>{_showModal(0),},
+                      child: const Text(
+                          'Agregar',
+                          style: TextStyle(
+                          color: Colors.white,
+                          ),
+                        ),
+                      ),
                   ),
                   Container(
                       width: 110,
@@ -206,12 +235,24 @@ class _Hotel extends State<Hotel>{
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
-                        image: const DecorationImage(
-                          image: AssetImage ('assets/Tirolesa.png'),
-                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                        image: DecorationImage(
+                          image: NetworkImage(imagenes[1]),
                           fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                      ),
+                      onPressed: ()=>{_showModal(1),},
+                      child: const Text(
+                        'Agregar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
                       width: 110,
@@ -221,62 +262,111 @@ class _Hotel extends State<Hotel>{
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0), //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
-                        image: const DecorationImage(
-                          image: AssetImage ('assets/Tirolesa.png'),
-                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                        image: DecorationImage(
+                          image: NetworkImage(imagenes[2]),
                           fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                      ),
+                      onPressed: ()=>{_showModal(2),},
+                      child: const Text(
+                        'Agregar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Container(
-                      width: 100,
-                      height: 100,
+                      width: 110,
+                      height: 110,
                       // color: const Color.fromRGBO(234, 234, 234, 1.0),
                       margin: const EdgeInsets.only(left: 10, top:5, bottom: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
-                        image: const DecorationImage(
-                          image: AssetImage ('assets/Tirolesa.png'),
-                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                        image:  DecorationImage(
+                          image: NetworkImage(imagenes[3]),
                           fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                      ),
+                      onPressed: ()=>{_showModal(3),},
+                      child: const Text(
+                        'Agregar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
-                      width: 100,
-                      height: 100,
+                      width: 110,
+                      height: 110,
                       // color: const Color.fromRGBO(234, 234, 234, 1.0),
                       margin: const EdgeInsets.only(left: 10, right: 10, top:5, bottom: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
-                        image: const DecorationImage(
-                          image: AssetImage ('assets/Tirolesa.png'),
-                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                        image: DecorationImage(
+                          image: NetworkImage(imagenes[4]),
                           fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                      ),
+                      onPressed: ()=>{_showModal(4),},
+                      child: const Text(
+                        'Agregar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                   Container(
-                      width: 100,
-                      height: 100,
+                      width: 110,
+                      height: 110,
                       // color: const Color.fromRGBO(234, 234, 234, 1.0),
                       margin: const EdgeInsets.only( right: 10, top:5, bottom: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
-                        image: const DecorationImage(
-                          image: AssetImage ('assets/Tirolesa.png'),
-                          //NetworkImage("https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/7a/ea/98/caption.jpg?w=500&h=400&s=1"),
+                        image: DecorationImage(
+                          image: NetworkImage(imagenes[5]),
                           fit: BoxFit.cover,
                         ),
-                      )
+                      ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.pinkAccent.withOpacity(0.0),
+                        onPrimary: Colors.white.withOpacity(0.0),
+                      ),
+                      onPressed: ()=>{ _showModal(5), },
+                      child: const Text(
+                        'Agregar',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -530,6 +620,7 @@ class _Hotel extends State<Hotel>{
               )
             ],
           ),
+
           Column(
             children: <Widget>[
               Container(
@@ -664,6 +755,7 @@ class _Hotel extends State<Hotel>{
               )
             ],
           ),
+
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -740,5 +832,79 @@ class _Hotel extends State<Hotel>{
 
   }
 
+  Future<String?> _showModal(int index) {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Agregar imagen'),
+        actions: <Widget>[
+
+          Column(
+            children: <Widget>[
+              Container(
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 28, top:10),
+                child: const Text(
+                  "Ingrese el URL de la imagen",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.w300
+                  ),
+                ),
+              ),
+
+              Container(
+                alignment: Alignment.centerLeft,
+                padding: const EdgeInsets.only(left: 13, right: 13),
+                margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+                decoration: BoxDecoration(
+                  color: const Color.fromRGBO(93, 93, 93, 0.1),
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                child: TextField(
+                  textAlign: TextAlign.left,
+                  controller: _ImagenInputTextController,
+                  decoration:const  InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+            ],
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              TextButton(
+                onPressed: () => {
+                  _ImagenInputTextController.text = '',
+                  Navigator.pop(context, 'Cancel'),
+                },
+                child: const Text('Cancel'),
+              ),
+
+              TextButton(
+                onPressed: () => {
+                  _getImage(index),
+                  Navigator.pop(context, 'Guardar'),
+                },
+                child: const Text('Guardar'),
+              ),
+            ],
+          ),
+
+        ],
+      ),
+    );
+  }
+
+  void _getImage(int index) {
+    setState(() {
+        imagenes[index] = _ImagenInputTextController.value.text.toString();
+        _ImagenInputTextController.text = '';
+    });
+  }
 
 }
