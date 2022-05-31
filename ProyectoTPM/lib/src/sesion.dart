@@ -8,7 +8,7 @@ class sesionFunctions{
   var session = FlutterSession();
   late bool isLoginG = false;
   late var nameG = "";
-  late var tipoG = 1;
+  late var tipoG = "";
   late var idG = 0;
 
   //Llamar a esta función para iniciar sesión
@@ -31,7 +31,7 @@ class sesionFunctions{
 
         userName = users.first['Usuario'].toString();
         idUser = int.parse(users.first['idUsuarios'].toString());
-        tipo = int.parse(users.first['TipoUsuario'].toString());
+        tipo = users.first['TipoUsuario'].toString();
         print('Nombre: $userName, ID: $idUser, Tipo: $tipo');
         _startSession(userName, idUser, tipo);
         probarSesion2();
@@ -78,7 +78,7 @@ class sesionFunctions{
 
   void closeSession(context){
     session.set("isLogin", false);
-    session.set("user", '0');
+    session.set("user", "0");
     session.set("idUser", 0);
     session.set("tipo", 1);
     _alert('Sesión cerrada',context);

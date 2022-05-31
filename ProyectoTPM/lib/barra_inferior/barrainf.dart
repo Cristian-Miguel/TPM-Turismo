@@ -27,7 +27,7 @@ class BarraInferior extends StatefulWidget{
 
 class BarraInferiorMenu extends State<BarraInferior>{
   var session = FlutterSession();
-  var tipo = 1;
+  var tipo = "";
   bool isLogin = false;
   var user = "";
   var idUser = 0;
@@ -62,7 +62,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
   void updateUser() async{
     tipo = await session.get("tipo");
     isLogin = await session.get("isLogin");
-    user = await session.get("user");
+    user = (await session.get("user")).toString();
     idUser = await session.get("idUser");
   }
 
@@ -121,7 +121,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                   Navigator.of(context).pop(),
                 }
             ),
-            if(tipo != 1) panelEmpresa() as Column,
+            if(tipo == "Administrador" || tipo == "Empresa") panelEmpresa() as Column,
 
             Container(
               alignment: Alignment.centerLeft,
