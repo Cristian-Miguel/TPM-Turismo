@@ -80,7 +80,7 @@ class sesionFunctions{
     session.set("isLogin", false);
     session.set("user", "0");
     session.set("idUser", 0);
-    session.set("tipo", 1);
+    session.set("tipo", "Turista");
     _alert('Sesión cerrada',context);
   }
 
