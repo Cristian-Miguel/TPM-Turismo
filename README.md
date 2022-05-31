@@ -51,3 +51,12 @@ Para correr el web server de node se necesita poner el siguiente comando
 ```
 node src/index.js
 ```
+
+Si Android Studio te da error ve a la barra de navegación de arriba a la izquierda y dale a "run", luego a "Edit configurations"
+Se te desplegará una ventana, en "Additional run args" agrega la siguiente linea
+
+```
+--no-sound-null-safety
+```
+
+Por ultimo solo da click en aplicar y aceptar
