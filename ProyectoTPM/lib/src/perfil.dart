@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:proyectotmp/src/LogIn.dart';
+import 'Registro.dart';
 import 'sesion.dart';
 
 class Perfil extends StatefulWidget{
@@ -174,7 +175,7 @@ class _Perfil extends State<Perfil>{
                     onPrimary: Colors.white,
                     // side: BorderSide(color: Colors.red, width: 1),
                   ),
-                  onPressed: (){},
+                  onPressed: _onChangeRegistro,
                   child: const Text(
                     'Registrate',
                     style: TextStyle(
@@ -188,6 +189,16 @@ class _Perfil extends State<Perfil>{
           ),
         ),
 
+    );
+  }
+  void _onChangeRegistro(){
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder:(context)
+            {
+              return Registro();
+            }
+        )
     );
   }
 }
