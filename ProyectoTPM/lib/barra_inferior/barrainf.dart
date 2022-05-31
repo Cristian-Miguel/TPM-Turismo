@@ -72,6 +72,9 @@ class BarraInferiorMenu extends State<BarraInferior>{
       updateUser();
       setState(() {
         tipo;
+        isLogin;
+        user;
+        idUser;
       });
     });
 
