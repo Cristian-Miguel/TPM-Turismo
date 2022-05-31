@@ -47,6 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
     session.set("isLogin", false);
     session.set("user", '0');
     session.set("idUser", 0);
+    session.set("tipo", 1);
   }
 }
 

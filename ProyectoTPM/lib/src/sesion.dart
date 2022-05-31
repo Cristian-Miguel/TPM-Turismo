@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:http/http.dart' as http;
+import '../barra_inferior/barrainf.dart';
 import 'dart:convert';
 
 class sesionFunctions{
   var session = FlutterSession();
+  late bool isLoginG = false;
+  late var nameG = "";
+  late var tipoG = 1;
+  late var idG = 0;
 
   //Llamar a esta función para iniciar sesión
   void getUser(email,pass,context) async {
     var userName;
     var idUser;
+    var tipo;
 
     var urlUsers = Uri.parse('http://localhost:4000/Usuarios/LogIn/');
     late List users = [];
@@ -25,8 +31,15 @@ class sesionFunctions{
 
         userName = users.first['Usuario'].toString();
         idUser = int.parse(users.first['idUsuarios'].toString());
-        print('Nombre: $userName, ID: $idUser');
-        _startSession(userName, idUser);
+        tipo = int.parse(users.first['TipoUsuario'].toString());
+        print('Nombre: $userName, ID: $idUser, Tipo: $tipo');
+        _startSession(userName, idUser, tipo);
+        probarSesion2();
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(builder: (context) => BarraInferior()), // this mainpage is your page to refresh
+              (Route<dynamic> route) => false,
+        );
       }catch(_){
         _alert('Datos incorrectos',context);
       }
@@ -55,10 +68,11 @@ class sesionFunctions{
     });
   }
 
-  void _startSession(user,idUser){
+  void _startSession(user,idUser,tipo){
     session.set("isLogin", true);
     session.set("user", user);
     session.set("idUser", idUser);
+    session.set("tipo", tipo);
     print('Sesion Iniciada');
   }
 
@@ -66,6 +80,7 @@ class sesionFunctions{
     session.set("isLogin", false);
     session.set("user", '0');
     session.set("idUser", 0);
+    session.set("tipo", 1);
     _alert('Sesión cerrada',context);
   }
 
@@ -73,8 +88,18 @@ class sesionFunctions{
     bool isLogin = await session.get("isLogin");
     var name = await session.get("user");
     var id = await session.get("idUser");
-    print(isLogin);
-    print(name);
-    print(id);
+    var tipo = await session.get("tipo");
+
+    probarSesion2();
+    print('isLogin: $isLogin, Nombre: $name, ID: $id, Tipo: $tipo');
+    Future.delayed(Duration(seconds: 1), () {print(isLoginG);});
+    //Future.delayed(Duration(seconds: 1), () {});
+  }
+
+  void probarSesion2() async{
+    isLoginG = await session.get("isLogin");
+    tipoG = await session.get("tipo");
+    nameG = await session.get("user");
+    idG = await session.get("idUser");
   }
 }

@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_session/flutter_session.dart';
 import 'package:proyectotmp/src/LogIn.dart';
+import 'sesion.dart';
 
 class Perfil extends StatefulWidget{
   @override
@@ -13,10 +14,11 @@ class Perfil extends StatefulWidget{
 class _Perfil extends State<Perfil>{
   final _emailInputTextController = TextEditingController();
   final _passwordInputTextController = TextEditingController();
+  late sesionFunctions sF = new sesionFunctions();
+
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: Expanded(
         child: SingleChildScrollView(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -55,18 +57,17 @@ class _Perfil extends State<Perfil>{
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
                 ),
-                child: const Center(
-                  child: TextField(
+                  child: TextFormField(
                     textAlign: TextAlign.center,
+                    controller: _emailInputTextController,
                     decoration: InputDecoration(
                       hintText: '...Correo...',
                       border: InputBorder.none,
                     ),
                   ),
-                ),
               ),
               Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10, top: 25),
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
                   "Contraseña",
@@ -83,13 +84,12 @@ class _Perfil extends State<Perfil>{
                 decoration: BoxDecoration(
                   color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
                 ),
-                child: const Center(
-                  child: TextField(
-                    textAlign: TextAlign.center,
-                    decoration: InputDecoration(
-                      hintText: '...Contraseña...',
-                      border: InputBorder.none,
-                    ),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: _passwordInputTextController,
+                  decoration: InputDecoration(
+                    hintText: '...Contraseña...',
+                    border: InputBorder.none,
                   ),
                 ),
               ),
@@ -131,7 +131,10 @@ class _Perfil extends State<Perfil>{
                         onPrimary: Colors.white,
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
-                      onPressed: (){},
+                      onPressed: (){
+                          sF.getUser(_emailInputTextController.text, _passwordInputTextController.text, context);
+
+                        },
                       child: const Text(
                         'Iniciar Sesión',
                         style: TextStyle(
@@ -184,7 +187,6 @@ class _Perfil extends State<Perfil>{
             ],
           ),
         ),
-      ),
 
     );
   }

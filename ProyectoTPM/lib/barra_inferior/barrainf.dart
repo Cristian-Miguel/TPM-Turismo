@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
@@ -6,6 +8,7 @@ import 'package:proyectotmp/src/reservas.dart';
 import 'package:proyectotmp/src/mensajes.dart';
 import 'package:proyectotmp/src/perfil.dart';
 import 'package:proyectotmp/src/LogIn.dart';
+import 'package:proyectotmp/src/sesion.dart';
 
 import '../src/EmpresaViews/Hotel.dart';
 import '../src/EmpresaViews/Viaje.dart';
@@ -15,13 +18,19 @@ import '../src/EmpresaViews/Paquete.dart';
 import 'package:flutter_session/flutter_session.dart';
 
 class BarraInferior extends StatefulWidget{
+
   @override
   State<StatefulWidget> createState(){
-    return _BarraInferior();
+    return BarraInferiorMenu();
   }
 }
 
-class _BarraInferior extends State<BarraInferior>{
+class BarraInferiorMenu extends State<BarraInferior>{
+  var session = FlutterSession();
+  var tipo = 1;
+  bool isLogin = false;
+  var user = "";
+  var idUser = 0;
 
   int indexTap = 0;
   int indexPage = 0;
@@ -42,7 +51,7 @@ class _BarraInferior extends State<BarraInferior>{
     LogIn(),
   ];
 
-  void onTapTapped(int index,bool color){
+  void onTapTapped (int index,bool color){
     setState(() {
       indexPage  = index;
       indexTap = 0;
@@ -50,8 +59,22 @@ class _BarraInferior extends State<BarraInferior>{
     });
   }
 
+  void updateUser() async{
+    tipo = await session.get("tipo");
+    isLogin = await session.get("isLogin");
+    user = await session.get("user");
+    idUser = await session.get("idUser");
+  }
+
   @override
   Widget build(BuildContext context) {
+    Future.delayed(Duration(seconds: 1), () {
+      updateUser();
+      setState(() {
+        tipo;
+      });
+    });
+
     return Scaffold(
       drawer: Drawer(
         child: Column(
@@ -82,7 +105,10 @@ class _BarraInferior extends State<BarraInferior>{
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
-              onTap: () =>{ }
+              onTap: () =>{
+                onTapTapped(0,true),
+                Navigator.of(context).pop(),
+              }
             ),
             ListTile(
                 leading: Icon(Icons.favorite),
@@ -92,58 +118,7 @@ class _BarraInferior extends State<BarraInferior>{
                   Navigator.of(context).pop(),
                 }
             ),
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 20),
-              child: const Text(
-                "Empresa",
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            ListTile(
-              leading: Icon(Icons.hotel),
-              title: Text('Agregar Hotel'),
-              onTap: () => {
-                onTapTapped(6,true),
-                Navigator.of(context).pop()
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.airplanemode_on_sharp),
-              title: Text('Agregar Viaje'),
-              onTap: () => {
-                onTapTapped(7,true),
-                Navigator.of(context).pop()
-              },
-            ),
-            ListTile(
-              leading: Icon(Icons.fastfood),
-              title: Text('Agregar Restaurante'),
-              onTap: () => {
-                onTapTapped(8,true),
-                Navigator.of(context).pop()
-              },
-            ),
-
-            ListTile(
-                leading: Icon(Icons.airport_shuttle_sharp),
-                title: Text('Agregar Tour'),
-                onTap: () => {
-                  onTapTapped(9,true),
-                  Navigator.of(context).pop()
-                },
-            ),
-            ListTile(
-              leading: Icon(Icons.backpack),
-              title: Text('Agregar Paquete'),
-              onTap: () => {
-                onTapTapped(10,true),
-                Navigator.of(context).pop()
-              },
-            ),
+            if(tipo != 1) panelEmpresa() as Column,
 
             Container(
               alignment: Alignment.centerLeft,
@@ -239,6 +214,63 @@ class _BarraInferior extends State<BarraInferior>{
           ]
       ),
     );
+  }
+
+  Column panelEmpresa(){
+    return Column(children: <Widget>[
+      Container(
+        alignment: Alignment.centerLeft,
+        margin: const EdgeInsets.only(left: 20),
+        child: const Text(
+          "Empresa",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      ListTile(
+        leading: Icon(Icons.hotel),
+        title: Text('Agregar Hotel'),
+        onTap: () => {
+          onTapTapped(6,true),
+          Navigator.of(context).pop()
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.airplanemode_on_sharp),
+        title: Text('Agregar Viaje'),
+        onTap: () => {
+          onTapTapped(7,true),
+          Navigator.of(context).pop()
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.fastfood),
+        title: Text('Agregar Restaurante'),
+        onTap: () => {
+          onTapTapped(8,true),
+          Navigator.of(context).pop()
+        },
+      ),
+
+      ListTile(
+        leading: Icon(Icons.airport_shuttle_sharp),
+        title: Text('Agregar Tour'),
+        onTap: () => {
+          onTapTapped(9,true),
+          Navigator.of(context).pop()
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.backpack),
+        title: Text('Agregar Paquete'),
+        onTap: () => {
+          onTapTapped(10,true),
+          Navigator.of(context).pop()
+        },
+      ),
+    ],);
   }
 
 }
