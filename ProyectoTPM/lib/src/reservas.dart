@@ -34,12 +34,21 @@ class _Reservas extends State<Reservas> {
     //var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
 
     // para web
+<<<<<<< HEAD
      var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
      var urlH = Uri.parse('http:/localhost:4000/reservas/Hoteles');
      var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
      var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
      var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
      var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
+=======
+    var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
+    var urlH = Uri.parse('http:/localhost:4000/reservas/Hoteles');
+    var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
+    var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
+    var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
+    var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
+>>>>>>> 0fc415ade0638abc10520e88032a1cdff6d02522
 
     var responseH = await http.get(urlH);
     var responseV = await http.get(urlV);
