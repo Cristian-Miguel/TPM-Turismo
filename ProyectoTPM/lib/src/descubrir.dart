@@ -99,7 +99,7 @@ class _Descubrir extends State<Descubrir>{
                 margin: EdgeInsets.all(5),
                 child: RaisedButton(
                   color: Colors.white,
-                  onPressed: (){},
+                  onPressed: (){  },
                   // child: Card(
                 child: Container(
                   height: 290,
@@ -180,4 +180,7 @@ class _Descubrir extends State<Descubrir>{
       ],
     );
   }
+
+
+
 }
