@@ -23,6 +23,7 @@ class _Descubrir extends State<Descubrir>{
   late List ServiciosP = [];
   final _fechaEntradaInputTextController = TextEditingController();
   final _fechaSalidaInputTextController = TextEditingController();
+  var FechaReserva = "Sin fecha";
 
   int activeIndex= 0;
 
@@ -105,7 +106,7 @@ class _Descubrir extends State<Descubrir>{
                 margin: EdgeInsets.all(5),
                 child: RaisedButton(
                   color: Colors.white,
-                  onPressed: (){_onChangeReserva();},
+                  onPressed: (){ _onChangeReserva(); },
                   // child: Card(
                 child: Container(
                   height: 290,
@@ -410,6 +411,7 @@ class _Descubrir extends State<Descubrir>{
         )
     );
   }
+
   void _onPressReserva() {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -526,7 +528,7 @@ class _Descubrir extends State<Descubrir>{
                                  onPrimary: Colors.white,
                                  // side: BorderSide(color: Colors.red, width: 1),
                                ),
-                               onPressed: (){},
+                               onPressed: (){ _showDate();  },
                                child: const Text(
                                  'Editar',
                                  style: TextStyle(
@@ -543,9 +545,9 @@ class _Descubrir extends State<Descubrir>{
                     Row(
                         children: <Widget> [
                           Container(
-                            child: const Text(
-                              "7-9 jun",
-                              style: TextStyle(
+                            child: Text(
+                              FechaReserva,
+                              style: const TextStyle(
                                 fontSize: 14,
                                 //fontWeight: FontWeight.w500,
                               ),
@@ -611,19 +613,132 @@ class _Descubrir extends State<Descubrir>{
                       ),
                     ),
 
-
-
                   ],
 
                 );
-
-
           },
         )
 
         );
       },
     ),
+    );
+  }
+
+  Future<String?> _showDate() {
+    return showDialog<String>(
+      context: context,
+      builder: (BuildContext context) => AlertDialog(
+        title: const Text('Dias a reservar'),
+        actions: <Widget>[
+
+          Column(
+            children: <Widget>[
+              Container(
+                  padding: const EdgeInsets.only(left:20 ,right: 20),
+                  margin: const EdgeInsets.only(top:5 ,bottom: 15),
+                  // height:150,
+                  child:Center(
+                      child:TextField(
+                        controller: _fechaEntradaInputTextController, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.calendar_today), //icon of text field
+                            labelText: "Ingrese la fecha de Entrada" //label text of field
+                        ),
+                        readOnly: true,  //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context, initialDate: DateTime.now(),
+                              firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101)
+                          );
+
+                          if(pickedDate != null ){
+                            print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+
+                            setState(() {
+                              _fechaEntradaInputTextController.text = formattedDate; //set output date to TextField value.
+                            });
+                          }else{
+                            print("Date is not selected");
+                          }
+                        },
+                      )
+                  )
+              ),
+            ],
+          ),
+
+          Column(
+            children: <Widget>[
+              Container(
+                  padding: const EdgeInsets.only(left:20 ,right: 20),
+                  margin: const EdgeInsets.only(top:10 ,bottom: 40),
+                  // height:150,
+                  child:Center(
+                      child:TextField(
+                        controller: _fechaSalidaInputTextController, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.calendar_today), //icon of text field
+                            labelText: "Ingrese la fecha de Salida" //label text of field
+                        ),
+                        readOnly: true,  //set it true, so that user will not able to edit text
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                              context: context, initialDate: DateTime.now(),
+                              firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                              lastDate: DateTime(2101)
+                          );
+
+                          if(pickedDate != null ){
+                            print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                            print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                            //you can implement different kind of Date Format here according to your requirement
+                            setState(() {
+                              _fechaSalidaInputTextController.text = formattedDate; //set output date to TextField value.
+                            });
+                          }else{
+                            print("Date is not selected");
+                          }
+                        },
+                      )
+                  )
+              ),
+            ],
+          ),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              TextButton(
+                onPressed: () => {
+                  // _ImagenInputTextController.text = '',
+                  // _ChangeDateRerervate(),
+                  Navigator.pop(context, 'Cancel'),
+                },
+                child: const Text('Cancel'),
+              ),
+
+              TextButton(
+                onPressed: () => {
+                  // _getImage(index),
+                  // _ChangeDateRerervate(),
+                  setState(() {
+                    FechaReserva = _fechaSalidaInputTextController.text.toString() + ' - '+ _fechaEntradaInputTextController.text.toString();
+                  }),
+                  Navigator.pop(context, 'Guardar'),
+                },
+                child: const Text('Guardar'),
+              ),
+            ],
+          ),
+
+        ],
+      ),
     );
   }
 
