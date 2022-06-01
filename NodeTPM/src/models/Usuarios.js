@@ -35,6 +35,37 @@ function login(res, sql){
     });
 }
 
+function registrar(res, sql){
+    conexion.query(sql).
+    then(row => {
+
+        if (row.length == 0) {
+            res.header("Access-Control-Allow-Origin", "*");
+            res.status(404).json({
+                
+            });
+        } else {
+            res.header("Access-Control-Allow-Origin", "*");
+            if (!row) {
+                //madamos error si hay algun problema
+                res.status(401).json({
+                msg : 'no existes'
+                }) 
+            } else {
+                //madamos los datos obtenidos
+                res.status(200).json({
+                    row
+                }); 
+            }
+
+        }
+
+    }).catch(err => {
+        console.log(err);
+    });
+}
+
 module.exports = {
     login,
+    registrar,
 }

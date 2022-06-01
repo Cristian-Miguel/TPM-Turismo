@@ -25,13 +25,14 @@ class BarraInferior extends StatefulWidget{
   }
 }
 
+var tipo = "";
+bool isLogin = false;
+var user = "";
+var idUser = 0;
+
 class BarraInferiorMenu extends State<BarraInferior>{
   var sF = sesionFunctions();
   var session = FlutterSession();
-  var tipo = "";
-  bool isLogin = false;
-  var user = "";
-  var idUser = 0;
 
   int indexTap = 0;
   int indexPage = 0;

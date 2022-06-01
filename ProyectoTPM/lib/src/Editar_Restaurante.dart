@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'llamadasAPI.dart';
-import 'package:date_field/date_field.dart';
 
-class Registro extends StatefulWidget{
+class Editar_Restaurante extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Registro();
+    return _Editar_Restaurante();
   }
 }
 
-class _Registro extends State<Registro>{
+class _Editar_Restaurante extends State<Editar_Restaurante>{
   var api = APIfunctions();
   final _userInputTextController = TextEditingController();
   final _nameInputTextController = TextEditingController();
@@ -27,7 +26,7 @@ class _Registro extends State<Registro>{
       appBar: AppBar(
         backgroundColor: Colors.grey,
         title: Container(
-          child: const Text('Registrarse'),
+          child: const Text('Editar Restaurante'),
         ),
       ),
       body: Center(
@@ -38,7 +37,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 20, top: 20),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nuevo Usuario",
+                  "Editar Restaurante",
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 30,
@@ -49,7 +48,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Foto de Perfil",
+                  "Nombre",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -76,7 +75,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nombre de usuario",
+                  "Descripción",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -103,7 +102,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nombre",
+                  "Costo",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -130,7 +129,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Apellido Paterno",
+                  "Imagen 1",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -153,142 +152,6 @@ class _Registro extends State<Registro>{
                   ),
                 ),
               ),
-              Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  "Apellido Materno",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: _lastnamesecondInputTextController,
-                  decoration: const InputDecoration(
-                    hintText: '...',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  "Fecha de nacimiento",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: _birthdateInputTextController,
-                  decoration: const InputDecoration(
-                    hintText: '...',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  "RFC",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: _rfcInputTextController,
-                  decoration: const InputDecoration(
-                    hintText: '...',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  "Correo Electronico",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: _emailInputTextController,
-                  decoration: const InputDecoration(
-                    hintText: '...',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-              Container(
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                alignment: Alignment.centerLeft,
-                child: const Text(
-                  "Contraseña",
-                  style: TextStyle(
-                    fontWeight: FontWeight.w400,
-                    fontSize: 15,
-                  ),
-                ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 40,
-                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
-                decoration: BoxDecoration(
-                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
-                ),
-                child: TextFormField(
-                  textAlign: TextAlign.center,
-                  controller: _passwordInputTextController,
-                  decoration: const InputDecoration(
-                    hintText: '...',
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
-
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -328,9 +191,8 @@ class _Registro extends State<Registro>{
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
                       onPressed: (){
-                        if(!vacio()){
-                          Navigator.of(context).pop();
-                          api.registrar(
+                        Navigator.of(context).pop();
+                        api.registrar(
                             _userInputTextController.text,
                             _nameInputTextController.text,
                             _lastnamefirstInputTextController.text,
@@ -340,11 +202,10 @@ class _Registro extends State<Registro>{
                             _photoInputTextController.text,
                             _passwordInputTextController.text,
                             _emailInputTextController.text,
-                            "Turista", context);
-                        }
+                            1, context);
                       },
                       child: const Text(
-                        'Registrar',
+                        'Agregar',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -359,26 +220,5 @@ class _Registro extends State<Registro>{
         ),
       ),
     );
-  }
-
-  bool vacio(){
-    if(_emailInputTextController.text == "" ||
-    _passwordInputTextController.text == "" ||
-    _userInputTextController.text == ""){
-      showDialog(context: context, builder: (BuildContext context){
-        return AlertDialog(
-          title: Text("Email, Contraseña y Usuario no pueden estar vacios", style: Theme.of(context).textTheme.headline6),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Volver'),
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-            ),
-          ],
-        );
-      });
-
-      return true;
-    }
-    else return false;
   }
 }
