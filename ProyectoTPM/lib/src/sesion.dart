@@ -30,7 +30,7 @@ class sesionFunctions{
         }
 
         userName = users.first['Usuario'].toString();
-        idUser = int.parse(users.first['idUsuarios'].toString());
+        idUser = int.parse(users.first['idUsuario'].toString());
         tipo = users.first['TipoUsuario'].toString();
         print('Nombre: $userName, ID: $idUser, Tipo: $tipo');
         _startSession(userName, idUser, tipo);
