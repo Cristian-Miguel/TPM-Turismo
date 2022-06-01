@@ -113,7 +113,7 @@ class _Reservas extends State<Reservas> {
               itemBuilder: (BuildContext context, int index) {
                 return RaisedButton(
                   color: Colors.white,
-                  onPressed: _onChangeReserva,
+                  onPressed: (){ _onChangeReserva(); },
                   child: Container(
                     height: Theme
                         .of(context)

@@ -29,13 +29,145 @@ class _Perfil extends State<Perfil>{
   }
 
   editSettings(){
-    return Center(
+    return Container(
       child: SingleChildScrollView(
         child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              Container(
-                
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(top:25 ,bottom: 40),
+                    width: 90,
+                    height: 90,
+                    decoration: BoxDecoration(
+                      color: Color.fromRGBO(32, 32, 32, 0.7),
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child: const Icon(
+                      Icons.card_travel,
+                      color: Colors.white,
+                      size: 60,
+                    ),
+                  ),
+                  Container(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    child: Text(
+                      "Hola, ${name.toString()}",
+                      style: const TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+
+              const Divider(
+                color: Colors.black38,
+              ),
+
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(top:25 ,bottom: 20, left: 10),
+                    child: const Text(
+                        "Configuración de la cuenta",
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.account_circle_outlined),
+                      title: const Text('Información  personal'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: (){},
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.money_sharp),
+                      title: const Text('Pagos y cobros'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: (){},
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.add_alert),
+                      title: const Text('Notificaciones'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: (){},
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      leading: const Icon(Icons.announcement_sharp),
+                      title: const Text('Privacidad'),
+                      trailing: const Icon(Icons.arrow_forward_ios),
+                      onTap: (){},
+                    ),
+                  ),
+                ],
+              ),
+
+              Column(
+                children: <Widget>[
+                  Container(
+                    margin: const EdgeInsets.only(top:20 ,bottom: 20, left: 10),
+                    child: const Text(
+                      "Asistencia",
+                      textAlign: TextAlign.left,
+                      style: TextStyle(
+                        fontSize: 26,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                        leading: const Icon(Icons.account_balance),
+                        title: const Text('Como funciona ExploraMich'),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () => {
+                          Navigator.of(context).pop(),
+                        }
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                        leading: const Icon(Icons.money_sharp),
+                        title: const Text('Comunícate con el servicio de ayuda'),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () => {
+                          Navigator.of(context).pop(),
+                        }
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                        leading: const Icon(Icons.help),
+                        title: const Text('Recibir Ayuda'),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () => {
+                          Navigator.of(context).pop(),
+                        }
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                        leading: const Icon(Icons.app_registration),
+                        title: const Text('Envía Tus comentarios'),
+                        trailing: const Icon(Icons.arrow_forward_ios),
+                        onTap: () => {
+                          Navigator.of(context).pop(),
+                        }
+                    ),
+                  ),
+
+                ],
               ),
             ],
         ),
@@ -44,6 +176,7 @@ class _Perfil extends State<Perfil>{
   }
 
   logIn(){
+
     return Center(
       child: SizedBox(
         width: 600,
