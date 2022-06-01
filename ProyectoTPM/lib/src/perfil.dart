@@ -22,6 +22,15 @@ class _Perfil extends State<Perfil>{
   var idUser = barra.idUser;
   var name = barra.user;
 
+  TextEditingController dateinput = TextEditingController();
+  //text editing controller for text field
+
+  @override
+  void initState() {
+    dateinput.text = ""; //set the initial value of text field
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     if(isLogin) return editSettings();
@@ -255,6 +264,7 @@ class _Perfil extends State<Perfil>{
                     ),
                   ),
                 ),
+
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   mainAxisSize: MainAxisSize.min,

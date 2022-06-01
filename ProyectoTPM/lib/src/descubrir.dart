@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:async';
 import 'dart:convert';
+import 'package:intl/intl.dart';
 
 class Descubrir extends StatefulWidget{
 
@@ -19,6 +20,8 @@ class _Descubrir extends State<Descubrir>{
   late List ServiciosR = [];
   late List ServiciosT = [];
   late List ServiciosP = [];
+  final _fechaEntradaInputTextController = TextEditingController();
+  final _fechaSalidaInputTextController = TextEditingController();
 
   //obtenemos los datos de la api
   getReservas() async {
@@ -99,7 +102,7 @@ class _Descubrir extends State<Descubrir>{
                 margin: EdgeInsets.all(5),
                 child: RaisedButton(
                   color: Colors.white,
-                  onPressed: (){  },
+                  onPressed: (){ },
                   // child: Card(
                 child: Container(
                   height: 290,
@@ -180,6 +183,7 @@ class _Descubrir extends State<Descubrir>{
       ],
     );
   }
+
 
 
 
