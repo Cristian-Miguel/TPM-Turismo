@@ -109,7 +109,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
             ListTile(
               leading: Icon(Icons.home),
               title: Text('Home'),
-              onTap: () =>{
+              onTap: () => {
                 onTapTapped(0,true),
                 Navigator.of(context).pop(),
               }

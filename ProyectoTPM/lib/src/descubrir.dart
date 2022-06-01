@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:async';
+import 'dart:convert';
 
 class Descubrir extends StatefulWidget{
 
@@ -9,9 +12,71 @@ class Descubrir extends StatefulWidget{
 }
 
 class _Descubrir extends State<Descubrir>{
+
+  late List ServiciosData = [];
+  late List ServiciosH = [];
+  late List ServiciosV = [];
+  late List ServiciosR = [];
+  late List ServiciosT = [];
+  late List ServiciosP = [];
+
+  //obtenemos los datos de la api
+  getReservas() async {
+    //para telefono
+    // var urlH = Uri.parse('http://10.0.2.2:4000/servicios/Hoteles');
+    // var urlV = Uri.parse('http://10.0.2.2:4000/servicios/Viajes');
+    // var urlR = Uri.parse('http://10.0.2.2:4000/servicios/Restaurantes');
+    // var urlT = Uri.parse('http://10.0.2.2:4000/servicios/Tour');
+    // var urlP = Uri.parse('http://10.0.2.2:4000/servicios/Paquetes');
+
+    // para web
+    var urlH = Uri.parse('http://localhost:4000/servicios/Hoteles');
+    var urlV = Uri.parse('http://localhost:4000/servicios/Viajes');
+    var urlR = Uri.parse('http://localhost:4000/servicios/Restaurantes');
+    var urlT = Uri.parse('http://localhost:4000/servicios/Tour');
+    var urlP = Uri.parse('http://localhost:4000/servicios/Paquetes');
+
+    var responseH = await http.get(urlH);
+    var responseV = await http.get(urlV);
+    var responseR = await http.get(urlR);
+    var responseT = await http.get(urlT);
+    var responseP = await http.get(urlP);
+
+    if(json.decode(responseH.body)['row'].toString() != 'null'){
+      ServiciosH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
+    }
+    if(json.decode(responseV.body)['row'].toString() != 'null'){
+      ServiciosV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['row']);
+    }
+    if(json.decode(responseR.body)['row'].toString() != 'null'){
+      ServiciosR = List<Map<String, dynamic>>.from(json.decode(responseR.body)['row']);
+    }
+    if(json.decode(responseT.body)['row'].toString() != 'null'){
+      ServiciosT = List<Map<String, dynamic>>.from(json.decode(responseT.body)['row']);
+    }
+    if(json.decode(responseP.body)['row'].toString() != 'null'){
+      ServiciosP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
+    }
+
+    setState(() {
+      ServiciosData.addAll(ServiciosH);
+      ServiciosData.addAll(ServiciosV);
+      ServiciosData.addAll(ServiciosR);
+      ServiciosData.addAll(ServiciosT);
+      ServiciosData.addAll(ServiciosP);
+    });
+
+  }
+
+  //constructor tara inicializar el getFavoritos
+  @override
+  void initState() {
+    super.initState();
+    getReservas();
+  }
+
   @override
   Widget build(BuildContext context) {
-    List<String> listaDeOpciones = <String>["A","B","C","D","E","F","G"];
     return Column(
       children: <Widget>[
         Container(
@@ -28,9 +93,14 @@ class _Descubrir extends State<Descubrir>{
           child: GridView.builder(
             shrinkWrap: true,
             padding: const EdgeInsets.symmetric(horizontal: 30),
-            itemCount: 6,
+            itemCount: ServiciosData == null ? 0 : ServiciosData.length,
             itemBuilder: (ctx, i) {
-              return Card(
+              return Container(
+                margin: EdgeInsets.all(5),
+                child: RaisedButton(
+                  color: Colors.white,
+                  onPressed: (){},
+                  // child: Card(
                 child: Container(
                   height: 290,
                   decoration: BoxDecoration(
@@ -44,13 +114,13 @@ class _Descubrir extends State<Descubrir>{
                         children: [
                           Expanded(
                             child: Image.network(
-                              'https://images.pexels.com/photos/1172518/pexels-photo-1172518.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+                              '${ServiciosData[i]["Imagen"].toString()}',
                                fit: BoxFit.fill,
                           ),
                         ),
-                        const Text(
-                          'Playas Michoacanas',
-                          style: TextStyle(
+                         Text(
+                          '${ServiciosData[i]["Nombre"].toString()}',
+                          style: const TextStyle(
                           fontSize: 16,
                           //fontWeight: FontWeight.bold,
                           ),
@@ -71,9 +141,9 @@ class _Descubrir extends State<Descubrir>{
                                        left: 5,
                                        bottom:5,
                                        top: 4),
-                                   child: const Text(
-                                     "4.71 (300)",
-                                     style: TextStyle(
+                                   child: Text(
+                                     "${ServiciosData[i]["Calificacion"].toString()}",
+                                     style: const TextStyle(
                                        fontSize: 10,
                                      ),
                                    )
@@ -81,10 +151,10 @@ class _Descubrir extends State<Descubrir>{
                              ]
                           ),
                           Row(
-                            children: const [
+                            children:  [
                               Text(
-                                'Desde 352 MXM p/p',
-                                style: TextStyle(
+                                'Desde ${ServiciosData[i]["Costo"].toString()} MXM p/p',
+                                style: const TextStyle(
                                   fontSize: 12,
                                 ),
                               ),
@@ -95,6 +165,7 @@ class _Descubrir extends State<Descubrir>{
                     ],
                   ),
                 ),
+               ),
               );
           },
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
