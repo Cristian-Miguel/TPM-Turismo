@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'llamadasAPI.dart';
+import 'package:date_field/date_field.dart';
 
 class Registro extends StatefulWidget{
   @override
@@ -327,8 +328,9 @@ class _Registro extends State<Registro>{
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
                       onPressed: (){
-                        Navigator.of(context).pop();
-                        api.registrar(
+                        if(!vacio()){
+                          Navigator.of(context).pop();
+                          api.registrar(
                             _userInputTextController.text,
                             _nameInputTextController.text,
                             _lastnamefirstInputTextController.text,
@@ -339,6 +341,7 @@ class _Registro extends State<Registro>{
                             _passwordInputTextController.text,
                             _emailInputTextController.text,
                             "Turista", context);
+                        }
                       },
                       child: const Text(
                         'Registrar',
@@ -356,5 +359,26 @@ class _Registro extends State<Registro>{
         ),
       ),
     );
+  }
+
+  bool vacio(){
+    if(_emailInputTextController.text == "" ||
+    _passwordInputTextController.text == "" ||
+    _userInputTextController.text == ""){
+      showDialog(context: context, builder: (BuildContext context){
+        return AlertDialog(
+          title: Text("Email, Contraseña y Usuario no pueden estar vacios", style: Theme.of(context).textTheme.headline6),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Volver'),
+              onPressed: () => Navigator.pop(context, 'Cancel'),
+            ),
+          ],
+        );
+      });
+
+      return true;
+    }
+    else return false;
   }
 }
