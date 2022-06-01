@@ -22,24 +22,24 @@ class _Favoritos extends State<Favoritos>{
   //obtenemos los datos de la api
   getFavoritos() async{
     //para telefonos
-    var urlH = Uri.parse('http://10.0.2.2:4000/favoritos/Hoteles');
-    var urlV = Uri.parse('http://10.0.2.2:4000/favoritos/Viajes');
-    var urlR = Uri.parse('http://10.0.2.2:4000/favoritos/Restaurantes');
-    var urlT = Uri.parse('http://10.0.2.2:4000/favoritos/Tour');
-    var urlP = Uri.parse('http://10.0.2.2:4000/favoritos/Paquete');
+    // var urlH = Uri.parse('http://10.0.2.2:4000/favoritos/Hoteles');
+    // var urlV = Uri.parse('http://10.0.2.2:4000/favoritos/Viajes');
+    // var urlR = Uri.parse('http://10.0.2.2:4000/favoritos/Restaurantes');
+    // var urlT = Uri.parse('http://10.0.2.2:4000/favoritos/Tour');
+    // var urlP = Uri.parse('http://10.0.2.2:4000/favoritos/Paquete');
 
     // para web
-    // var urlH = Uri.parse('http://localhost:4000/favoritos/Hoteles');
-    // var urlV = Uri.parse('http://localhost:4000/favoritos/Viajes');
-    // var urlR = Uri.parse('http://localhost:4000/favoritos/Restaurantes');
-    // var urlT = Uri.parse('http://localhost:4000/favoritos/Tour');
-    // var urlP = Uri.parse('http://localhost:4000/favoritos/Paquetes');
+    var urlH = Uri.parse('http://localhost:4000/favoritos/Hoteles');
+    var urlV = Uri.parse('http://localhost:4000/favoritos/Viajes');
+    var urlR = Uri.parse('http://localhost:4000/favoritos/Restaurantes');
+    var urlT = Uri.parse('http://localhost:4000/favoritos/Tour');
+    var urlP = Uri.parse('http://localhost:4000/favoritos/Paquete');
     var responseH = await http.get(urlH);
     var responseV = await http.get(urlV);
     var responseR = await http.get(urlR);
     var responseT = await http.get(urlT);
     var responseP = await http.get(urlP);
-    debugPrint(json.decode(responseH.body)['row'].toString());
+    // debugPrint(json.decode(responseH.body)['row'].toString());
 
     if(json.decode(responseH.body)['row'].toString() != 'null'){
       FavoritosH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);

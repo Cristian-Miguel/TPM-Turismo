@@ -27,29 +27,29 @@ class _Reservas extends State<Reservas> {
   //obtenemos los datos de la api
   getReservas() async {
     //para telefono
-    var urlH = Uri.parse('http://10.0.2.2:4000/reservas/Hoteles');
-    var urlV = Uri.parse('http://10.0.2.2:4000/reservas/Viajes');
-    var urlR = Uri.parse('http://10.0.2.2:4000/reservas/Restaurantes');
-    var urlT = Uri.parse('http://10.0.2.2:4000/reservas/Tour');
-    var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
+    // var urlH = Uri.parse('http://10.0.2.2:4000/reservas/Hoteles');
+    // var urlV = Uri.parse('http://10.0.2.2:4000/reservas/Viajes');
+    // var urlR = Uri.parse('http://10.0.2.2:4000/reservas/Restaurantes');
+    // var urlT = Uri.parse('http://10.0.2.2:4000/reservas/Tour');
+    // var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
 
     // para web
-    // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
-    // var urlH = Uri.parse('http:/localhost:4000/reservas/Hoteles');
-    // var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
-    // var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
-    // var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
-    // var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
-
+    var urlH = Uri.parse('http://localhost:4000/reservas/Hoteles');
+    var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
+    var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
+    var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
+    var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
 
     var responseH = await http.get(urlH);
     var responseV = await http.get(urlV);
     var responseR = await http.get(urlR);
     var responseT = await http.get(urlT);
     var responseP = await http.get(urlP);
+    // debugPrint("Reservas ---------> "+responseH.toString());
 
     if(json.decode(responseH.body)['row'].toString() != 'null'){
       ReservasH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
+
     }
     if(json.decode(responseV.body)['row'].toString() != 'null'){
       ReservasV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['row']);
@@ -63,6 +63,7 @@ class _Reservas extends State<Reservas> {
     if(json.decode(responseP.body)['row'].toString() != 'null'){
       ReservasP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
     }
+
 
     setState(() {
       // ReservasData = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
