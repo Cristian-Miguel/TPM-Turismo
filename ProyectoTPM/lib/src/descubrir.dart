@@ -102,11 +102,9 @@ class _Descubrir extends State<Descubrir>{
                 margin: EdgeInsets.all(5),
                 child: RaisedButton(
                   color: Colors.white,
-<<<<<<< HEAD
+
                   onPressed: (){_onChangeReserva();},
-=======
-                  onPressed: (){  },
->>>>>>> 2c79503e42ee9eaafd4373869e1dd286aa60aea6
+
                   // child: Card(
                 child: Container(
                   height: 290,
@@ -187,7 +185,7 @@ class _Descubrir extends State<Descubrir>{
       ],
     );
   }
-<<<<<<< HEAD
+
   void _onChangeReserva() {
     Navigator.of(context).push(
         MaterialPageRoute(
@@ -639,9 +637,9 @@ class _Descubrir extends State<Descubrir>{
 }
 
 
-=======
 
 
 
-}
->>>>>>> 2c79503e42ee9eaafd4373869e1dd286aa60aea6
+
+
+
