@@ -30,6 +30,7 @@ bool isLogin = false;
 var user = "";
 var idUser = 0;
 
+var desc = 0;
 class BarraInferiorMenu extends State<BarraInferior>{
   var sF = sesionFunctions();
   var session = FlutterSession();
@@ -180,6 +181,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
       body: colorChange ? widgetsChildren[indexPage] : widgetsChildren[indexTap],
       bottomNavigationBar: BottomNavigationBar(
           onTap: (index) => {
+              desc = 0,
               setState(() {
                 indexTap = index;
                 colorChange = false;
