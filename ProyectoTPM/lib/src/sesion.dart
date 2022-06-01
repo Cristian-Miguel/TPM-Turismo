@@ -30,7 +30,7 @@ class sesionFunctions{
         }
 
         userName = users.first['Usuario'].toString();
-        idUser = int.parse(users.first['idUsuarios'].toString());
+        idUser = int.parse(users.first['idUsuario'].toString());
         tipo = users.first['TipoUsuario'].toString();
         print('Nombre: $userName, ID: $idUser, Tipo: $tipo');
         _startSession(userName, idUser, tipo);
@@ -80,7 +80,7 @@ class sesionFunctions{
     session.set("isLogin", false);
     session.set("user", "0");
     session.set("idUser", 0);
-    session.set("tipo", 1);
+    session.set("tipo", "Turista");
     _alert('Sesión cerrada',context);
   }
 

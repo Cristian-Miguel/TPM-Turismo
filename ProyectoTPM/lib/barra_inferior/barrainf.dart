@@ -26,6 +26,7 @@ class BarraInferior extends StatefulWidget{
 }
 
 class BarraInferiorMenu extends State<BarraInferior>{
+  var sF = sesionFunctions();
   var session = FlutterSession();
   var tipo = "";
   bool isLogin = false;
@@ -142,11 +143,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                   Navigator.of(context).pop(),
                 }
             ),
-            ListTile(
-              leading: Icon(Icons.exit_to_app),
-              title: Text('Logout'),
-              onTap: () => {Navigator.pop(context,LogIn())},
-            ),
+            if(isLogin) logOut(),
           ],
         ),
       ),
@@ -216,6 +213,16 @@ class BarraInferiorMenu extends State<BarraInferior>{
             ),
           ]
       ),
+    );
+  }
+
+  ListTile logOut(){
+    return ListTile(
+      leading: Icon(Icons.exit_to_app),
+      title: Text('Logout'),
+      onTap: () => {
+        sF.closeSession(context),
+      },
     );
   }
 

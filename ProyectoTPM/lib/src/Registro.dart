@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'llamadasAPI.dart';
 
 class Registro extends StatefulWidget{
   @override
@@ -8,6 +9,7 @@ class Registro extends StatefulWidget{
 }
 
 class _Registro extends State<Registro>{
+  var api = APIfunctions();
   final _userInputTextController = TextEditingController();
   final _nameInputTextController = TextEditingController();
   final _lastnamefirstInputTextController = TextEditingController();
@@ -326,7 +328,17 @@ class _Registro extends State<Registro>{
                       ),
                       onPressed: (){
                         Navigator.of(context).pop();
-                       // sF.getUser(_emailInputTextController.text, _passwordInputTextController.text, context);
+                        api.registrar(
+                            _userInputTextController.text,
+                            _nameInputTextController.text,
+                            _lastnamefirstInputTextController.text,
+                            _lastnamesecondInputTextController.text,
+                            _birthdateInputTextController.text,
+                            _rfcInputTextController.text,
+                            _photoInputTextController.text,
+                            _passwordInputTextController.text,
+                            _emailInputTextController.text,
+                            1, context);
                       },
                       child: const Text(
                         'Registrar',
