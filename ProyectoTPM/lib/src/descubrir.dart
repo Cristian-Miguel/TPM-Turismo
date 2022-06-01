@@ -490,7 +490,7 @@ class _Descubrir extends State<Descubrir>{
                               Text(
                                 "Disfrute la magia de patzcuaro verdaderamente el secrero mejor guardado de todas las ciudades coloniales de México",
                                 style:TextStyle(
-                                fontSize: 11,
+                                fontSize: 13,
                                 color: Colors.black54
                                 ),
                               ),
@@ -629,6 +629,158 @@ class _Descubrir extends State<Descubrir>{
                         thickness: 1,
                       ),
                     ),
+
+                    Row(
+                        children: <Widget> [
+                          Container(
+                            child: const Text(
+                              "Detalles de precio",
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          )
+                        ]
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\$260 MXN x1 Persona",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\$520",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                        ]
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "Comisión por el servicio",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\$85.15",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                        ]
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "Impuestos",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\$83.20",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                ),
+                              )
+                          ),
+                        ]
+                    ),
+                    Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\nTotal",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                          ),
+                          Container(
+                              margin: const EdgeInsets.only(
+                                  bottom: 2),
+                              child: const Text(
+                                "\n\$688.36",
+                                textAlign: TextAlign.start,
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              )
+                          ),
+                        ]
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Container(
+                          margin: const EdgeInsets.only(top: 15.0, bottom: 15.0),
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                              primary: Colors.pinkAccent,
+                              onPrimary: Colors.white,
+                              // side: BorderSide(color: Colors.red, width: 1),
+                            ),
+                            onPressed: (){},
+                            child: const Text(
+                              'Confirmar Servicio',
+                              style: TextStyle(
+                                fontSize: 22,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ),
+
+                        ),
+                      ],
+                    ),
+
 
 
 
