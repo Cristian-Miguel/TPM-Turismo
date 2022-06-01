@@ -111,6 +111,13 @@ class _Descubrir extends State<Descubrir>{
           width: 500,
           color: Colors.white,
           padding: const EdgeInsets.only(left: 16, top: 16),
+          child: const Text(
+            "Descubrir",
+            style: TextStyle(
+              fontSize: 30,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
         Expanded(
           child: GridView.builder(
