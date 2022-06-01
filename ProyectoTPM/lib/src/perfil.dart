@@ -35,7 +35,7 @@ class _Perfil extends State<Perfil>{
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                
+
               ),
             ],
         ),

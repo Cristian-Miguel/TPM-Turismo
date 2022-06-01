@@ -20,6 +20,14 @@ router.post('/Usuarios/Repetido/', (req, res, next) => {
     //res.json(req.body);
 });
 
+router.post('/Usuarios/Nombre/', (req, res, next) => {
+    const {id,columna,tabla} = req.body;
+
+    let sql = "SELECT * FROM "+tabla+" LEFT JOIN usuarios ON "+tabla+".idUsuario = usuarios.idUsuario WHERE "+columna+" = '"+id+"';";
+    Usuarios.login(res,sql);
+    //res.json(req.body);
+});
+
 router.post('/Usuarios/Registrar/', (req, res, next) => {
     const {user,name,apeP,apeM,cumple,rfc,foto,tipo} = req.body;
     const {email} = req.body;
