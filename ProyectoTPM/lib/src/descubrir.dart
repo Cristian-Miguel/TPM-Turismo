@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../barra_inferior/barrainf.dart' as barra;
 import 'dart:async';
 import 'dart:convert';
 
@@ -25,6 +26,8 @@ class _Descubrir extends State<Descubrir>{
 
   //obtenemos los datos de la api
   getReservas() async {
+    var desc = barra.desc;
+
     //para telefono
     // var urlH = Uri.parse('http://10.0.2.2:4000/servicios/Hoteles');
     // var urlV = Uri.parse('http://10.0.2.2:4000/servicios/Viajes');
@@ -61,13 +64,30 @@ class _Descubrir extends State<Descubrir>{
       ServiciosP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
     }
 
-    setState(() {
-      ServiciosData.addAll(ServiciosH);
-      ServiciosData.addAll(ServiciosV);
-      ServiciosData.addAll(ServiciosR);
-      ServiciosData.addAll(ServiciosT);
-      ServiciosData.addAll(ServiciosP);
-    });
+    if(desc == 0){
+      setState(() {
+        ServiciosData.addAll(ServiciosH);
+        ServiciosData.addAll(ServiciosV);
+        ServiciosData.addAll(ServiciosR);
+        ServiciosData.addAll(ServiciosT);
+        ServiciosData.addAll(ServiciosP);
+      });
+    }
+    if(desc == 1){
+      setState(() {ServiciosData.addAll(ServiciosH);});
+    }
+    if(desc == 2){
+      setState(() {ServiciosData.addAll(ServiciosV);});
+    }
+    if(desc == 3){
+      setState(() {ServiciosData.addAll(ServiciosR);});
+    }
+    if(desc == 4){
+      setState(() {ServiciosData.addAll(ServiciosT);});
+    }
+    if(desc == 5){
+      setState(() {ServiciosData.addAll(ServiciosP);});
+    }
 
   }
 

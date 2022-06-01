@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:proyectotmp/src/descubrir.dart';
+import '../barra_inferior/barrainf.dart' as barra;
 
 class Home extends StatefulWidget{
   @override
@@ -45,7 +47,10 @@ class _Home extends State<Home>{
                       ),
                     ),
                     child: TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        barra.desc = 1;
+                        //Navigator.of(context)
+                      },
                       child: const Text(
                           "Hoteles",
                         style: TextStyle(
