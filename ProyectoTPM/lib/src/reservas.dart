@@ -115,10 +115,10 @@ class _Reservas extends State<Reservas> {
                   color: Colors.white,
                   onPressed: () {
                       if(ReservasData[index]["idHotel"] != null) _onChangeReserva(index,"idHotel");
-                      //if(ReservasData[index]["idViaje"] != null) _onChangeReserva(index,"idViaje");
-                      //if(ReservasData[index]["idRestaurante"] != null) _onChangeReserva(index,"idRestaurante");
-                      //if(ReservasData[index]["idTour"] != null) _onChangeReserva(index,"idTour");
-                      //if(ReservasData[index]["idPaquete"] != null) _onChangeReserva(index,"idPaquete");
+                      if(ReservasData[index]["idViaje"] != null) _onChangeReserva(index,"idViaje");
+                      if(ReservasData[index]["idRestaurante"] != null) _onChangeReserva(index,"idRestaurante");
+                      if(ReservasData[index]["idTour"] != null) _onChangeReserva(index,"idTour");
+                      if(ReservasData[index]["idPaquete"] != null) _onChangeReserva(index,"idPaquete");
                     },
                   child: Container(
                     height: Theme

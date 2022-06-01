@@ -123,7 +123,13 @@ class _Descubrir extends State<Descubrir>{
                 child: RaisedButton(
                   color: Colors.white,
 
-                  onPressed: (){_onChangeReserva();},
+                  onPressed: (){
+                      if(ServiciosData[i]["idHotel"] != null) _onChangeReserva(i,"idHotel");
+                      if(ServiciosData[i]["idViaje"] != null) _onChangeReserva(i,"idViaje");
+                      if(ServiciosData[i]["idRestaurante"] != null) _onChangeReserva(i,"idRestaurante");
+                      if(ServiciosData[i]["idTour"] != null) _onChangeReserva(i,"idTour");
+                      if(ServiciosData[i]["idPaquete"] != null) _onChangeReserva(i,"idPaquete");
+                    },
 
                   // child: Card(
                 child: Container(
@@ -206,7 +212,60 @@ class _Descubrir extends State<Descubrir>{
     );
   }
 
-  void _onChangeReserva() {
+  late List user = [];
+  var nombre = "";
+  var apellidoP = "";
+
+  void getUserInfo(index,tipo) async{
+    var id = 0;
+    var columna = "";
+    var tabla = "";
+
+    if(tipo == "idHotel"){
+      id = ServiciosData[index]["idHotel"];
+      columna = "idHotel";
+      tabla = "hotel";
+    }
+    if(tipo == "idViaje"){
+      id = ServiciosData[index]["idViaje"];
+      columna = "idViaje";
+      tabla = "viajes";
+    }
+    if(tipo == "idRestaurante"){
+      id = ServiciosData[index]["idRestaurante"];
+      columna = "idRestaurante";
+      tabla = "restaurantes";
+    }
+    if(tipo == "idTour"){
+      id = ServiciosData[index]["idTour"];
+      columna = "idTour";
+      tabla = "tour";
+    }
+    if(tipo == "idPaquete"){
+      id = ServiciosData[index]["idPaquete"];
+      columna = "idPaquete";
+      tabla = "paquetes";
+    }
+
+    var response = await http.post(Uri.parse("http://localhost:4000/Usuarios/Nombre/"), body: {'id': '$id', 'columna': '$columna', 'tabla': '$tabla'});
+    if(json.decode(response.body)['row'].toString() != 'null'){
+      user = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+    }
+
+    setState(() {
+      nombre = user.first["Nombre"];
+      apellidoP = user.first["ApellidoPaterno"];
+    });
+  }
+
+  void _onChangeReserva(index,tipo) {
+    getUserInfo(index,tipo);
+    var calificacion = ServiciosData[index]["Calificacion"];
+    var descripcion = ServiciosData[index]["Descripcion"];
+    var costo = ServiciosData[index]["Costo"];
+    print(ServiciosData[index].toString());
+
+    Future.delayed(Duration(milliseconds: 100), () {
     Navigator.of(context).push(
         MaterialPageRoute(
             builder: (context) {
@@ -267,8 +326,8 @@ class _Descubrir extends State<Descubrir>{
                                           .start,
                                       children: <Widget>[
                                         Container(
-                                          child: const Text(
-                                            "Playas Michoacanas",
+                                          child: Text(
+                                            ServiciosData[index]["Nombre"],
                                             style: TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
@@ -292,8 +351,8 @@ class _Descubrir extends State<Descubrir>{
                                                       left: 5,
                                                       bottom: 5,
                                                       top: 2),
-                                                  child: const Text(
-                                                    "4.71 Michoacan Morelia",
+                                                  child: Text(
+                                                    "$calificacion",
                                                     style: TextStyle(
                                                       fontSize: 10,
                                                     ),
@@ -308,9 +367,9 @@ class _Descubrir extends State<Descubrir>{
                                               Container(
                                                   margin: const EdgeInsets.only(
                                                       bottom: 2),
-                                                  child: const Text(
+                                                  child: Text(
                                                     "Experiencia ofrecida \n"
-                                                        "por Maria Elena",
+                                                        "por $nombre $apellidoP",
                                                     textAlign: TextAlign.start,
                                                     style: TextStyle(
                                                       fontSize: 18,
@@ -339,8 +398,8 @@ class _Descubrir extends State<Descubrir>{
                                           margin: const EdgeInsets.only(
                                             bottom: 10,
                                           ),
-                                          child: const Text(
-                                            "6.5 horas Idioma: Inglés y Español",
+                                          child: Text(
+                                            "Costo: $costo",
                                             style: TextStyle(
                                               fontSize: 11,
                                             ),
@@ -428,6 +487,7 @@ class _Descubrir extends State<Descubrir>{
             }
         )
     );
+    });
   }
   void _onPressReserva() {
     Navigator.of(context).push(

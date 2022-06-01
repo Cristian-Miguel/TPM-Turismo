@@ -49,7 +49,14 @@ class _Home extends State<Home>{
                     child: TextButton(
                       onPressed: (){
                         barra.desc = 1;
-                        //Navigator.of(context)
+                        Navigator.of(context).push(
+                            MaterialPageRoute(
+                                builder:(context)
+                                {
+                                  return Descubrir();
+                                }
+                            )
+                        );
                       },
                       child: const Text(
                           "Hoteles",
@@ -75,6 +82,7 @@ class _Home extends State<Home>{
                       ),
                     ),
                     child: const Center(
+
                       child: Text(
                         "Restaurantes",
                         style: TextStyle(
