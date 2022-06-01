@@ -332,7 +332,10 @@ class _Reservas extends State<Reservas> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Reserva'),
+                    title: const Text('Reserva', style: TextStyle(color: Colors.black),),
+                    backgroundColor: Colors.white,
+                    //centerTitle: true,
+                    iconTheme: const IconThemeData(color: Colors.black)
                 ),
                 body: Container(
                   child: ListView(
