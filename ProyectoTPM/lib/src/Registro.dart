@@ -338,7 +338,7 @@ class _Registro extends State<Registro>{
                             _photoInputTextController.text,
                             _passwordInputTextController.text,
                             _emailInputTextController.text,
-                            1, context);
+                            "Turista", context);
                       },
                       child: const Text(
                         'Registrar',

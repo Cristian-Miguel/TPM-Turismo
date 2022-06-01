@@ -27,7 +27,7 @@ router.post('/Usuarios/Registrar/', (req, res, next) => {
 
     console.log(req.body);
     let sql = "INSERT INTO usuarios(Usuario,Email,Password,TipoUsuario,Imagen,Nombre,ApellidoPaterno,ApellidoMaterno,FechNac,RFC) VALUES ('"+user+"','"+email+"','"+pass+"','"+tipo+"','"+foto+"','"+name+"','"+apeP+"','"+apeM+"','"+cumple+"','"+rfc+"');";
-    Usuarios.login(res,sql);
+    Usuarios.registrar(res,sql);
     //res.json(req.body);
 });
 
