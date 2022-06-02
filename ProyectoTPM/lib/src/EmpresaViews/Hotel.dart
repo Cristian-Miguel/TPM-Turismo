@@ -1,4 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../../barra_inferior/barrainf.dart';
+
+import '../../barra_inferior/barrainf.dart' as barra;
 
 class Hotel extends StatefulWidget{
   @override
@@ -8,6 +15,8 @@ class Hotel extends StatefulWidget{
 }
 
 class _Hotel extends State<Hotel>{
+  var idUser = barra.idUser;
+
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
@@ -772,7 +781,17 @@ class _Hotel extends State<Hotel>{
                     onPrimary: Colors.white,
                     // side: BorderSide(color: Colors.red, width: 1),
                   ),
-                  onPressed: (){},
+                  //Redirigimos al home importando BarraInferior de otro .dart
+                  onPressed: () =>{
+                  Navigator.of(context).push(
+                  MaterialPageRoute(
+                  builder:(context)
+                  {
+                  return BarraInferior();
+                  }
+                  )
+                  )
+                  },
                   child: const Text(
                     'Cancelar',
                     style: TextStyle(
@@ -813,23 +832,87 @@ class _Hotel extends State<Hotel>{
     final controllers = [
       _nombreInputTextController,
       _descripcionInputTextController,
-      _costoInputTextController,
-      _tipohabitacionInputTextController,
       _categoriaInputTextController,
+      _costoInputTextController,
       _numerohabitacionInputTextController,
-      _estadoInputTextController,
-      _ciudadInputTextController,
-      _coloniaInputTextController,
+      _tipohabitacionInputTextController,
+      _numeroInputTextController,
       _calleInputTextController,
-       _numeroInputTextController,
+      _coloniaInputTextController,
+      _ciudadInputTextController,
+      _estadoInputTextController,
       _codigopostalInputTextController,
       _telefonoInputTextController,
     ];
+    agregarHotel(controllers);
+  }
+
+
+  void agregarHotel(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var categoria = controllers[2];
+    var costo = controllers[3];
+    var numeroHab = controllers[4];
+    var tipoHab = controllers[5];
+    var numeroExt = controllers[6];
+    var calle = controllers[7];
+    var colonia = controllers[8];
+    var ciudad = controllers[9];
+    var estado = controllers[10];
+    var codigoPostal = controllers[11];
+    var telefono = controllers[12];
+
+    var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Hotel');
+
+    late List hoteles = [];
+    var response;
+
+    if(_verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+        colonia,ciudad,estado,codigoPostal,telefono,context)){
+      try{
+        response = await http.post(urlHotel, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'categoria': '$categoria', 'costo': '$costo','numeroHab': '$numeroHab','tipoHab': '$tipoHab',
+          'numeroExt': '$numeroExt', 'calle': '$calle', 'colonia': '$colonia', 'ciudad': '$ciudad',
+          'estado': '$estado', 'codigoPostal': '$codigoPostal', 'idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          hoteles = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+      colonia,ciudad,estado,codigoPostal,telefono,context){
+    if(nombre == '' || descripcion == '' || categoria == '' || costo == '' || costo == '' || numeroHab == ''
+    || tipoHab == '' || numeroExt == '' || calle == '' || colonia == '' || ciudad == '' || estado == '' ||
+    codigoPostal == '' || telefono == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
   }
 
   void _sendControllers(){
     debugPrint(_nombreInputTextController.toString());
-
   }
 
   Future<String?> _showModal(int index) {
