@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Hotel extends StatefulWidget{
+class AgregarHotel extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Hotel();
+    return _AgregarHotel();
   }
 }
 
-class _Hotel extends State<Hotel>{
+class _AgregarHotel extends State<AgregarHotel>{
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
@@ -67,22 +67,11 @@ class _Hotel extends State<Hotel>{
         child:ListView(
         scrollDirection: Axis.vertical,
         children:<Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
-              child: const Text(
-                  "Agregar Hotel",
-                style: TextStyle(
-                  fontSize: 24,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
             Column(
               children: <Widget>[
                 Container(
                   alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(left: 28, top:10),
+                  margin: const EdgeInsets.only(left: 28, top:20),
                   child: const Text(
                     "Nombre",
                     style: TextStyle(

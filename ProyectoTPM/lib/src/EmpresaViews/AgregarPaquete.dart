@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Restaurante extends StatefulWidget{
+class AgregarPaquete extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Restaurante();
+    return _AgregarPaquete();
   }
 }
 
-class _Restaurante extends State<Restaurante>{
+class _AgregarPaquete extends State<AgregarPaquete>{
 
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
-  Object _categoriaInputTextController = "";
+  final _numeropaquetesInputTextController = TextEditingController();
   final _ImagenInputTextController = TextEditingController();
 
   var imagenes = [
@@ -24,42 +24,16 @@ class _Restaurante extends State<Restaurante>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
 
-  Object CatselectedValue = "Buffet";
-  List<DropdownMenuItem<String>> get CatdropdownItems{
-    const List<DropdownMenuItem<String>> menuItems = [
-      DropdownMenuItem(child: Text("Buffet"),        value: "Buffet"),
-      DropdownMenuItem(child: Text("Internacional"), value: "Internacional"),
-      DropdownMenuItem(child: Text("Mexicana"),      value: "Mexicana"),
-      DropdownMenuItem(child: Text("Pizzeria"),      value: "Pizzeria"),
-      DropdownMenuItem(child: Text("Michoacana"),    value: "Michoacana"),
-      DropdownMenuItem(child: Text("Churrasqueria"), value: "Churrasqueria"),
-      DropdownMenuItem(child: Text("Marisqueria"),   value: "Marisqueria"),
-    ];
-    return menuItems;
-  }
-
   @override
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
       children:<Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
-          child: const Text(
-            "Agregar Restaurante",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
         Column(
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 28, top:10),
+              margin: const EdgeInsets.only(left: 28, top:20),
               child: const Text(
                 "Nombre",
                 style: TextStyle(
@@ -356,7 +330,7 @@ class _Restaurante extends State<Restaurante>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Categoria",
+                "Numero de paquetes disponibles",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -365,35 +339,19 @@ class _Restaurante extends State<Restaurante>{
             ),
             Container(
               alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 13, right: 13),
               margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(93, 93, 93, 0.1),
-                          width: 0
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        // color: Color.fromRGBO(93, 93, 93, 0.1),
-                          width: 0
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    filled: true,
-                    fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
-                  ),
-                  dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
-                  value: CatselectedValue,
-                  onChanged: (Object? value) {
-                    setState(() {
-                      CatselectedValue = value!;
-                      _categoriaInputTextController = value;
-                    });
-                  },
-                  items: CatdropdownItems
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(93, 93, 93, 0.1),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                textAlign: TextAlign.left,
+                controller: _numeropaquetesInputTextController,
+                decoration: const InputDecoration(
+                  hintText: '...',
+                  border: InputBorder.none,
+                ),
               ),
             )
           ],
@@ -525,5 +483,4 @@ class _Restaurante extends State<Restaurante>{
       _ImagenInputTextController.text = '';
     });
   }
-
 }

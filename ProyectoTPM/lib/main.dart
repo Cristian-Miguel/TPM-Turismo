@@ -38,9 +38,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     _startSession();
     return BarraInferior();
-    //   Scaffold(
-    //     bottomNavigationBar: NeumorphicBottomNav(),
-    // );
   }
 
   void _startSession(){
@@ -50,23 +47,3 @@ class _MyHomePageState extends State<MyHomePage> {
     session.set("tipo", "Turista");
   }
 }
-
-// SafeArea(
-// child: Scaffold(
-// resizeToAvoidBottomInset: false,
-// body: Padding(
-// padding: const EdgeInsets.all(10.0),
-// child: Column(
-// mainAxisSize: MainAxisSize.max,
-// children: [
-// Expanded(
-// child: Align(
-// alignment: Alignment.bottomCenter,
-// child: NeumorphicBottomNav(),
-// ),
-// )
-// ],
-// ),
-// ),
-// ),
-// );

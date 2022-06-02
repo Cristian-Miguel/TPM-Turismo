@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Paquete extends StatefulWidget{
+class AgregarTours extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Paquete();
+    return _AgregarTours();
   }
 }
 
-class _Paquete extends State<Paquete>{
+class _AgregarTours extends State<AgregarTours>{
 
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
-  final _numeropaquetesInputTextController = TextEditingController();
+  final _cantidadInputTextController = TextEditingController();
+  final _ciudadInputTextController = TextEditingController();
   final _ImagenInputTextController = TextEditingController();
 
   var imagenes = [
@@ -29,18 +30,6 @@ class _Paquete extends State<Paquete>{
     return ListView(
       scrollDirection: Axis.vertical,
       children:<Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
-          child: const Text(
-            "Agregar Paquete",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
         Column(
           children: <Widget>[
             Container(
@@ -342,7 +331,7 @@ class _Paquete extends State<Paquete>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Numero de paquetes disponibles",
+                "Cantidad de tours",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -359,7 +348,40 @@ class _Paquete extends State<Paquete>{
               ),
               child: TextField(
                 textAlign: TextAlign.left,
-                controller: _numeropaquetesInputTextController,
+                controller: _cantidadInputTextController,
+                decoration: const InputDecoration(
+                  hintText: '...',
+                  border: InputBorder.none,
+                ),
+              ),
+            )
+          ],
+        ),
+
+        Column(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 28, top:10),
+              child: const Text(
+                "Ciudad",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 13, right: 13),
+              margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(93, 93, 93, 0.1),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                textAlign: TextAlign.left,
+                controller: _ciudadInputTextController,
                 decoration: const InputDecoration(
                   hintText: '...',
                   border: InputBorder.none,
