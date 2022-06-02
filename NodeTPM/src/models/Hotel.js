@@ -32,13 +32,10 @@ function Agregar(res, sql){
                 
             });
         } else {
-            const accessToken = jwt.sign({ Nombre: row[0].Nombre }, server_config.get('app.JWT_SECRET'), {
-                expiresIn: "1d"
-            });
             res.header("Access-Control-Allow-Origin", "*");
             //madamos los datos obtenidos
             res.status(200).json({
-                rows
+                //rows
             });  
             //madamos error si hay algun problema
             res.status(401).json({

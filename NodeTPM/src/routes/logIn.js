@@ -62,6 +62,7 @@ router.post('/Agregar/Hotel/', (req, res, next) => {
     let sql = "INSERT INTO hotel(Nombre, Descripcion, Categoria, Costo, NumHabitacion, TipoHabitacion, NumeroExterior, Calle, Colonia, Ciudad, Estado, CodigoPostal, idUsuario ) VALUES ('"+nombre+"','"+descripcion+"','"+categoria+"',"+costo+","+numeroHab+",'"+tipoHab+"','"+numeroExt+"','"+calle+"','"+colonia+"','"+ciudad+"','"+estado+"',"+codigoPostal+","+idUser+");";
     Hotel.Agregar(res,sql);
     //res.json(req.body);
+    console.log(sql);
 });
 
 

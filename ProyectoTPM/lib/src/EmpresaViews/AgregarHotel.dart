@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:proyectotmp/src/EmpresaViews/ListarHotel.dart';
 
 import '../../barra_inferior/barrainf.dart';
 
@@ -25,7 +26,7 @@ class _AgregarHotel extends State<AgregarHotel>{
   final _calleInputTextController = TextEditingController();
   final _numeroInputTextController = TextEditingController();
   final _codigopostalInputTextController = TextEditingController();
-  final _telefonoInputTextController = TextEditingController();
+  //final _telefonoInputTextController = TextEditingController();
   final _ImagenInputTextController = TextEditingController();
   Object _tipohabitacionInputTextController = "";
   Object _categoriaInputTextController = "";
@@ -718,7 +719,7 @@ class _AgregarHotel extends State<AgregarHotel>{
             ],
           ),
 
-          Column(
+       /*   Column(
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
@@ -751,7 +752,7 @@ class _AgregarHotel extends State<AgregarHotel>{
               )
             ],
           ),
-
+*/
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -817,19 +818,19 @@ class _AgregarHotel extends State<AgregarHotel>{
 
   void _updateControllers(){
     final controllers = [
-      _nombreInputTextController,
-      _descripcionInputTextController,
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
       _categoriaInputTextController,
-      _costoInputTextController,
-      _numerohabitacionInputTextController,
+      _costoInputTextController.value.text,
+      _numerohabitacionInputTextController.value.text,
       _tipohabitacionInputTextController,
-      _numeroInputTextController,
-      _calleInputTextController,
-      _coloniaInputTextController,
-      _ciudadInputTextController,
-      _estadoInputTextController,
-      _codigopostalInputTextController,
-      _telefonoInputTextController,
+      _numeroInputTextController.value.text,
+      _calleInputTextController.value.text,
+      _coloniaInputTextController.value.text,
+      _ciudadInputTextController.value.text,
+      _estadoInputTextController.value.text,
+      _codigopostalInputTextController.value.text,
+      //_telefonoInputTextController,
     ];
     agregarHotel(controllers);
   }
@@ -848,15 +849,16 @@ class _AgregarHotel extends State<AgregarHotel>{
     var ciudad = controllers[9];
     var estado = controllers[10];
     var codigoPostal = controllers[11];
-    var telefono = controllers[12];
+    //var telefono = controllers[12];
 
     var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Hotel');
 
     late List hoteles = [];
     var response;
+    var idUser = barra.idUser;
 
     if(_verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
-        colonia,ciudad,estado,codigoPostal,telefono,context)){
+        colonia,ciudad,estado,codigoPostal,context)){
       try{
         response = await http.post(urlHotel, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
           'categoria': '$categoria', 'costo': '$costo','numeroHab': '$numeroHab','tipoHab': '$tipoHab',
@@ -875,10 +877,10 @@ class _AgregarHotel extends State<AgregarHotel>{
   }
 
   bool _verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
-      colonia,ciudad,estado,codigoPostal,telefono,context){
+      colonia,ciudad,estado,codigoPostal,context){
     if(nombre == '' || descripcion == '' || categoria == '' || costo == '' || costo == '' || numeroHab == ''
     || tipoHab == '' || numeroExt == '' || calle == '' || colonia == '' || ciudad == '' || estado == '' ||
-    codigoPostal == '' || telefono == ''){
+    codigoPostal == ''){
       _alert('Los campos no pueden estar vacios',context);
       return false;
     }else return true;
@@ -899,7 +901,9 @@ class _AgregarHotel extends State<AgregarHotel>{
   }
 
   void _sendControllers(){
-    debugPrint(_nombreInputTextController.toString());
+    _updateControllers();
+    Navigator.pop(context);
+    _alert('Hotel agregado',context);
   }
 
   Future<String?> _showModal(int index) {
