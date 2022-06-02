@@ -64,72 +64,8 @@ class _ListarHoteles extends State<ListarHoteles> {
               ),
               SizedBox(
                 width: double.infinity,
-                child: DataTable(
-
-                  columns: const <DataColumn>[
-                    DataColumn(
-                      label: Text('id'),
-                    ),
-                    DataColumn(
-                      label: Text('Nombre'),
-                    ),
-                    DataColumn(
-                      label: Text('Acciones'),
-                    ),
-                  ],
-                  rows: List<DataRow>.generate(
-                    ServiciosData == null ? 0 : ServiciosData.length,
-                        (int index) => DataRow(
-                      cells: <DataCell>[
-                        DataCell(Text(ServiciosData[index]["idHotel"].toString())),
-                        DataCell(Text(ServiciosData[index]["Nombre"].toString())),
-                        DataCell(
-                            Row(
-                              // mainAxisAlignment: MainAxisAlignment.end,
-                              // crossAxisAlignment: CrossAxisAlignment.end,
-                              // mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[
-                                IconButton(
-                                  alignment: Alignment.centerLeft,
-                                  onPressed: (){},
-                                  icon: const Icon(
-                                    Icons.info_outline,
-                                    color: Colors.grey,
-                                    size: 25,
-                                  ),
-                                ),
-                                IconButton(
-                                  alignment: Alignment.centerLeft,
-                                  onPressed: (){},
-                                  icon: const Icon(
-                                    Icons.edit,
-                                    color: Colors.grey,
-                                    size: 25,
-                                  ),
-                                ),
-
-                                IconButton(
-                                  alignment: Alignment.centerLeft,
-                                  onPressed: (){},
-                                  icon: const Icon(
-                                    Icons.delete_forever,
-                                    color: Colors.red,
-                                    size: 25,
-                                  ),
-                                ),
-
-                              ],
-                            )
-
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                child: ServiciosData.isEmpty ? DataTableNull() :  DataTablewithData(),
               ),
-
-
-
             ],
           ),
         ),
@@ -140,6 +76,81 @@ class _ListarHoteles extends State<ListarHoteles> {
       ),
     );
   }
+
+  DataTableNull(){
+    return Container(
+      margin: const EdgeInsets.only(top:50),
+      alignment: Alignment.center,
+      child: const Text(
+        "Sin Datos Registrados",
+        style: TextStyle(
+          fontSize: 35,
+          fontWeight: FontWeight.w800,
+        ),
+      ),
+    );
+  }
+
+  DataTablewithData(){
+    return  DataTable(
+
+      columns: const <DataColumn>[
+        DataColumn(
+          label: Text('id'),
+        ),
+        DataColumn(
+          label: Text('Nombre'),
+        ),
+        DataColumn(
+          label: Text('Acciones'),
+        ),
+      ],
+      rows: List<DataRow>.generate(
+        ServiciosData == null ? 0 : ServiciosData.length,
+            (int index) => DataRow(
+          cells: <DataCell>[
+            DataCell(Text(ServiciosData[index]["idHotel"].toString())),
+            DataCell(Text(ServiciosData[index]["Nombre"].toString())),
+            DataCell(
+                Row(
+                  children: <Widget>[
+                    IconButton(
+                      alignment: Alignment.centerLeft,
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.info_outline,
+                        color: Colors.grey,
+                        size: 25,
+                      ),
+                    ),
+                    IconButton(
+                      alignment: Alignment.centerLeft,
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.edit,
+                        color: Colors.grey,
+                        size: 25,
+                      ),
+                    ),
+
+                    IconButton(
+                      alignment: Alignment.centerLeft,
+                      onPressed: (){},
+                      icon: const Icon(
+                        Icons.delete_forever,
+                        color: Colors.red,
+                        size: 25,
+                      ),
+                    ),
+                  ],
+                )
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
   void _onChangeRegistro(){
     Navigator.of(context).push(
         MaterialPageRoute(
