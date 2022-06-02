@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Tour extends StatefulWidget{
+class AgregarViaje extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Tour();
+    return _AgregarViaje();
   }
 }
 
-class _Tour extends State<Tour>{
+class _AgregarViaje extends State<AgregarViaje>{
 
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
-  final _cantidadInputTextController = TextEditingController();
-  final _ciudadInputTextController = TextEditingController();
+  final _origenInputTextController = TextEditingController();
+  final _destinoInputTextController = TextEditingController();
+  final _numeroasientosInputTextController = TextEditingController();
   final _ImagenInputTextController = TextEditingController();
 
   var imagenes = [
@@ -25,23 +26,12 @@ class _Tour extends State<Tour>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
 
+
   @override
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
       children:<Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
-          child: const Text(
-            "Agregar Tour",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
         Column(
           children: <Widget>[
             Container(
@@ -343,7 +333,7 @@ class _Tour extends State<Tour>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Cantidad de tours",
+                "Origen",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -360,7 +350,7 @@ class _Tour extends State<Tour>{
               ),
               child: TextField(
                 textAlign: TextAlign.left,
-                controller: _cantidadInputTextController,
+                controller: _origenInputTextController,
                 decoration: const InputDecoration(
                   hintText: '...',
                   border: InputBorder.none,
@@ -376,7 +366,7 @@ class _Tour extends State<Tour>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Ciudad",
+                "Destino",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -393,7 +383,41 @@ class _Tour extends State<Tour>{
               ),
               child: TextField(
                 textAlign: TextAlign.left,
-                controller: _ciudadInputTextController,
+                controller: _destinoInputTextController,
+                decoration: const InputDecoration(
+                  hintText: '...',
+                  border: InputBorder.none,
+                ),
+              ),
+            )
+          ],
+        ),
+
+        Column(
+          children: <Widget>[
+            Container(
+              alignment: Alignment.centerLeft,
+              margin: const EdgeInsets.only(left: 28, top:10),
+              child: const Text(
+                "Número de asientos",
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w300
+                ),
+              ),
+            ),
+            Container(
+              alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 13, right: 13),
+              margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(93, 93, 93, 0.1),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                textAlign: TextAlign.left,
+                keyboardType: TextInputType.number,
+                controller: _numeroasientosInputTextController,
                 decoration: const InputDecoration(
                   hintText: '...',
                   border: InputBorder.none,
@@ -454,7 +478,6 @@ class _Tour extends State<Tour>{
       ],
     );
   }
-
   Future<String?> _showModal(int index) {
     return showDialog<String>(
       context: context,

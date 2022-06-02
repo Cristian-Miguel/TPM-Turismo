@@ -27,29 +27,29 @@ class _Reservas extends State<Reservas> {
   //obtenemos los datos de la api
   getReservas() async {
     //para telefono
-    var urlH = Uri.parse('http://10.0.2.2:4000/reservas/Hoteles');
-    var urlV = Uri.parse('http://10.0.2.2:4000/reservas/Viajes');
-    var urlR = Uri.parse('http://10.0.2.2:4000/reservas/Restaurantes');
-    var urlT = Uri.parse('http://10.0.2.2:4000/reservas/Tour');
-    var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
+    // var urlH = Uri.parse('http://10.0.2.2:4000/reservas/Hoteles');
+    // var urlV = Uri.parse('http://10.0.2.2:4000/reservas/Viajes');
+    // var urlR = Uri.parse('http://10.0.2.2:4000/reservas/Restaurantes');
+    // var urlT = Uri.parse('http://10.0.2.2:4000/reservas/Tour');
+    // var urlP = Uri.parse('http://10.0.2.2:4000/reservas/Paquetes');
 
     // para web
-    // var url = Uri.parse('http://localhost:4000/favoritos/Hoteles');
-    // var urlH = Uri.parse('http:/localhost:4000/reservas/Hoteles');
-    // var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
-    // var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
-    // var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
-    // var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
-
+    var urlH = Uri.parse('http://localhost:4000/reservas/Hoteles');
+    var urlV = Uri.parse('http://localhost:4000/reservas/Viajes');
+    var urlR = Uri.parse('http://localhost:4000/reservas/Restaurantes');
+    var urlT = Uri.parse('http://localhost:4000/reservas/Tour');
+    var urlP = Uri.parse('http://localhost:4000/reservas/Paquetes');
 
     var responseH = await http.get(urlH);
     var responseV = await http.get(urlV);
     var responseR = await http.get(urlR);
     var responseT = await http.get(urlT);
     var responseP = await http.get(urlP);
+    // debugPrint("Reservas ---------> "+responseH.toString());
 
     if(json.decode(responseH.body)['row'].toString() != 'null'){
       ReservasH = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
+
     }
     if(json.decode(responseV.body)['row'].toString() != 'null'){
       ReservasV = List<Map<String, dynamic>>.from(json.decode(responseV.body)['row']);
@@ -63,6 +63,7 @@ class _Reservas extends State<Reservas> {
     if(json.decode(responseP.body)['row'].toString() != 'null'){
       ReservasP = List<Map<String, dynamic>>.from(json.decode(responseP.body)['row']);
     }
+
 
     setState(() {
       // ReservasData = List<Map<String, dynamic>>.from(json.decode(responseH.body)['row']);
@@ -112,7 +113,13 @@ class _Reservas extends State<Reservas> {
               itemBuilder: (BuildContext context, int index) {
                 return RaisedButton(
                   color: Colors.white,
-                  onPressed: _onChangeReserva,
+                  onPressed: () {
+                      if(ReservasData[index]["idHotel"] != null) _onChangeReserva(index,"idHotel");
+                      if(ReservasData[index]["idViaje"] != null) _onChangeReserva(index,"idViaje");
+                      if(ReservasData[index]["idRestaurante"] != null) _onChangeReserva(index,"idRestaurante");
+                      if(ReservasData[index]["idTour"] != null) _onChangeReserva(index,"idTour");
+                      if(ReservasData[index]["idPaquete"] != null) _onChangeReserva(index,"idPaquete");
+                    },
                   child: Container(
                     height: Theme
                         .of(context)
@@ -248,7 +255,60 @@ class _Reservas extends State<Reservas> {
     );
   }
 
-  void _onChangeReserva() {
+  late List user = [];
+  var nombre = "";
+  var apellidoP = "";
+
+  void getUserInfo(index,tipo) async{
+    var id = 0;
+    var columna = "";
+    var tabla = "";
+
+    if(tipo == "idHotel"){
+      id = ReservasData[index]["idHotel"];
+      columna = "idHotel";
+      tabla = "hotel";
+    }
+    if(tipo == "idViaje"){
+      id = ReservasData[index]["idViaje"];
+      columna = "idViaje";
+      tabla = "viajes";
+    }
+    if(tipo == "idRestaurante"){
+      id = ReservasData[index]["idRestaurante"];
+      columna = "idRestaurante";
+      tabla = "restaurantes";
+    }
+    if(tipo == "idTour"){
+      id = ReservasData[index]["idTour"];
+      columna = "idTour";
+      tabla = "tour";
+    }
+    if(tipo == "idPaquete"){
+      id = ReservasData[index]["idPaquete"];
+      columna = "idPaquete";
+      tabla = "paquetes";
+    }
+
+    var response = await http.post(Uri.parse("http://localhost:4000/Usuarios/Nombre/"), body: {'id': '$id', 'columna': '$columna', 'tabla': '$tabla'});
+    if(json.decode(response.body)['row'].toString() != 'null'){
+      user = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+    }
+
+    setState(() {
+      nombre = user.first["Nombre"];
+      apellidoP = user.first["ApellidoPaterno"];
+    });
+  }
+
+  void _onChangeReserva(index,tipo){
+    getUserInfo(index,tipo);
+    var calificacion = ReservasData[index]["Calificacion"];
+    var descripcion = ReservasData[index]["Descripcion"];
+    var costo = ReservasData[index]["Costo"];
+    print(ReservasData[index].toString());
+
+    Future.delayed(Duration(milliseconds: 100), () {
     Navigator.of(context).push(
         MaterialPageRoute(
             builder: (context) {
@@ -272,7 +332,10 @@ class _Reservas extends State<Reservas> {
 
               return Scaffold(
                 appBar: AppBar(
-                  title: const Text('Reserva'),
+                    title: const Text('Reserva', style: TextStyle(color: Colors.black),),
+                    backgroundColor: Colors.white,
+                    //centerTitle: true,
+                    iconTheme: const IconThemeData(color: Colors.black)
                 ),
                 body: Container(
                   child: ListView(
@@ -322,8 +385,8 @@ class _Reservas extends State<Reservas> {
                                         .start,
                                     children: <Widget>[
                                       Container(
-                                        child: const Text(
-                                          "Playas Michoacanas",
+                                        child: Text(
+                                          ReservasData[index]["Nombre"],
                                           style: TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
@@ -347,8 +410,8 @@ class _Reservas extends State<Reservas> {
                                                     left: 5,
                                                     bottom: 5,
                                                     top: 2),
-                                                child: const Text(
-                                                  "4.71 Michoacan Morelia",
+                                                child: Text(
+                                                  "$calificacion",
                                                   style: TextStyle(
                                                     fontSize: 10,
                                                   ),
@@ -363,9 +426,9 @@ class _Reservas extends State<Reservas> {
                                           Container(
                                               margin: const EdgeInsets.only(
                                                   bottom: 2),
-                                              child: const Text(
+                                              child: Text(
                                                 "Experiencia ofrecida \n"
-                                                    "por Maria Elena",
+                                                    "por $nombre $apellidoP",
                                                 textAlign: TextAlign.start,
                                                 style: TextStyle(
                                                     fontSize: 18,
@@ -394,8 +457,8 @@ class _Reservas extends State<Reservas> {
                                         margin: const EdgeInsets.only(
                                             bottom: 10,
                                             ),
-                                        child: const Text(
-                                          "6.5 horas Idioma: Inglés y Español",
+                                        child: Text(
+                                          "Costo: $costo",
                                           style: TextStyle(
                                             fontSize: 11,
                                           ),
@@ -422,10 +485,8 @@ class _Reservas extends State<Reservas> {
                                       ),
 
                                       Container(
-                                        child: const Text(
-                                          "Michoacán tiene hermosas playas con buenos servicios en sus casi 230 km de litoral oceánico.\n"
-                                              "Te invitamos a conocer nuestra selección con las mejores playas de Michoacán, esperando que"
-                                              " puedas añadir algunas después de visitar la fantástica costa de este bello estado mexicano.",
+                                        child: Text(
+                                          "$descripcion",
                                           textAlign: TextAlign.justify,
                                           style: TextStyle(
                                             fontSize: 11,
@@ -464,6 +525,7 @@ class _Reservas extends State<Reservas> {
             }
         )
     );
+    });
   }
 
   Widget buildImage(String image, int index) =>

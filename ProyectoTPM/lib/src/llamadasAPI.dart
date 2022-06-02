@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'sesion.dart';
 import 'dart:convert';
 
 class APIfunctions{
+  var session = sesionFunctions();
 
   void registrar(user,name,apeP,apeM,cumple,rfc,foto,pass,email,tipo,context) async{
     var dirRegistrar = Uri.parse('http://localhost:4000/Usuarios/Registrar/');

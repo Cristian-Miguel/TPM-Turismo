@@ -1,20 +1,18 @@
 import 'package:flutter/material.dart';
 
-class Viaje extends StatefulWidget{
+class AgregarRestaurante extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Viaje();
+    return _AgregarRestaurante();
   }
 }
 
-class _Viaje extends State<Viaje>{
+class _AgregarRestaurante extends State<AgregarRestaurante>{
 
   final _nombreInputTextController = TextEditingController();
   final _descripcionInputTextController = TextEditingController();
   final _costoInputTextController = TextEditingController();
-  final _origenInputTextController = TextEditingController();
-  final _destinoInputTextController = TextEditingController();
-  final _numeroasientosInputTextController = TextEditingController();
+  Object _categoriaInputTextController = "";
   final _ImagenInputTextController = TextEditingController();
 
   var imagenes = [
@@ -26,29 +24,42 @@ class _Viaje extends State<Viaje>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
 
+  Object CatselectedValue = "Buffet";
+  List<DropdownMenuItem<String>> get CatdropdownItems{
+    const List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Buffet"),        value: "Buffet"),
+      DropdownMenuItem(child: Text("Internacional"), value: "Internacional"),
+      DropdownMenuItem(child: Text("Mexicana"),      value: "Mexicana"),
+      DropdownMenuItem(child: Text("Pizzeria"),      value: "Pizzeria"),
+      DropdownMenuItem(child: Text("Michoacana"),    value: "Michoacana"),
+      DropdownMenuItem(child: Text("Churrasqueria"), value: "Churrasqueria"),
+      DropdownMenuItem(child: Text("Marisqueria"),   value: "Marisqueria"),
+    ];
+    return menuItems;
+  }
 
   @override
   Widget build(BuildContext context) {
     return ListView(
       scrollDirection: Axis.vertical,
       children:<Widget>[
-        Container(
-          alignment: Alignment.centerLeft,
-          margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
-          child: const Text(
-            "Agregar Viaje",
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        // Container(
+        //   alignment: Alignment.centerLeft,
+        //   margin: const EdgeInsets.only(left: 20, top:20, bottom: 20),
+        //   child: const Text(
+        //     "Agregar Restaurante",
+        //     style: TextStyle(
+        //       fontSize: 24,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
 
         Column(
           children: <Widget>[
             Container(
               alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 28, top:10),
+              margin: const EdgeInsets.only(left: 28, top:20),
               child: const Text(
                 "Nombre",
                 style: TextStyle(
@@ -345,7 +356,7 @@ class _Viaje extends State<Viaje>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Origen",
+                "Categoria",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -354,86 +365,35 @@ class _Viaje extends State<Viaje>{
             ),
             Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 13, right: 13),
               margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(93, 93, 93, 0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextField(
-                textAlign: TextAlign.left,
-                controller: _origenInputTextController,
-                decoration: const InputDecoration(
-                  hintText: '...',
-                  border: InputBorder.none,
-                ),
-              ),
-            )
-          ],
-        ),
-
-        Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 28, top:10),
-              child: const Text(
-                "Destino",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 13, right: 13),
-              margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(93, 93, 93, 0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextField(
-                textAlign: TextAlign.left,
-                controller: _destinoInputTextController,
-                decoration: const InputDecoration(
-                  hintText: '...',
-                  border: InputBorder.none,
-                ),
-              ),
-            )
-          ],
-        ),
-
-        Column(
-          children: <Widget>[
-            Container(
-              alignment: Alignment.centerLeft,
-              margin: const EdgeInsets.only(left: 28, top:10),
-              child: const Text(
-                "Número de asientos",
-                style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w300
-                ),
-              ),
-            ),
-            Container(
-              alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 13, right: 13),
-              margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(93, 93, 93, 0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextField(
-                textAlign: TextAlign.left,
-                keyboardType: TextInputType.number,
-                controller: _numeroasientosInputTextController,
-                decoration: const InputDecoration(
-                  hintText: '...',
-                  border: InputBorder.none,
-                ),
+              child: DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(93, 93, 93, 0.1),
+                          width: 0
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        // color: Color.fromRGBO(93, 93, 93, 0.1),
+                          width: 0
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    filled: true,
+                    fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
+                  ),
+                  dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                  value: CatselectedValue,
+                  onChanged: (Object? value) {
+                    setState(() {
+                      CatselectedValue = value!;
+                      _categoriaInputTextController = value;
+                    });
+                  },
+                  items: CatdropdownItems
               ),
             )
           ],
@@ -490,6 +450,7 @@ class _Viaje extends State<Viaje>{
       ],
     );
   }
+
   Future<String?> _showModal(int index) {
     return showDialog<String>(
       context: context,
@@ -564,4 +525,5 @@ class _Viaje extends State<Viaje>{
       _ImagenInputTextController.text = '';
     });
   }
+
 }

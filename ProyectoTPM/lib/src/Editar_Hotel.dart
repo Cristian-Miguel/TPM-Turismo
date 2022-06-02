@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'llamadasAPI.dart';
-import 'package:date_field/date_field.dart';
 
-class Registro extends StatefulWidget{
+class Editar_Hotel extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
-    return _Registro();
+    return _Editar_Hotel();
   }
 }
 
-class _Registro extends State<Registro>{
+class _Editar_Hotel extends State<Editar_Hotel>{
   var api = APIfunctions();
   final _userInputTextController = TextEditingController();
   final _nameInputTextController = TextEditingController();
@@ -27,7 +26,7 @@ class _Registro extends State<Registro>{
       appBar: AppBar(
         backgroundColor: Colors.grey,
         title: Container(
-          child: const Text('Registrarse'),
+          child: const Text('Editar Hotel'),
         ),
       ),
       body: Center(
@@ -38,7 +37,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 20, top: 20),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nuevo Usuario",
+                  "Editar Hotel",
                   style: TextStyle(
                     fontWeight: FontWeight.w800,
                     fontSize: 30,
@@ -49,7 +48,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Foto de Perfil",
+                  "Nombre",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -76,7 +75,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nombre de usuario",
+                  "Descripción",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -103,7 +102,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Nombre",
+                  "Costo",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -130,7 +129,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Apellido Paterno",
+                  "Imagen 1",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -157,7 +156,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Apellido Materno",
+                  "Tipo De Habitación",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -173,7 +172,7 @@ class _Registro extends State<Registro>{
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  controller: _lastnamesecondInputTextController,
+                  controller: _lastnamefirstInputTextController,
                   decoration: const InputDecoration(
                     hintText: '...',
                     border: InputBorder.none,
@@ -184,7 +183,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Fecha de nacimiento",
+                  "Categoria",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -200,7 +199,45 @@ class _Registro extends State<Registro>{
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  controller: _birthdateInputTextController,
+                  controller: _lastnamefirstInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 20, top: 20),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Conforme a Ubicación",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w800,
+                    fontSize: 30,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Estado",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 40,
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: _lastnamefirstInputTextController,
                   decoration: const InputDecoration(
                     hintText: '...',
                     border: InputBorder.none,
@@ -211,7 +248,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "RFC",
+                  "Ciudad",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -227,7 +264,7 @@ class _Registro extends State<Registro>{
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  controller: _rfcInputTextController,
+                  controller: _lastnamefirstInputTextController,
                   decoration: const InputDecoration(
                     hintText: '...',
                     border: InputBorder.none,
@@ -238,7 +275,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Correo Electronico",
+                  "Colonia",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -254,7 +291,7 @@ class _Registro extends State<Registro>{
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  controller: _emailInputTextController,
+                  controller: _lastnamefirstInputTextController,
                   decoration: const InputDecoration(
                     hintText: '...',
                     border: InputBorder.none,
@@ -265,7 +302,7 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
-                  "Contraseña",
+                  "Calle",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
                     fontSize: 15,
@@ -281,14 +318,94 @@ class _Registro extends State<Registro>{
                 ),
                 child: TextFormField(
                   textAlign: TextAlign.center,
-                  controller: _passwordInputTextController,
+                  controller: _lastnamefirstInputTextController,
                   decoration: const InputDecoration(
                     hintText: '...',
                     border: InputBorder.none,
                   ),
                 ),
               ),
-
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Número",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 40,
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: _lastnamefirstInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Código Postal",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 40,
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: _lastnamefirstInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const Text(
+                  "Teléfono",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 40,
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 15),
+                decoration: BoxDecoration(
+                  color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(15),
+                ),
+                child: TextFormField(
+                  textAlign: TextAlign.center,
+                  controller: _lastnamefirstInputTextController,
+                  decoration: const InputDecoration(
+                    hintText: '...',
+                    border: InputBorder.none,
+                  ),
+                ),
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
@@ -328,9 +445,8 @@ class _Registro extends State<Registro>{
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
                       onPressed: (){
-                        if(!vacio()){
-                          Navigator.of(context).pop();
-                          api.registrar(
+                        Navigator.of(context).pop();
+                        api.registrar(
                             _userInputTextController.text,
                             _nameInputTextController.text,
                             _lastnamefirstInputTextController.text,
@@ -340,11 +456,10 @@ class _Registro extends State<Registro>{
                             _photoInputTextController.text,
                             _passwordInputTextController.text,
                             _emailInputTextController.text,
-                            "Turista", context);
-                        }
+                            1, context);
                       },
                       child: const Text(
-                        'Registrar',
+                        'Agregar',
                         style: TextStyle(
                           color: Colors.white,
                         ),
@@ -359,26 +474,5 @@ class _Registro extends State<Registro>{
         ),
       ),
     );
-  }
-
-  bool vacio(){
-    if(_emailInputTextController.text == "" ||
-    _passwordInputTextController.text == "" ||
-    _userInputTextController.text == ""){
-      showDialog(context: context, builder: (BuildContext context){
-        return AlertDialog(
-          title: Text("Email, Contraseña y Usuario no pueden estar vacios", style: Theme.of(context).textTheme.headline6),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Volver'),
-              onPressed: () => Navigator.pop(context, 'Cancel'),
-            ),
-          ],
-        );
-      });
-
-      return true;
-    }
-    else return false;
   }
 }
