@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../barra_inferior/barrainf.dart';
+
 class AgregarHotel extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
@@ -818,7 +820,7 @@ class _AgregarHotel extends State<AgregarHotel>{
 
   void _sendControllers(){
     debugPrint(_nombreInputTextController.toString());
-
+    Navigator.pop(context);
   }
 
   Future<String?> _showModal(int index) {

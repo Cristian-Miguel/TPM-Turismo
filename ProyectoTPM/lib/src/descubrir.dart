@@ -24,6 +24,7 @@ class _Descubrir extends State<Descubrir>{
   late List ServiciosP = [];
   final _fechaEntradaInputTextController = TextEditingController();
   final _fechaSalidaInputTextController = TextEditingController();
+  final _personasInputTextController = TextEditingController();
   var FechaReserva = "Sin fecha";
 
   int activeIndex= 0;
@@ -225,6 +226,7 @@ class _Descubrir extends State<Descubrir>{
   late List user = [];
   var nombre = "";
   var apellidoP = "";
+  var id = 0;
 
   void getUserInfo(index,tipo) async{
     var id = 0;
@@ -270,10 +272,11 @@ class _Descubrir extends State<Descubrir>{
 
   void _onChangeReserva(index,tipo) {
     getUserInfo(index,tipo);
+    id = index;
     var calificacion = ServiciosData[index]["Calificacion"];
     var descripcion = ServiciosData[index]["Descripcion"];
     var costo = ServiciosData[index]["Costo"];
-    print(ServiciosData[index].toString());
+    // print(ServiciosData[index].toString());
 
     Future.delayed(Duration(milliseconds: 100), () {
     Navigator.of(context).push(
@@ -281,20 +284,20 @@ class _Descubrir extends State<Descubrir>{
             builder: (context) {
               final CarouselController _controller = CarouselController();
               final List<String>  images = [
-                'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/3601456/pexels-photo-3601456.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://www.eluniversal.com.mx/sites/default/files/2019/05/17/playas-maruata-costa-michoacana.jpeg',
-                'https://images.pexels.com/photos/3601369/pexels-photo-3601369.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/4602279/pexels-photo-4602279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/163872/italy-cala-gonone-air-sky-163872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/412681/pexels-photo-412681.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
               ];
 
               final List<String> descripimages = [
-                'https://images.pexels.com/photos/1172518/pexels-photo-1172518.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/2403840/pexels-photo-2403840.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/4318913/pexels-photo-4318913.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-                'https://images.pexels.com/photos/462024/pexels-photo-462024.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
+                ServiciosData[index]["Imagen"].toString(),
               ];
 
               return Scaffold(
@@ -338,7 +341,7 @@ class _Descubrir extends State<Descubrir>{
                                         Container(
                                           child: Text(
                                             ServiciosData[index]["Nombre"],
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 30,
                                               fontWeight: FontWeight.bold,
                                             ),
@@ -363,7 +366,7 @@ class _Descubrir extends State<Descubrir>{
                                                       top: 2),
                                                   child: Text(
                                                     "$calificacion",
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 10,
                                                     ),
                                                   )
@@ -381,7 +384,7 @@ class _Descubrir extends State<Descubrir>{
                                                     "Experiencia ofrecida \n"
                                                         "por $nombre $apellidoP",
                                                     textAlign: TextAlign.start,
-                                                    style: TextStyle(
+                                                    style: const TextStyle(
                                                       fontSize: 18,
                                                       fontWeight: FontWeight.w700,
                                                     ),
@@ -410,7 +413,7 @@ class _Descubrir extends State<Descubrir>{
                                           ),
                                           child: Text(
                                             "Costo: $costo",
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 11,
                                             ),
                                           ),
@@ -436,12 +439,10 @@ class _Descubrir extends State<Descubrir>{
                                         ),
 
                                         Container(
-                                          child: const Text(
-                                            "Michoacán tiene hermosas playas con buenos servicios en sus casi 230 km de litoral oceánico.\n"
-                                                "Te invitamos a conocer nuestra selección con las mejores playas de Michoacán, esperando que"
-                                                " puedas añadir algunas después de visitar la fantástica costa de este bello estado mexicano.",
+                                          child: Text(
+                                            ServiciosData[index]["Descripcion"].toString(),
                                             textAlign: TextAlign.justify,
-                                            style: TextStyle(
+                                            style: const TextStyle(
                                               fontSize: 11,
                                             ),
                                           ),
@@ -468,7 +469,8 @@ class _Descubrir extends State<Descubrir>{
                                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                                           children: <Widget>[
                                             Container(
-                                              margin: const EdgeInsets.only(top: 10.0, bottom: 10.0),
+                                              width: 300,
+                                              margin: const EdgeInsets.only(top: 20.0, bottom: 30.0),
                                               child: RaisedButton(
                                                   color: Colors.pinkAccent,
                                                   textColor: Colors.white,
@@ -478,7 +480,7 @@ class _Descubrir extends State<Descubrir>{
                                                       fontSize: 16.0,
                                                     ),
                                                   ),
-                                                  onPressed: () {_onPressReserva();}),
+                                                  onPressed: () { _onPressReserva(id);}),
 
                                             ),
                                           ],
@@ -496,11 +498,11 @@ class _Descubrir extends State<Descubrir>{
               );
             }
         )
-    );
+      );
     });
   }
 
-  void _onPressReserva() {
+  void _onPressReserva(index) {
     Navigator.of(context).push(
       MaterialPageRoute(
       builder: (context) {
@@ -511,356 +513,310 @@ class _Descubrir extends State<Descubrir>{
               //centerTitle: true,
               iconTheme: const IconThemeData(color: Colors.black)
             ),
-          body: ListView.builder(
-            padding: const EdgeInsets.only(top: 10, right: 16, left: 16,bottom: 10),
-            scrollDirection: Axis.vertical,
-            itemCount: 1,
-            itemBuilder: (
-            BuildContext context, int index) {
-
-                return Column(
-
-                  children: [
-                    Row(
-                      children: <Widget> [
-                        Container(
-                          height: 125,
-                          width: 125,
-                          margin: new EdgeInsets.all(16),
-                          decoration: BoxDecoration(
-                              color: Colors.yellow,  //PARA PROBAR CONTAINER
-                              borderRadius: BorderRadius.circular(10.0),
-                              image: const DecorationImage(
-                                image: NetworkImage("https://images.pexels.com/photos/315998/pexels-photo-315998.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"),
-                                fit: BoxFit.cover,
+          body: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  Row(
+                    children: <Widget>[
+                      Container(
+                        margin: const EdgeInsets.only(left:10, top: 30, bottom: 30),
+                        height: 125,
+                        width: 125,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,  //PARA PROBAR CONTAINER
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: NetworkImage("${ServiciosData[index]["Imagen"].toString()}"),
+                              fit: BoxFit.cover,
+                            ),
+                            boxShadow: const[
+                              BoxShadow(
+                                //SOMBRA
+                                color: Color(0xffA4A4A4),
+                                offset: Offset(1.0, 5.0),
+                                blurRadius: 3.0,
                               ),
-                              boxShadow: const[
-                                BoxShadow(
-                                  //SOMBRA
-                                  color: Color(0xffA4A4A4),
-                                  offset: Offset(1.0, 5.0),
-                                  blurRadius: 3.0,
-                                ),
-                              ]
-                          ),
+                            ]
                         ),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.only( left:16),
-                            child: Column(
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.only(left:16, top: 30, bottom: 30, right: 10),
+                          child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children: const <Widget> [
-                              Text(
-                                "Tour Patzcuaro",
-                                style: TextStyle(
-                                  fontSize: 22,
-                                  fontWeight: FontWeight.w500,
+                              children: <Widget> [
+                                Container(
+                                  child: Text(
+                                    "${ServiciosData[index]["Nombre"].toString()}",
+                                    style: const TextStyle(
+                                      fontSize: 22,
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Text(
-                                "Disfrute la magia de patzcuaro verdaderamente el secrero mejor guardado de todas las ciudades coloniales de México",
-                                style:TextStyle(
-                                fontSize: 13,
-                                color: Colors.black54
+                                Container(
+                                  child: Text(
+                                    "${ServiciosData[index]["Descripcion"].toString()}",
+                                    style: const TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.black54
+                                    ),
+                                  ),
                                 ),
-                              ),
                               ]
-                            ),
                           ),
                         ),
-                    ],
-                ),
-                    Container(
-                      child: const Divider(
-                        color: Colors.black54,
-                        thickness: 1,
                       ),
-                    ),
-
-                 Row(
-                     children: <Widget> [
-                       Container(
-                         child: const Text(
-                           "Tu viaje",
-                           style: TextStyle(
-                             fontSize: 22,
-                             fontWeight: FontWeight.w500,
-                           ),
-                         ),
-                       )
-                     ]
+                    ],
                   ),
 
-                    Row(
-                        children: <Widget> [
-                          Container(
-                            child: const Text(
-                              "Fechas",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                         Expanded(
-                           child: Container(
-                             width: Theme.of(context).textTheme.bodyText1!.fontSize! * 30,
-                             margin: const EdgeInsets.only(left:220),
-                              child: ElevatedButton(
-                               style: ElevatedButton.styleFrom(
-                                 shape: RoundedRectangleBorder(
-                                   borderRadius: BorderRadius.circular(10.0),
-                                 ),
-                                 primary: Colors.pinkAccent,
-                                 onPrimary: Colors.white,
-                                 // side: BorderSide(color: Colors.red, width: 1),
-                               ),
-                               onPressed: (){ _showDate();  },
-                               child: const Text(
-                                 'Editar',
-                                 style: TextStyle(
-                                   fontSize: 18,
-                                   fontWeight: FontWeight.w500,
-                                 ),
-                               ),
-                             ),
-                           ),
+                  const Divider(
+                    color: Colors.black38,
+                  ),
 
-                          )
-                        ]
-                    ),
-                    Row(
-                        children: <Widget> [
-                          Container(
-                            child: Text(
-                              FechaReserva,
-                              style: const TextStyle(
-                                fontSize: 14,
-                                //fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
-                    Row(
-                        children: <Widget> [
-                          Container(
-                            child: const Text(
-                              "Personas",
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: Container(
-                              width: Theme.of(context).textTheme.bodyText1!.fontSize! * 30,
-                              margin: const EdgeInsets.only(left:200),
-                              child: ElevatedButton(
-                                style: ElevatedButton.styleFrom(
-                                  shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                  ),
-                                  primary: Colors.pinkAccent,
-                                  onPrimary: Colors.white,
-                                  // side: BorderSide(color: Colors.red, width: 1),
-                                ),
-                                onPressed: (){},
-                                child: const Text(
-                                  'Editar',
-                                  style: TextStyle(
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w500,
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                          )
-                        ]
-                    ),
-                    Row(
-                        children: <Widget> [
-                          Container(
-                            child: const Text(
-                              "1 persona",
-                              style: TextStyle(
-                                fontSize: 14,
-                                //fontWeight: FontWeight.w500,
-                              ),
-                            ),
-                          )
-                        ]
-                    ),
-                    Container(
-                      child: const Divider(
-                        color: Colors.black54,
-                        thickness: 1,
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:10, right: 10, top: 20),
+                    child: const Text(
+                      "Tu viaje",
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black
                       ),
                     ),
+                  ),
 
-                    Row(
-                        children: <Widget> [
-                          Container(
-                            child: const Text(
-                              "Detalles de precio",
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:10, right: 10, top: 20),
+                    child: const Text(
+                      "Fechas",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black
+                      ),
+                    ),
+                  ),
+
+                  Column(
+                    children: <Widget>[
+                      Container(
+                          padding: const EdgeInsets.only(left:20 ,right: 20),
+                          margin: const EdgeInsets.only(top:5 ,bottom: 15),
+                          // height:150,
+                          child:Center(
+                              child:TextField(
+                                controller: _fechaEntradaInputTextController, //editing controller of this TextField
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.calendar_today), //icon of text field
+                                    labelText: "Fecha de Entrada" //label text of field
+                                ),
+                                readOnly: true,  //set it true, so that user will not able to edit text
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context, initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime(2101)
+                                  );
+
+                                  if(pickedDate != null ){
+                                    print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                    print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    //you can implement different kind of Date Format here according to your requirement
+
+                                    setState(() {
+                                      _fechaEntradaInputTextController.text = formattedDate; //set output date to TextField value.
+                                    });
+                                  }else{
+                                    print("Date is not selected");
+                                  }
+                                },
+                              )
                           )
-                        ]
+                      ),
+                    ],
+                  ),
+
+                  Column(
+                    children: <Widget>[
+                      Container(
+                          padding: const EdgeInsets.only(left:20 ,right: 20),
+                          margin: const EdgeInsets.only(top:10),
+                          // height:150,
+                          child:Center(
+                              child:TextField(
+                                controller: _fechaSalidaInputTextController, //editing controller of this TextField
+                                decoration: const InputDecoration(
+                                    icon: Icon(Icons.calendar_today), //icon of text field
+                                    labelText: "Fecha de Salida" //label text of field
+                                ),
+                                readOnly: true,  //set it true, so that user will not able to edit text
+                                onTap: () async {
+                                  DateTime? pickedDate = await showDatePicker(
+                                      context: context, initialDate: DateTime.now(),
+                                      firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
+                                      lastDate: DateTime(2101)
+                                  );
+
+                                  if(pickedDate != null ){
+                                    print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                    String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                    print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    //you can implement different kind of Date Format here according to your requirement
+                                    setState(() {
+                                      _fechaSalidaInputTextController.text = formattedDate; //set output date to TextField value.
+                                    });
+                                  }else{
+                                    print("Date is not selected");
+                                  }
+                                },
+                              )
+                          )
+                      ),
+                    ],
+                  ),
+
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:10, right: 10, top: 20),
+                    child: const Text(
+                      "Persona(s)",
+                      style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.black
+                      ),
                     ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\$260 MXN x1 Persona",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\$520",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                        ]
+                  ),
+
+                  Container(
+                    width: double.infinity,
+                    height: 60,
+                    margin: const EdgeInsets.only(left:12, right: 12, top:10, bottom: 30),
+                      child:TextField(
+                        controller: _personasInputTextController, //editing controller of this TextField
+                        decoration: const InputDecoration(
+                            icon: Icon(Icons.person), //icon of text field
+                            labelText: "Cantidad" //label text of field
+                        ),
+                      )
+                  ),
+
+                  const Divider(
+                    color: Colors.black38,
+                  ),
+
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.only(left:10, right: 10, top: 20),
+                    child: const Text(
+                      "Detalles de precio",
+                      style: TextStyle(
+                          fontSize: 26,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black
+                      ),
                     ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "Comisión por el servicio",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\$85.15",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                        ]
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "Impuestos",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\$83.20",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 16,
-                                ),
-                              )
-                          ),
-                        ]
-                    ),
-                    Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: <Widget>[
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\nTotal",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                          ),
-                          Container(
-                              margin: const EdgeInsets.only(
-                                  bottom: 2),
-                              child: const Text(
-                                "\n\$688.36",
-                                textAlign: TextAlign.start,
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontWeight: FontWeight.w500,
-                                ),
-                              )
-                          ),
-                        ]
-                    ),
-                    Row(
+                  ),
+
+                  SizedBox(
+                    width: double.infinity,
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Container(
-                          margin: const EdgeInsets.only(top: 15.0, bottom: 15.0),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                              primary: Colors.pinkAccent,
-                              onPrimary: Colors.white,
-                              // side: BorderSide(color: Colors.red, width: 1),
-                            ),
-                            onPressed: (){},
-                            child: const Text(
-                              'Confirmar Servicio',
-                              style: TextStyle(
-                                fontSize: 22,
-                                fontWeight: FontWeight.w500,
-                              ),
-                            ),
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(right:30, top: 30),
+                          child: Text(
+                              "\$${ServiciosData[index]["Costo"].toString()}.00 MXN x Persona"
                           ),
-
                         ),
+                        Container(
+                          alignment: Alignment.centerRight,
+                          margin: const EdgeInsets.only(left:30, top: 30),
+                          child: const Text(
+                              "\$520"
+                          ),
+                        )
                       ],
                     ),
+                  ),
 
-                  ],
 
-                );
-          },
-        )
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        // alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(right:32, top: 10),
+                        child: const Text(
+                            "Comision por servicio",
+                          textAlign: TextAlign.left,
+                        ),
+                      ),
 
-        );
-      },
-    ),
+                      Container(
+                        // alignment: Alignment.centerRight,
+                        margin: const EdgeInsets.only(left:30, top: 10),
+                        child: const Text(
+                            "\$20",
+                          textAlign: TextAlign.right,
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        alignment: Alignment.bottomLeft,
+                        margin: const EdgeInsets.only(right:70, top: 10),
+                        child: const Text(
+                            "Impuestos"
+                        ),
+                      ),
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        margin: const EdgeInsets.only(left:62, top: 10),
+                        child: const Text(
+                            "\$10"
+                        ),
+                      )
+                    ],
+                  ),
+
+                  Container(
+                    width: Theme.of(context).textTheme.bodyText1!.fontSize! * 24,
+                    margin: const EdgeInsets.only(left:6, right: 6, top: 50, bottom: 30),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(8.0),
+                        ),
+                        primary: Colors.pinkAccent,
+                        onPrimary: Colors.white,
+                        // side: BorderSide(color: Colors.red, width: 1),
+                      ),
+                      onPressed: (){},
+                      child: const Text(
+                        'Confirmar Reserva',
+                        style: TextStyle(
+                          color: Colors.white,
+
+                        ),
+                      ),
+                    ),
+                  ),
+
+                ],
+              ),
+            ),
+          );
+        },
+      ),
     );
   }
 
@@ -882,7 +838,7 @@ class _Descubrir extends State<Descubrir>{
                         controller: _fechaEntradaInputTextController, //editing controller of this TextField
                         decoration: const InputDecoration(
                             icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Ingrese la fecha de Entrada" //label text of field
+                            labelText: "Fecha de Entrada" //label text of field
                         ),
                         readOnly: true,  //set it true, so that user will not able to edit text
                         onTap: () async {
@@ -922,7 +878,7 @@ class _Descubrir extends State<Descubrir>{
                         controller: _fechaSalidaInputTextController, //editing controller of this TextField
                         decoration: const InputDecoration(
                             icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Ingrese la fecha de Salida" //label text of field
+                            labelText: "Fecha de Salida" //label text of field
                         ),
                         readOnly: true,  //set it true, so that user will not able to edit text
                         onTap: () async {
