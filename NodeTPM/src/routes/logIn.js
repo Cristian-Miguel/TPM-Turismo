@@ -1,6 +1,7 @@
 const { Router } = require("express");
 const router = Router();
 const Usuarios = require('../models/Usuarios');
+const Hotel = require('../models/Hotel');
 
 router.post('/Usuarios/LogIn/', (req, res, next) => { 
     const {email} = req.body;
@@ -38,6 +39,32 @@ router.post('/Usuarios/Registrar/', (req, res, next) => {
     Usuarios.registrar(res,sql);
     //res.json(req.body);
 });
+
+router.post('/Agregar/Hotel/', (req, res, next) => { 
+    const {nombre} = req.body;
+    const {descripcion} = req.body;
+    const {categoria} = req.body;
+    const {costo} = req.body;
+    const {numeroHab} = req.body;
+    const {tipoHab} = req.body;
+    const {numeroExt} = req.body;
+    const {calle} = req.body;
+    const {colonia} = req.body;
+    const {ciudad} = req.body;
+    const {estado} = req.body;
+    const {codigoPostal} = req.body;
+    const {telefono} = req.body;
+    const {idUser} = req.body;
+
+    
+  console.log(req.body);
+    // let sql = "SELECT idUsuario,Usuario,TipoUsuario FROM usuarios WHERE Email = '"+email+"' AND Password = '"+pass+"';";
+    let sql = "INSERT INTO hotel(Nombre, Descripcion, Categoria, Costo, NumHabitacion, TipoHabitacion, NumeroExterior, Calle, Colonia, Ciudad, Estado, CodigoPostal, idUsuario ) VALUES ('"+nombre+"','"+descripcion+"','"+categoria+"',"+costo+","+numeroHab+",'"+tipoHab+"','"+numeroExt+"','"+calle+"','"+colonia+"','"+ciudad+"','"+estado+"',"+codigoPostal+","+idUser+");";
+    Hotel.Agregar(res,sql);
+    //res.json(req.body);
+    console.log(sql);
+});
+
 
 module.exports = router;
 //node src/index.js

@@ -1,4 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:proyectotmp/src/EmpresaViews/ListarHotel.dart';
+
+import '../../barra_inferior/barrainf.dart';
+
+import '../../barra_inferior/barrainf.dart' as barra;
 
 import '../../barra_inferior/barrainf.dart';
 
@@ -20,7 +28,7 @@ class _AgregarHotel extends State<AgregarHotel>{
   final _calleInputTextController = TextEditingController();
   final _numeroInputTextController = TextEditingController();
   final _codigopostalInputTextController = TextEditingController();
-  final _telefonoInputTextController = TextEditingController();
+  //final _telefonoInputTextController = TextEditingController();
   final _ImagenInputTextController = TextEditingController();
   Object _tipohabitacionInputTextController = "";
   Object _categoriaInputTextController = "";
@@ -713,7 +721,7 @@ class _AgregarHotel extends State<AgregarHotel>{
             ],
           ),
 
-          Column(
+       /*   Column(
             children: <Widget>[
               Container(
                 alignment: Alignment.centerLeft,
@@ -746,7 +754,7 @@ class _AgregarHotel extends State<AgregarHotel>{
               )
             ],
           ),
-
+*/
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
@@ -763,7 +771,17 @@ class _AgregarHotel extends State<AgregarHotel>{
                     onPrimary: Colors.white,
                     // side: BorderSide(color: Colors.red, width: 1),
                   ),
-                  onPressed: (){},
+                  //Redirigimos al home importando BarraInferior de otro .dart
+                  onPressed: () =>{
+                  Navigator.of(context).push(
+                  MaterialPageRoute(
+                  builder:(context)
+                  {
+                  return BarraInferior();
+                  }
+                  )
+                  )
+                  },
                   child: const Text(
                     'Cancelar',
                     style: TextStyle(
@@ -802,25 +820,92 @@ class _AgregarHotel extends State<AgregarHotel>{
 
   void _updateControllers(){
     final controllers = [
-      _nombreInputTextController,
-      _descripcionInputTextController,
-      _costoInputTextController,
-      _tipohabitacionInputTextController,
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
       _categoriaInputTextController,
-      _numerohabitacionInputTextController,
-      _estadoInputTextController,
-      _ciudadInputTextController,
-      _coloniaInputTextController,
-      _calleInputTextController,
-       _numeroInputTextController,
-      _codigopostalInputTextController,
-      _telefonoInputTextController,
+      _costoInputTextController.value.text,
+      _numerohabitacionInputTextController.value.text,
+      _tipohabitacionInputTextController,
+      _numeroInputTextController.value.text,
+      _calleInputTextController.value.text,
+      _coloniaInputTextController.value.text,
+      _ciudadInputTextController.value.text,
+      _estadoInputTextController.value.text,
+      _codigopostalInputTextController.value.text,
+      //_telefonoInputTextController,
     ];
+    agregarHotel(controllers);
+  }
+
+
+  void agregarHotel(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var categoria = controllers[2];
+    var costo = controllers[3];
+    var numeroHab = controllers[4];
+    var tipoHab = controllers[5];
+    var numeroExt = controllers[6];
+    var calle = controllers[7];
+    var colonia = controllers[8];
+    var ciudad = controllers[9];
+    var estado = controllers[10];
+    var codigoPostal = controllers[11];
+    //var telefono = controllers[12];
+
+    var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Hotel');
+
+    late List hoteles = [];
+    var response;
+    var idUser = barra.idUser;
+
+    if(_verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+        colonia,ciudad,estado,codigoPostal,context)){
+      try{
+        response = await http.post(urlHotel, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'categoria': '$categoria', 'costo': '$costo','numeroHab': '$numeroHab','tipoHab': '$tipoHab',
+          'numeroExt': '$numeroExt', 'calle': '$calle', 'colonia': '$colonia', 'ciudad': '$ciudad',
+          'estado': '$estado', 'codigoPostal': '$codigoPostal', 'idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          hoteles = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+      colonia,ciudad,estado,codigoPostal,context){
+    if(nombre == '' || descripcion == '' || categoria == '' || costo == '' || costo == '' || numeroHab == ''
+    || tipoHab == '' || numeroExt == '' || calle == '' || colonia == '' || ciudad == '' || estado == '' ||
+    codigoPostal == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
   }
 
   void _sendControllers(){
-    debugPrint(_nombreInputTextController.toString());
+    _updateControllers();
     Navigator.pop(context);
+    _alert('Hotel agregado',context);
   }
 
   Future<String?> _showModal(int index) {
