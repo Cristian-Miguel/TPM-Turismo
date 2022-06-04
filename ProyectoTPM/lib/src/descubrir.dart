@@ -45,7 +45,6 @@ class _Descubrir extends State<Descubrir>{
     return menuItems;
   }
 
-
   int activeIndex= 0;
 
   //obtenemos los datos de la api
@@ -295,8 +294,6 @@ class _Descubrir extends State<Descubrir>{
     getUserInfo(index,tipo);
     id = index;
     var calificacion = ServiciosData[index]["Calificacion"];
-    var descripcion = ServiciosData[index]["Descripcion"];
-    var costo = ServiciosData[index]["Costo"];
     // print(ServiciosData[index].toString());
 
     Future.delayed(Duration(milliseconds: 100), () {
@@ -326,7 +323,18 @@ class _Descubrir extends State<Descubrir>{
                   title: const Text('Reservar', style: TextStyle(color: Colors.black),),
                   backgroundColor: Colors.white,
                     //centerTitle: true,
-                  iconTheme: const IconThemeData(color: Colors.black)
+                  iconTheme: const IconThemeData(color: Colors.black),
+                  leading: IconButton( //menu icon button at start left of appbar
+                    onPressed: (){
+                      _fechaEntradaInputTextController.text = "";
+                      _fechaSalidaInputTextController.text = "";
+                      _costoNetoInputTextController.text = "\$0.00";
+                      _costoTotalInputTextController.text = "\$0.00";
+                      PersonselectedValue = "1";
+                      Navigator.of(context).pop();
+                    },
+                    icon: Icon(Icons.arrow_back),
+                  ),
                 ),
                 body: Center(
                     child: ListView(
@@ -435,7 +443,7 @@ class _Descubrir extends State<Descubrir>{
                                             bottom: 10,
                                           ),
                                           child: Text(
-                                            "Costo: $costo",
+                                            "Costo: ${ServiciosData[index]["Costo"].toString()}",
                                             style: const TextStyle(
                                               fontSize: 11,
                                             ),
@@ -504,11 +512,9 @@ class _Descubrir extends State<Descubrir>{
                                                     ),
                                                   ),
                                                   onPressed: () { _onPressReserva(id);}),
-
                                             ),
                                           ],
                                         ),
-
                                       ]
                                   ),
                                 ),
@@ -889,7 +895,6 @@ class _Descubrir extends State<Descubrir>{
       ),
     );
   }
-
 
   void calcularCosto(index){
     //yyyy-mm-dd

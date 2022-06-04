@@ -115,7 +115,7 @@ class _ListarPaquetes extends State<ListarPaquetes> {
                     children: <Widget>[
                       IconButton(
                         alignment: Alignment.centerLeft,
-                        onPressed: (){},
+                        onPressed: (){InfoPaquete(index);},
                         icon: const Icon(
                           Icons.info_outline,
                           color: Colors.grey,
@@ -169,4 +169,263 @@ class _ListarPaquetes extends State<ListarPaquetes> {
         )
     );
   }
+
+  InfoPaquete(index){
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder:(context)
+            {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Reservar', style: TextStyle(color: Colors.black),),
+                  backgroundColor: Colors.white,
+                  iconTheme: const IconThemeData(color: Colors.black),
+                ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 25),
+                        child: const Text(
+                          "Informacion del Paquetes",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+
+                      const Divider(
+                        color: Colors.black38,
+                      ),
+
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 20),
+                        child: const Text(
+                          "Id: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          child: Text(
+                            ServiciosData[index]["idPaquete"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Nombre: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Nombre"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Descripcion: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Descripcion"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 10, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Imagen: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right:16, top: 5),
+                        height: 175,
+                        width: 175,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,  //PARA PROBAR CONTAINER
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: NetworkImage("${ServiciosData[index]["Imagen"].toString()}"),
+                              fit: BoxFit.cover,
+                            ),
+                            boxShadow: const[
+                              BoxShadow(
+                                //SOMBRA
+                                color: Color(0xffA4A4A4),
+                                offset: Offset(1.0, 5.0),
+                                blurRadius: 3.0,
+                              ),
+                            ]
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Costo: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "\$"+ServiciosData[index]["Costo"].toString()+".00",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Numero de Paquetes:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["NumeroPaquetes"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Descuento:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "\$"+ServiciosData[index]["Descuento"].toString()+".00",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Calificacion:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5, bottom: 20),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Calificacion"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              );
+            }
+        )
+    );
+  }
+
 }
