@@ -24,8 +24,27 @@ class _Descubrir extends State<Descubrir>{
   late List ServiciosP = [];
   final _fechaEntradaInputTextController = TextEditingController();
   final _fechaSalidaInputTextController = TextEditingController();
-  final _personasInputTextController = TextEditingController();
-  var FechaReserva = "Sin fecha";
+  final _costoNetoInputTextController = TextEditingController();
+  final _costoTotalInputTextController = TextEditingController();
+  Object _personasInputTextController = "";
+  // String CostoNeto = "0";
+  // String CostoTotal = "30";
+
+  Object PersonselectedValue = "1";
+  List<DropdownMenuItem<String>> get PersondropdownItems{
+    const List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("1"),  value: "1"),
+      DropdownMenuItem(child: Text("2"),   value: "2"),
+      DropdownMenuItem(child: Text("3"),   value: "3"),
+      DropdownMenuItem(child: Text("4"),   value: "4"),
+      DropdownMenuItem(child: Text("5"),   value: "5"),
+      DropdownMenuItem(child: Text("6"),   value: "6"),
+      DropdownMenuItem(child: Text("7"),   value: "7"),
+      DropdownMenuItem(child: Text("8"),   value: "8"),
+    ];
+    return menuItems;
+  }
+
 
   int activeIndex= 0;
 
@@ -76,6 +95,8 @@ class _Descubrir extends State<Descubrir>{
         ServiciosData.addAll(ServiciosR);
         ServiciosData.addAll(ServiciosT);
         ServiciosData.addAll(ServiciosP);
+        _costoNetoInputTextController.text = "\$0.00";
+        _costoTotalInputTextController.text = "\$30.00";
       });
     }
     if(desc == 1){
@@ -307,11 +328,11 @@ class _Descubrir extends State<Descubrir>{
                     //centerTitle: true,
                   iconTheme: const IconThemeData(color: Colors.black)
                 ),
-                body: Container(
+                body: Center(
                     child: ListView(
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
-                      //mainAxisAlignment: MainAxisAlignment.center,
+                      // mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         CarouselSlider.builder(
                           options: CarouselOptions(
@@ -327,8 +348,10 @@ class _Descubrir extends State<Descubrir>{
                             return buildImage(image, index);
                           },
                         ),
+
                         const SizedBox(height: 10,),
-                        Expanded(
+
+                        SizedBox(
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: <Widget>[
@@ -621,13 +644,14 @@ class _Descubrir extends State<Descubrir>{
                                   );
 
                                   if(pickedDate != null ){
-                                    print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                    // print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
                                     String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                    print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                    // print(formattedDate); //formatted date output using intl package =>  2021-03-16
                                     //you can implement different kind of Date Format here according to your requirement
 
                                     setState(() {
                                       _fechaEntradaInputTextController.text = formattedDate; //set output date to TextField value.
+                                      calcularCosto(index);
                                     });
                                   }else{
                                     print("Date is not selected");
@@ -654,6 +678,7 @@ class _Descubrir extends State<Descubrir>{
                                 ),
                                 readOnly: true,  //set it true, so that user will not able to edit text
                                 onTap: () async {
+                                  calcularCosto(index);
                                   DateTime? pickedDate = await showDatePicker(
                                       context: context, initialDate: DateTime.now(),
                                       firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
@@ -661,12 +686,13 @@ class _Descubrir extends State<Descubrir>{
                                   );
 
                                   if(pickedDate != null ){
-                                    print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
+                                   // print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
                                     String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                                    print(formattedDate); //formatted date output using intl package =>  2021-03-16
+                                   // print(formattedDate); //formatted date output using intl package =>  2021-03-16
                                     //you can implement different kind of Date Format here according to your requirement
                                     setState(() {
                                       _fechaSalidaInputTextController.text = formattedDate; //set output date to TextField value.
+                                      calcularCosto(index);
                                     });
                                   }else{
                                     print("Date is not selected");
@@ -694,12 +720,21 @@ class _Descubrir extends State<Descubrir>{
                     width: double.infinity,
                     height: 60,
                     margin: const EdgeInsets.only(left:12, right: 12, top:10, bottom: 30),
-                      child:TextField(
-                        controller: _personasInputTextController, //editing controller of this TextField
-                        decoration: const InputDecoration(
-                            icon: Icon(Icons.person), //icon of text field
-                            labelText: "Cantidad" //label text of field
-                        ),
+                      child:DropdownButtonFormField(
+                          decoration: const InputDecoration(
+                              icon: Icon(Icons.person), //icon of text field
+                              labelText: "Cantidad" //label text of field
+                          ),
+                          dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                          value: PersonselectedValue,
+                          onChanged: (Object? value){
+                            setState(() {
+                              PersonselectedValue = value!;
+                              _personasInputTextController = value;
+                              calcularCosto(index);
+                            });
+                          },
+                          items: PersondropdownItems,
                       )
                   ),
 
@@ -727,17 +762,22 @@ class _Descubrir extends State<Descubrir>{
                       mainAxisSize: MainAxisSize.max,
                       children: <Widget>[
                         Container(
+                          width: 200,
                           alignment: Alignment.centerLeft,
-                          margin: const EdgeInsets.only(right:30, top: 30),
+                          margin: const EdgeInsets.only(top: 30),
                           child: Text(
                               "\$${ServiciosData[index]["Costo"].toString()}.00 MXN x Persona"
                           ),
                         ),
                         Container(
+                          width: 100,
                           alignment: Alignment.centerRight,
-                          margin: const EdgeInsets.only(left:30, top: 30),
-                          child: const Text(
-                              "\$520"
+                          margin: const EdgeInsets.only(top: 30),
+                          child: TextField(
+                              controller: _costoNetoInputTextController,
+                            textAlign: TextAlign.right,
+                            decoration: null,
+                            readOnly: true,
                           ),
                         )
                       ],
@@ -749,8 +789,9 @@ class _Descubrir extends State<Descubrir>{
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Container(
-                        // alignment: Alignment.centerLeft,
-                        margin: const EdgeInsets.only(right:32, top: 10),
+                        width: 200,
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(top: 10),
                         child: const Text(
                             "Comision por servicio",
                           textAlign: TextAlign.left,
@@ -758,10 +799,11 @@ class _Descubrir extends State<Descubrir>{
                       ),
 
                       Container(
-                        // alignment: Alignment.centerRight,
-                        margin: const EdgeInsets.only(left:30, top: 10),
+                        width: 100,
+                        alignment: Alignment.centerRight,
+                        margin: const EdgeInsets.only(top: 10),
                         child: const Text(
-                            "\$20",
+                            "\$20.00",
                           textAlign: TextAlign.right,
                         ),
                       ),
@@ -772,21 +814,49 @@ class _Descubrir extends State<Descubrir>{
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: <Widget>[
                       Container(
+                        width: 200,
                         alignment: Alignment.bottomLeft,
-                        margin: const EdgeInsets.only(right:70, top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         child: const Text(
                             "Impuestos"
                         ),
                       ),
                       Container(
+                        width: 100,
                         alignment: Alignment.bottomRight,
-                        margin: const EdgeInsets.only(left:62, top: 10),
+                        margin: const EdgeInsets.only(top: 10),
                         child: const Text(
-                            "\$10"
+                            "\$10.00"
                         ),
                       )
                     ],
                   ),
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Container(
+                        width: 200,
+                        alignment: Alignment.bottomLeft,
+                        margin: const EdgeInsets.only(top: 10),
+                        child: const Text(
+                            "Total"
+                        ),
+                      ),
+                      Container(
+                        width: 100,
+                        alignment: Alignment.bottomRight,
+                        margin: const EdgeInsets.only(top: 10),
+                        child: TextField(
+                            controller: _costoTotalInputTextController,
+                          textAlign: TextAlign.right,
+                          decoration: null,
+                          readOnly: true,
+                        ),
+                      )
+                    ],
+                  ),
+
 
                   Container(
                     width: Theme.of(context).textTheme.bodyText1!.fontSize! * 24,
@@ -820,121 +890,44 @@ class _Descubrir extends State<Descubrir>{
     );
   }
 
-  Future<String?> _showDate() {
-    return showDialog<String>(
-      context: context,
-      builder: (BuildContext context) => AlertDialog(
-        title: const Text('Dias a reservar'),
-        actions: <Widget>[
 
-          Column(
-            children: <Widget>[
-              Container(
-                  padding: const EdgeInsets.only(left:20 ,right: 20),
-                  margin: const EdgeInsets.only(top:5 ,bottom: 15),
-                  // height:150,
-                  child:Center(
-                      child:TextField(
-                        controller: _fechaEntradaInputTextController, //editing controller of this TextField
-                        decoration: const InputDecoration(
-                            icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Fecha de Entrada" //label text of field
-                        ),
-                        readOnly: true,  //set it true, so that user will not able to edit text
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context, initialDate: DateTime.now(),
-                              firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime(2101)
-                          );
+  void calcularCosto(index){
+    //yyyy-mm-dd
+    //0123456789
 
-                          if(pickedDate != null ){
-                            print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
+    if(!_fechaEntradaInputTextController.value.text.isEmpty &&
+       !_fechaSalidaInputTextController.value.text.isEmpty){
+      int mesInicio = int.parse(_fechaEntradaInputTextController.value.text.substring(5,7));
+      int mesSalida = int.parse(_fechaSalidaInputTextController.value.text.substring(5,7));
+      int diaInicio = int.parse(_fechaEntradaInputTextController.value.text.substring(8));
+      int diaSalida = int.parse(_fechaSalidaInputTextController.value.text.substring(8));
+      int personas = _personasInputTextController.toString().isEmpty ? 1 : int.parse(_personasInputTextController.toString());
+      int costo = int.parse(ServiciosData[index]["Costo"].toString());
+      print("personas = "+personas.toString());
 
-                            setState(() {
-                              _fechaEntradaInputTextController.text = formattedDate; //set output date to TextField value.
-                            });
-                          }else{
-                            print("Date is not selected");
-                          }
-                        },
-                      )
-                  )
-              ),
-            ],
-          ),
+      if(mesInicio == mesSalida){
+        int diasTotales = diaSalida - diaInicio;
+        int Neto = (personas * costo) *diasTotales;
+        _costoNetoInputTextController.text = "\$"+(Neto.toString())+".00";
+        _costoTotalInputTextController.text = "\$"+(Neto+30).toString()+".00";
+      }else{
+        int dias = 0;
+        for(int i = 29; i < 32; i++){
+          int yearInicio = int.parse(_fechaEntradaInputTextController.value.text.substring(0,4));
+          int mes = DateTime(yearInicio, mesInicio, i).month;
+          if(mes != mesInicio){
+            dias = i;
+            break;
+          }
+        }
+        int diasTotales = (dias - diaInicio) + diaSalida;
+        int Neto = (personas * costo) *diasTotales;
+        _costoNetoInputTextController.text = "\$"+(Neto.toString())+".00";
+        _costoTotalInputTextController.text = "\$"+(Neto+30).toString()+".00";
+      }
 
-          Column(
-            children: <Widget>[
-              Container(
-                  padding: const EdgeInsets.only(left:20 ,right: 20),
-                  margin: const EdgeInsets.only(top:10 ,bottom: 40),
-                  // height:150,
-                  child:Center(
-                      child:TextField(
-                        controller: _fechaSalidaInputTextController, //editing controller of this TextField
-                        decoration: const InputDecoration(
-                            icon: Icon(Icons.calendar_today), //icon of text field
-                            labelText: "Fecha de Salida" //label text of field
-                        ),
-                        readOnly: true,  //set it true, so that user will not able to edit text
-                        onTap: () async {
-                          DateTime? pickedDate = await showDatePicker(
-                              context: context, initialDate: DateTime.now(),
-                              firstDate: DateTime(2000), //DateTime.now() - not to allow to choose before today.
-                              lastDate: DateTime(2101)
-                          );
+    }
 
-                          if(pickedDate != null ){
-                            print(pickedDate);  //pickedDate output format => 2021-03-10 00:00:00.000
-                            String formattedDate = DateFormat('yyyy-MM-dd').format(pickedDate);
-                            print(formattedDate); //formatted date output using intl package =>  2021-03-16
-                            //you can implement different kind of Date Format here according to your requirement
-                            setState(() {
-                              _fechaSalidaInputTextController.text = formattedDate; //set output date to TextField value.
-                            });
-                          }else{
-                            print("Date is not selected");
-                          }
-                        },
-                      )
-                  )
-              ),
-            ],
-          ),
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: <Widget>[
-              TextButton(
-                onPressed: () => {
-                  // _ImagenInputTextController.text = '',
-                  // _ChangeDateRerervate(),
-                  Navigator.pop(context, 'Cancel'),
-                },
-                child: const Text('Cancel'),
-              ),
-
-              TextButton(
-                onPressed: () => {
-                  // _getImage(index),
-                  // _ChangeDateRerervate(),
-                  setState(() {
-                    FechaReserva = _fechaSalidaInputTextController.text.toString() + ' - '+ _fechaEntradaInputTextController.text.toString();
-                  }),
-                  Navigator.pop(context, 'Guardar'),
-                },
-                child: const Text('Guardar'),
-              ),
-            ],
-          ),
-
-        ],
-      ),
-    );
   }
 
   Widget buildImage(String image, int index) =>

@@ -344,7 +344,7 @@ class _AgregarHotel extends State<AgregarHotel>{
                       width: 110,
                       height: 110,
                       // color: const Color.fromRGBO(234, 234, 234, 1.0),
-                      margin: const EdgeInsets.only( right: 10, top:5, bottom: 5),
+                      margin: const EdgeInsets.only(right: 10, top:5, bottom: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
