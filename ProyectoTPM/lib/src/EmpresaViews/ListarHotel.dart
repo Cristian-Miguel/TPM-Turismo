@@ -18,8 +18,6 @@ class _ListarHoteles extends State<ListarHoteles> {
   late List ServiciosH = [];
   var idUser = barra.idUser;
 
-  int activeIndex= 0;
-
   //obtenemos los datos de la api
   getReservas() async {
 
@@ -29,7 +27,6 @@ class _ListarHoteles extends State<ListarHoteles> {
     // para web
     var url = Uri.parse('http://localhost:4000/empresa/Hoteles/');
     var response = await http.post(url, body: {'id': '$idUser'});
-
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
@@ -42,7 +39,7 @@ class _ListarHoteles extends State<ListarHoteles> {
 
   //constructor tara inicializar el getFavoritos
   @override
-  void initState() {
+  void initState(){
     super.initState();
     getReservas();
   }

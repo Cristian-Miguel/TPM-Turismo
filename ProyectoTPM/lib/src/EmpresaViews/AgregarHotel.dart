@@ -795,8 +795,8 @@ class _AgregarHotel extends State<AgregarHotel>{
                 margin: const EdgeInsets.only(left:6, right: 0, top: 20, bottom: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     primary: Colors.pinkAccent,
                     onPrimary: Colors.white,
