@@ -20,13 +20,14 @@ class _ListarTours extends State<ListarTours> {
 
   //obtenemos los datos de la api
   getReservas() async {
+    var tipo = barra.tipo;
 
     //para telefono
     // var url = Uri.parse('http://10.0.2.2:4000/empresa/Tour');;
 
     // para web
     var url = Uri.parse('http://localhost:4000/empresa/Tour');
-    var response = await http.post(url, body: {'id': '$idUser'});
+    var response = await http.post(url, body: {'id': '$idUser','tipo': '$tipo'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosT = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);

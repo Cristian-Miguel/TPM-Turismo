@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarHotel.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarPaquete.dart';
+import 'package:proyectotmp/src/EmpresaViews/ListarReservaciones.dart';
 import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
 import 'package:proyectotmp/src/home.dart';
@@ -51,6 +52,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
     ListarRestaurantes(),
     ListarTours(),
     ListarPaquetes(),
+    ListarReservaciones(),
     LogIn(),
   ];
 
@@ -118,15 +120,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                     Navigator.of(context).pop(),
                   }
                 ),
-                ListTile(
-                    leading: Icon(Icons.favorite),
-                    title: Text('Favoritos'),
-                    onTap: () => {
-                      onTapTapped(5,true),
-                      Navigator.of(context).pop(),
-                    }
-                ),
-
+                if(isLogin) favoritosBoton(),
                 if(tipo == "Administrador" || tipo == "Empresa") panelEmpresa() as Column,
 
                 Container(
@@ -140,15 +134,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                     ),
                   ),
                 ),
-                ListTile(
-                    leading: Icon(Icons.login),
-                    title: Text('Log In'),
-                    onTap: () => {
-                      onTapTapped(11,true),
-                      Navigator.of(context).pop(),
-                    }
-                ),
-                if(isLogin) logOut(),
+                logIn_Out(),
               ],
           ),
         ),
@@ -223,13 +209,35 @@ class BarraInferiorMenu extends State<BarraInferior>{
     );
   }
 
-  ListTile logOut(){
+  ListTile logIn_Out(){
+    if(isLogin){
+      return ListTile(
+        leading: Icon(Icons.exit_to_app),
+        title: Text('Logout'),
+        onTap: () => {
+          sF.closeSession(context),
+        },
+      );
+    }else{
+      return ListTile(
+          leading: Icon(Icons.login),
+          title: Text('Log In'),
+          onTap: () => {
+            onTapTapped(4,true),
+            Navigator.of(context).pop(),
+          }
+      );
+    }
+  }
+
+  ListTile favoritosBoton(){
     return ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Logout'),
-      onTap: () => {
-        sF.closeSession(context),
-      },
+        leading: Icon(Icons.favorite),
+        title: Text('Favoritos'),
+        onTap: () => {
+          onTapTapped(5,true),
+          Navigator.of(context).pop(),
+        }
     );
   }
 
@@ -284,6 +292,14 @@ class BarraInferiorMenu extends State<BarraInferior>{
         title: const Text('Paquete'),
         onTap: () => {
           onTapTapped(10,true),
+          Navigator.of(context).pop()
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.check),
+        title: const Text('Reservaciones'),
+        onTap: () => {
+          onTapTapped(11,true),
           Navigator.of(context).pop()
         },
       ),

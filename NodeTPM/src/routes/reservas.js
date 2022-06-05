@@ -42,4 +42,74 @@ router.post('/reservas/Paquetes', (req, res) => {
     Organizador.ListarSQL(res, sql);
 });
 
+router.post('/reservas/hotelN', (req, res) => { 
+    const {id,tipo} = req.body;
+    let sql;
+
+    if(tipo == "Administrador") sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN hotel AS H  ON O.idHotel = H.idHotel INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idHotel != '';";
+
+    else sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN hotel AS H  ON O.idHotel = H.idHotel INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idHotel != '' AND H.idUsuario = "+id;
+
+    Organizador.ListarSQL(res, sql);
+});
+
+router.post('/reservas/viajeN', (req, res) => { 
+    const {id,tipo} = req.body;
+    let sql;
+
+    if(tipo == "Administrador") sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN viajes AS H  ON O.idViaje = H.idViaje INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idViaje != '';";
+
+    else sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN viajes AS H  ON O.idViaje = H.idViaje INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idViaje != '' AND H.idUsuario = "+id;
+
+    Organizador.ListarSQL(res, sql);
+});
+
+router.post('/reservas/tourN', (req, res) => { 
+    const {id,tipo} = req.body;
+    let sql;
+
+    if(tipo == "Administrador") sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN tour AS H  ON O.idTour = H.idTour INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idTour != '';";
+
+    else sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN tour AS H  ON O.idTour = H.idTour INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idTour != '' AND H.idUsuario"+id;
+
+    Organizador.ListarSQL(res, sql);
+});
+
+router.post('/reservas/restauranteN', (req, res) => { 
+    const {id,tipo} = req.body;
+    let sql;
+
+    if(tipo == "Administrador") sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN restaurantes AS H  ON O.idRestaurante = H.idRestaurante INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idRestaurante != '';";
+
+    else sql = "SELECT H.Nombre,R.FechaEntrada,R.FechaSalida,R.FormaPago,R.idReserva,R.confirmado "+
+    "FROM organizador AS O INNER JOIN tour AS H  ON O.idTour = H.idTour INNER JOIN reserva_servicio AS R ON O.idReserva = R.idReserva "+
+    "WHERE O.TipoGuardado = 'Reserva' AND O.idTour != '' AND H.idUsuario = "+id;
+
+    Organizador.ListarSQL(res, sql);
+});
+
+router.post('/reservas/eliminar', (req, res) => { 
+    const {id} = req.body;
+    let sql;
+
+    sql = "DELETE FROM organizador WHERE idReserva = "+id+";";
+    Organizador.eliminarReserva(res, sql);
+    sql = "DELETE FROM reserva_servicio WHERE idReserva = "+id+";";
+    Organizador.eliminarReserva(res, sql);
+});
+
 module.exports = router;
