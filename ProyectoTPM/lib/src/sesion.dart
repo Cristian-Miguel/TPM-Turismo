@@ -82,6 +82,11 @@ class sesionFunctions{
     session.set("user", "0");
     session.set("idUser", 0);
     session.set("tipo", "Turista");
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => BarraInferior()), // this mainpage is your page to refresh
+          (Route<dynamic> route) => false,
+    );
     _alert('Sesión cerrada',context);
   }
 

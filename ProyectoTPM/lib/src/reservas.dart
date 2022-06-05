@@ -89,9 +89,11 @@ class _Reservas extends State<Reservas> {
   @override
   Widget build(BuildContext context) {
     if(tipoUsuario ==  "Empresa"){
-      return viewEmpresa();
+      if(ReservasData.isEmpty) return sinReservaciones();
+      else return viewEmpresa();
     }
     else if(tipoUsuario ==  "Usuario"){
+      if(ReservasData.isEmpty) return sinReservaciones();
       return viewUsuario();
     }
     else{
@@ -102,6 +104,12 @@ class _Reservas extends State<Reservas> {
   late List user = [];
   var nombre = "";
   var apellidoP = "";
+
+  Center sinReservaciones(){
+    return Center(
+      child: Text("No ha hecho ninguna reservacion aún :("),
+    );
+  }
 
   viewEmpresa(){
     return Column(
