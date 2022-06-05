@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarHotel.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarPaquete.dart';
+import 'package:proyectotmp/src/EmpresaViews/ListarReservaciones.dart';
 import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
 import 'package:proyectotmp/src/home.dart';
@@ -51,6 +52,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
     ListarRestaurantes(),
     ListarTours(),
     ListarPaquetes(),
+    ListarReservaciones(),
     LogIn(),
   ];
 
@@ -290,6 +292,14 @@ class BarraInferiorMenu extends State<BarraInferior>{
         title: const Text('Paquete'),
         onTap: () => {
           onTapTapped(10,true),
+          Navigator.of(context).pop()
+        },
+      ),
+      ListTile(
+        leading: Icon(Icons.check),
+        title: const Text('Reservaciones'),
+        onTap: () => {
+          onTapTapped(11,true),
           Navigator.of(context).pop()
         },
       ),

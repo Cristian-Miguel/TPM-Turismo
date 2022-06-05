@@ -20,13 +20,14 @@ class _ListarRestaurantes extends State<ListarRestaurantes> {
 
   //obtenemos los datos de la api
   getReservas() async {
+    var tipo = barra.tipo;
 
     //para telefono
     // var url = Uri.parse('http://10.0.2.2:4000/servicios/Restaurantes');
 
     // para web
-    var url = Uri.parse('http://localhost:4000/servicios/Restaurantes');
-    var response = await http.post(url, body: {'id': '$idUser'});
+    var url = Uri.parse('http://localhost:4000/empresa/Restaurantes');
+    var response = await http.post(url, body: {'id': '$idUser','tipo': '$tipo'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosR = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
