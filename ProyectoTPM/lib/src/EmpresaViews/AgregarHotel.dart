@@ -764,12 +764,11 @@ class _AgregarHotel extends State<AgregarHotel>{
                 margin: const EdgeInsets.only(left:0, right: 6, top: 20, bottom: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     primary: Colors.white54,
                     onPrimary: Colors.white,
-                    // side: BorderSide(color: Colors.red, width: 1),
                   ),
                   //Redirigimos al home importando BarraInferior de otro .dart
                   onPressed: () =>{

@@ -247,7 +247,6 @@ class _Reservas extends State<Reservas> {
                                         Container(
                                           child:  Text(
                                             "\$${ReservasData[index]["Costo"].toString()} MXN p/p",
-                                            // "\$352 MXN p/p",
                                             style: const TextStyle(
                                               fontSize: 11,
                                               fontWeight: FontWeight.w800,
