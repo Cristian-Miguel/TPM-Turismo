@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:proyectotmp/src/EmpresaViews/AgregarViaje.dart';
+import 'package:proyectotmp/barra_inferior/barrainf.dart' as barra;
 
 class ListarViajes extends StatefulWidget{
   @override
@@ -15,18 +16,17 @@ class _ListarViajes extends State<ListarViajes> {
 
   late List ServiciosData = [];
   late List ServiciosV = [];
-
-  int activeIndex= 0;
+  var idUser = barra.idUser;
 
   //obtenemos los datos de la api
   getReservas() async {
 
     //para telefono
-    // var url = Uri.parse('http://10.0.2.2:4000/servicios/Viajes');
+    // var url = Uri.parse('http://10.0.2.2:4000/empresa/Viajes');
 
     // para web
-    var url = Uri.parse('http://localhost:4000/servicios/Viajes');
-    var response = await http.get(url);
+    var url = Uri.parse('http://localhost:4000/empresa/Viajes');
+    var response = await http.post(url, body: {'id': '$idUser'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosV = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);

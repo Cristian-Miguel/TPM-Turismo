@@ -3,6 +3,7 @@ const router = Router();
 const Organizador = require('../models/Organizado');
 
 router.get('/reservas/Hoteles', (req, res) => { 
+    req
     let sql = "SELECT H.idHotel, H.Nombre, H.Descripcion, H.Imagen, H.Costo, H.Calificacion , RS.FechaEntrada FROM "+ 
     "(organizador AS O  INNER JOIN reserva_servicio AS RS ON O.idReserva = RS.idReserva) "+
     "JOIN  hotel AS H ON O.idHotel = H.idHotel WHERE RS.idUsuario = 1";

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'AgregarRestaurante.dart';
+import 'package:proyectotmp/barra_inferior/barrainf.dart' as barra;
 
 class ListarRestaurantes extends StatefulWidget{
   @override
@@ -15,8 +16,7 @@ class _ListarRestaurantes extends State<ListarRestaurantes> {
 
   late List ServiciosData = [];
   late List ServiciosR = [];
-
-  int activeIndex= 0;
+  var idUser = barra.idUser;
 
   //obtenemos los datos de la api
   getReservas() async {
@@ -26,7 +26,7 @@ class _ListarRestaurantes extends State<ListarRestaurantes> {
 
     // para web
     var url = Uri.parse('http://localhost:4000/servicios/Restaurantes');
-    var response = await http.get(url);
+    var response = await http.post(url, body: {'id': '$idUser'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosR = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);

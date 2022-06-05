@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'AgregarPaquete.dart';
+import 'package:proyectotmp/barra_inferior/barrainf.dart' as barra;
 
 class ListarPaquetes extends StatefulWidget{
   @override
@@ -15,16 +16,17 @@ class _ListarPaquetes extends State<ListarPaquetes> {
 
   late List ServiciosData = [];
   late List ServiciosP = [];
+  var idUser = barra.idUser;
 
   //obtenemos los datos de la api
   getReservas() async {
 
     //para telefono
-    // var url = Uri.parse('http://10.0.2.2:4000/servicios/Paquetes');
+    // var url = Uri.parse('http://10.0.2.2:4000/empresa/Paquetes');
 
     // para web
-    var url = Uri.parse('http://localhost:4000/servicios/Paquetes');
-    var response = await http.get(url);
+    var url = Uri.parse('http://localhost:4000/empresa/Paquetes/');
+    var response = await http.post(url, body: {'id': '$idUser'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosP = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);

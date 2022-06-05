@@ -12,5 +12,6 @@ app.use(require('./routes/servicios'));
 //Rutas que hacen uso de post
 app.use(express.urlencoded({ extended: true }));    //Middleware para formato x-www-form-urlencoded
 app.use(require('./routes/logIn'));
+app.use(require('./routes/empresa'));
 
 module.exports = app;
