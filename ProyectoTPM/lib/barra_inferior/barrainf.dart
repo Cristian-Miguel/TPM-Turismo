@@ -118,15 +118,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                     Navigator.of(context).pop(),
                   }
                 ),
-                ListTile(
-                    leading: Icon(Icons.favorite),
-                    title: Text('Favoritos'),
-                    onTap: () => {
-                      onTapTapped(5,true),
-                      Navigator.of(context).pop(),
-                    }
-                ),
-
+                if(isLogin) favoritosBoton(),
                 if(tipo == "Administrador" || tipo == "Empresa") panelEmpresa() as Column,
 
                 Container(
@@ -140,15 +132,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                     ),
                   ),
                 ),
-                ListTile(
-                    leading: Icon(Icons.login),
-                    title: Text('Log In'),
-                    onTap: () => {
-                      onTapTapped(11,true),
-                      Navigator.of(context).pop(),
-                    }
-                ),
-                if(isLogin) logOut(),
+                logIn_Out(),
               ],
           ),
         ),
@@ -223,13 +207,35 @@ class BarraInferiorMenu extends State<BarraInferior>{
     );
   }
 
-  ListTile logOut(){
+  ListTile logIn_Out(){
+    if(isLogin){
+      return ListTile(
+        leading: Icon(Icons.exit_to_app),
+        title: Text('Logout'),
+        onTap: () => {
+          sF.closeSession(context),
+        },
+      );
+    }else{
+      return ListTile(
+          leading: Icon(Icons.login),
+          title: Text('Log In'),
+          onTap: () => {
+            onTapTapped(4,true),
+            Navigator.of(context).pop(),
+          }
+      );
+    }
+  }
+
+  ListTile favoritosBoton(){
     return ListTile(
-      leading: Icon(Icons.exit_to_app),
-      title: Text('Logout'),
-      onTap: () => {
-        sF.closeSession(context),
-      },
+        leading: Icon(Icons.favorite),
+        title: Text('Favoritos'),
+        onTap: () => {
+          onTapTapped(5,true),
+          Navigator.of(context).pop(),
+        }
     );
   }
 
