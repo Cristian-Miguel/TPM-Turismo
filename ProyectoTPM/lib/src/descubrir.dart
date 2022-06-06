@@ -53,10 +53,10 @@ class _Descubrir extends State<Descubrir>{
   void agregarReserva(controllers) async {
     var fechaEntrada = controllers[0];
     var fechaSalida = controllers[1];
-    var costoNeto = controllers[2];
-    var costoTotal = controllers[3];
+    var costoNeto = controllers[2].toString().substring(1);
+    var costoTotal = controllers[3].toString().substring(1);
     var Personas = controllers[4];
-    var tipoS = controllers[5];
+    var tipoS = controllers[5].toString().substring(2);
 
     //var urlReserva = Uri.parse('http://10.0.2.2:4000/Agregar/Reserva');
 
@@ -72,8 +72,8 @@ class _Descubrir extends State<Descubrir>{
       try{
 
         if(idUser != ''){
-          response = await http.post(urlReserva, body: {'Tipo de servicio': '$tipoS','fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
-            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','idUser': '$idUser'
+          response = await http.post(urlReserva, body: {'TipoServicio': '$tipoS','fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
+            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','CantPersonas': '$Personas','idUser': '$idUser'
           });
 
           if(json.decode(response.body)['row'].toString() != 'null'){

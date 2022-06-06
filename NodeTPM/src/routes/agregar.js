@@ -85,14 +85,17 @@ router.post('/Agregar/Paquete', (req, res, next) => {
 });
 
 router.post('/Agregar/Reserva', (req, res, next) => {
+    const {TipoServicio} = req.body;
     const {fechaEntrada} = req.body;
     const {fechaSalida} = req.body;
     const {costoNeto} = req.body;
     const {costoTotal} = req.body;
+    const {CantPersonas} = req.body;
     const {idUser} = req.body;
 
     console.log(req.body);
-    let sql = "INSERT INTO reserva_servicio(Nombre, Descripcion, NumeroPaquetes, Costo, idUsuario) VALUES ('"+nombre+"','"+descripcion+"',"+numeroPaquete+","+costo+","+idUser+")";
+    let sql = "INSERT INTO reserva_servicio(TipoServicio, FechaEntrada, FechaSalida, FormaPago, CostoTotal, CantPersonas,confirmado,idUsuario) VALUES ('"+TipoServicio+"','"+fechaEntrada+"','"+fechaSalida+"','Efectivo',"+costoTotal+","+CantPersonas+",'0',"+idUser+")";
+    //let sql2 = "INSERT INTO organizador(TipoGuardado,idReserva,idHotel,idViaje,idRestaurante,idTour) VALUES();"
     Reservas.Agregar(res,sql);
 });
 
