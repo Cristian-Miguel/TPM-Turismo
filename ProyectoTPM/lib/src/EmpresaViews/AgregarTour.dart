@@ -1,4 +1,14 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../../barra_inferior/barrainf.dart';
+
+import '../../barra_inferior/barrainf.dart' as barra;
+
+import 'ListarTour.dart' as listaT;
 
 class AgregarTours extends StatefulWidget{
   @override
@@ -24,6 +34,86 @@ class _AgregarTours extends State<AgregarTours>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
+
+  void _sendControllers(){
+    _updateControllers();
+  }
+
+  void _updateControllers(){
+    var controllers = [
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
+      _costoInputTextController.value.text,
+      _cantidadInputTextController.value.text,
+      _ciudadInputTextController.value.text,
+    ];
+    agregarTour(controllers);
+  }
+
+  void agregarTour(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var costo = controllers[2];
+    var cantidad = controllers[3];
+    var ciudad = controllers[4];
+
+    //var urlTour = Uri.parse('http://10.0.2.2:4000/Agregar/Tour');
+
+    var urlTour = Uri.parse('http://localhost:4000/Agregar/Tour');
+
+    late List tours = [];
+    var response;
+    var idUser = barra.idUser;
+
+
+    if(_verifyData(nombre,descripcion,costo,cantidad,ciudad,context)){
+      try{
+        response = await http.post(urlTour, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'costo': '$costo','cantidad': '$cantidad','ciudad': '$ciudad','idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          tours = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+        if(!ciudad.toString().isEmpty){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder:(context)
+                  {
+                    return barra.BarraInferior();
+                    //return listaT.ListarTours();
+                  }
+              )
+          );
+        }
+        _alert('Tour agregado',context);
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,costo,cantidad,ciudad,context){
+    if(nombre == '' || descripcion == '' || costo == '' || cantidad == '' || ciudad == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -331,7 +421,7 @@ class _AgregarTours extends State<AgregarTours>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Cantidad de tours",
+                "Cantidad de personas para el tour",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -407,7 +497,16 @@ class _AgregarTours extends State<AgregarTours>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: () =>{
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder:(context)
+                          {
+                            return BarraInferior();
+                          }
+                      )
+                  )
+                },
                 child: const Text(
                   'Cancelar',
                   style: TextStyle(
@@ -428,7 +527,7 @@ class _AgregarTours extends State<AgregarTours>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: _sendControllers,
                 child: const Text(
                   'Agregar',
                   style: TextStyle(

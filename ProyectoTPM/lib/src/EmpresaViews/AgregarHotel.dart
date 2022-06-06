@@ -818,7 +818,7 @@ class _AgregarHotel extends State<AgregarHotel>{
   }
 
   void _updateControllers(){
-    final controllers = [
+    var controllers = [
       _nombreInputTextController.value.text,
       _descripcionInputTextController.value.text,
       _categoriaInputTextController,
@@ -831,19 +831,18 @@ class _AgregarHotel extends State<AgregarHotel>{
       _ciudadInputTextController.value.text,
       _estadoInputTextController.value.text,
       _codigopostalInputTextController.value.text,
-      //_telefonoInputTextController,
     ];
-    agregarHotel(controllers);
+      agregarHotel(controllers);
   }
 
 
   void agregarHotel(controllers) async {
     var nombre = controllers[0];
     var descripcion = controllers[1];
-    var categoria = controllers[2];
+    var categoria = controllers[2].toString().isEmpty? "Familiar":controllers[2];
     var costo = controllers[3];
     var numeroHab = controllers[4];
-    var tipoHab = controllers[5];
+    var tipoHab = controllers[5].toString().isEmpty? "Quad":controllers[5];
     var numeroExt = controllers[6];
     var calle = controllers[7];
     var colonia = controllers[8];
@@ -852,13 +851,15 @@ class _AgregarHotel extends State<AgregarHotel>{
     var codigoPostal = controllers[11];
     //var telefono = controllers[12];
 
-    var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Hotel');
+    //var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Hotel');
+
+    var urlHotel = Uri.parse('http://localhost:4000/Agregar/Hotel');
 
     late List hoteles = [];
     var response;
     var idUser = barra.idUser;
 
-    if(_verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+    if(_verifyData(nombre,descripcion,costo,numeroHab,numeroExt,calle,
         colonia,ciudad,estado,codigoPostal,context)){
       try{
         response = await http.post(urlHotel, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
@@ -870,6 +871,17 @@ class _AgregarHotel extends State<AgregarHotel>{
         if(json.decode(response.body)['row'].toString() != 'null'){
           hoteles = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
         }
+        if(!codigoPostal.toString().isEmpty){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder:(context)
+                  {
+                    return barra.BarraInferior();
+                  }
+              )
+          );
+        }
+        _alert('Hotel agregado',context);
 
       }catch(_){
         _alert('Datos incorrectos',context);
@@ -877,10 +889,10 @@ class _AgregarHotel extends State<AgregarHotel>{
     }
   }
 
-  bool _verifyData(nombre,descripcion,categoria,costo,numeroHab,tipoHab,numeroExt,calle,
+  bool _verifyData(nombre,descripcion,costo,numeroHab,numeroExt,calle,
       colonia,ciudad,estado,codigoPostal,context){
-    if(nombre == '' || descripcion == '' || categoria == '' || costo == '' || costo == '' || numeroHab == ''
-    || tipoHab == '' || numeroExt == '' || calle == '' || colonia == '' || ciudad == '' || estado == '' ||
+    if(nombre == '' || descripcion == '' || costo == '' || costo == '' || numeroHab == ''
+     || numeroExt == '' || calle == '' || colonia == '' || ciudad == '' || estado == '' ||
     codigoPostal == ''){
       _alert('Los campos no pueden estar vacios',context);
       return false;
@@ -903,8 +915,6 @@ class _AgregarHotel extends State<AgregarHotel>{
 
   void _sendControllers(){
     _updateControllers();
-    Navigator.pop(context);
-    _alert('Hotel agregado',context);
   }
 
   Future<String?> _showModal(int index) {

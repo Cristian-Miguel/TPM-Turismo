@@ -1,4 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../../barra_inferior/barrainf.dart';
+
+import '../../barra_inferior/barrainf.dart' as barra;
 
 class AgregarViaje extends StatefulWidget{
   @override
@@ -26,6 +33,87 @@ class _AgregarViaje extends State<AgregarViaje>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
 
+  void _sendControllers(){
+    _updateControllers();
+  }
+
+  void _updateControllers(){
+    var controllers = [
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
+      _costoInputTextController.value.text,
+      _origenInputTextController.value.text,
+      _destinoInputTextController.value.text,
+      _numeroasientosInputTextController.value.text,
+      _ImagenInputTextController.value.text,
+    ];
+    agregarViaje(controllers);
+  }
+
+  void agregarViaje(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var costo = controllers[2];
+    var origen = controllers[3];
+    var destino = controllers[4];
+    var numeroAsientos = controllers[5];
+
+    //var urlHotel = Uri.parse('http://10.0.2.2:4000/Agregar/Viaje');
+
+    var urlHotel = Uri.parse('http://localhost:4000/Agregar/Viaje');
+
+    late List viajes = [];
+    var response;
+    var idUser = barra.idUser;
+
+    if(_verifyData(nombre,descripcion,costo,origen,destino,numeroAsientos,context)){
+      try{
+        response = await http.post(urlHotel, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'costo': '$costo','origen': '$origen','destino': '$destino','numeroAsientos': '$numeroAsientos','idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          viajes = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+        if(!numeroAsientos.toString().isEmpty){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder:(context)
+                  {
+                    return barra.BarraInferior();
+                  }
+              )
+          );
+        }
+        _alert('Viaje agregado',context);
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,costo,origen,destino,numeroAsientos,context){
+    if(nombre == '' || descripcion == '' || costo == '' || origen == '' || destino == '' ||
+    numeroAsientos == '' ){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -443,7 +531,16 @@ class _AgregarViaje extends State<AgregarViaje>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: () =>{
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder:(context)
+                          {
+                            return BarraInferior();
+                          }
+                      )
+                  )
+                },
                 child: const Text(
                   'Cancelar',
                   style: TextStyle(
@@ -464,7 +561,7 @@ class _AgregarViaje extends State<AgregarViaje>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: _sendControllers,
                 child: const Text(
                   'Agregar',
                   style: TextStyle(
