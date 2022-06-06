@@ -8,6 +8,8 @@ import '../../barra_inferior/barrainf.dart';
 
 import '../../barra_inferior/barrainf.dart' as barra;
 
+import '../../barra_inferior/barrainf.dart';
+
 class AgregarHotel extends StatefulWidget{
   @override
   State<StatefulWidget> createState(){
@@ -342,7 +344,7 @@ class _AgregarHotel extends State<AgregarHotel>{
                       width: 110,
                       height: 110,
                       // color: const Color.fromRGBO(234, 234, 234, 1.0),
-                      margin: const EdgeInsets.only( right: 10, top:5, bottom: 5),
+                      margin: const EdgeInsets.only(right: 10, top:5, bottom: 5),
                       decoration: BoxDecoration(
                         color: const Color.fromRGBO(220, 220, 220, 1.0),  //PARA PROBAR CONTAINER
                         borderRadius: BorderRadius.circular(10.0),
@@ -762,12 +764,11 @@ class _AgregarHotel extends State<AgregarHotel>{
                 margin: const EdgeInsets.only(left:0, right: 6, top: 20, bottom: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     primary: Colors.white54,
                     onPrimary: Colors.white,
-                    // side: BorderSide(color: Colors.red, width: 1),
                   ),
                   //Redirigimos al home importando BarraInferior de otro .dart
                   onPressed: () =>{
@@ -793,8 +794,8 @@ class _AgregarHotel extends State<AgregarHotel>{
                 margin: const EdgeInsets.only(left:6, right: 0, top: 20, bottom: 20),
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                     ),
                     primary: Colors.pinkAccent,
                     onPrimary: Colors.white,

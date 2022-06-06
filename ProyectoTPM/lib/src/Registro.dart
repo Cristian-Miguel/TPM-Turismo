@@ -20,6 +20,16 @@ class _Registro extends State<Registro>{
   final _photoInputTextController = TextEditingController();
   final _passwordInputTextController = TextEditingController();
   final _emailInputTextController = TextEditingController();
+  Object _tipoUsuarioInputTextController = "";
+
+  Object TipoUsuarioselectedValue = "Usuario";
+  List<DropdownMenuItem<String>> get TipoUsuariodropdownItems{
+    const List<DropdownMenuItem<String>> menuItems = [
+      DropdownMenuItem(child: Text("Usuario"),          value: "Usuario"),
+      DropdownMenuItem(child: Text("Empresa"),            value: "Urbano"),
+    ];
+    return menuItems;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -238,6 +248,51 @@ class _Registro extends State<Registro>{
                 margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
                 alignment: Alignment.centerLeft,
                 child: const Text(
+                  "Tipo de Usuario",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w400,
+                    fontSize: 15,
+                  ),
+                ),
+              ),
+              Container(
+                height: 50,
+                alignment: Alignment.centerLeft,
+                margin: const EdgeInsets.only(left: 12, right: 12, bottom: 15),
+                child: DropdownButtonFormField(
+                    decoration: InputDecoration(
+                      enabledBorder: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                            color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0,
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      border: OutlineInputBorder(
+                        borderSide: const BorderSide(
+                          // color: Color.fromRGBO(93, 93, 93, 0.1),
+                            width: 0
+                        ),
+                        borderRadius: BorderRadius.circular(15),
+                      ),
+                      filled: true,
+                      fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
+                    ),
+                    dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                    value: TipoUsuarioselectedValue,
+                    onChanged: (Object? value) {
+                      setState(() {
+                        TipoUsuarioselectedValue = value!;
+                        _tipoUsuarioInputTextController = value;
+                      });
+                    },
+                    items: TipoUsuariodropdownItems
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
+                alignment: Alignment.centerLeft,
+                child: const Text(
                   "Correo Electronico",
                   style: TextStyle(
                     fontWeight: FontWeight.w400,
@@ -298,8 +353,8 @@ class _Registro extends State<Registro>{
                     margin: const EdgeInsets.only(left:0, right: 6, top: 20, bottom: 30),
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         primary: Colors.white54,
                         onPrimary: Colors.white,
@@ -320,8 +375,8 @@ class _Registro extends State<Registro>{
 
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(10.0),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
                         ),
                         primary: Colors.pinkAccent,
                         onPrimary: Colors.white,
@@ -340,7 +395,8 @@ class _Registro extends State<Registro>{
                             _photoInputTextController.text,
                             _passwordInputTextController.text,
                             _emailInputTextController.text,
-                            "Turista", context);
+                            _tipoUsuarioInputTextController.toString().isEmpty ? "Usuario" : _tipoUsuarioInputTextController,
+                             context);
                         }
                       },
                       child: const Text(

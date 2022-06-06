@@ -3,6 +3,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:proyectotmp/src/EmpresaViews/AgregarTour.dart';
+import 'package:proyectotmp/barra_inferior/barrainf.dart' as barra;
 
 class ListarTours extends StatefulWidget{
   @override
@@ -15,18 +16,18 @@ class _ListarTours extends State<ListarTours> {
 
   late List ServiciosData = [];
   late List ServiciosT = [];
-
-  int activeIndex= 0;
+  var idUser = barra.idUser;
 
   //obtenemos los datos de la api
   getReservas() async {
+    var tipo = barra.tipo;
 
     //para telefono
-    // var url = Uri.parse('http://10.0.2.2:4000/servicios/Tour');;
+    // var url = Uri.parse('http://10.0.2.2:4000/empresa/Tour');;
 
     // para web
-    var url = Uri.parse('http://localhost:4000/servicios/Tour');
-    var response = await http.get(url);
+    var url = Uri.parse('http://localhost:4000/empresa/Tour');
+    var response = await http.post(url, body: {'id': '$idUser','tipo': '$tipo'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ServiciosT = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
@@ -116,7 +117,7 @@ class _ListarTours extends State<ListarTours> {
                   children: <Widget>[
                     IconButton(
                       alignment: Alignment.centerLeft,
-                      onPressed: (){},
+                      onPressed: (){InfoTour(index);},
                       icon: const Icon(
                         Icons.info_outline,
                         color: Colors.grey,
@@ -169,4 +170,289 @@ class _ListarTours extends State<ListarTours> {
         )
     );
   }
+
+  InfoTour(index){
+    Navigator.of(context).push(
+        MaterialPageRoute(
+            builder:(context)
+            {
+              return Scaffold(
+                appBar: AppBar(
+                  title: const Text('Reservar', style: TextStyle(color: Colors.black),),
+                  backgroundColor: Colors.white,
+                  iconTheme: const IconThemeData(color: Colors.black),
+                ),
+                body: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.max,
+                    children: <Widget>[
+
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 25),
+                        child: const Text(
+                          "Informacion del Hotel ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24,
+                          ),
+                        ),
+                      ),
+
+                      const Divider(
+                        color: Colors.black38,
+                      ),
+
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 20),
+                        child: const Text(
+                          "Id: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          alignment: Alignment.centerLeft,
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          child: Text(
+                            ServiciosData[index]["idTour"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Nombre: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Nombre"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Descripcion: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child: Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Descripcion"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 10, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Imagen: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right:16, top: 5),
+                        height: 175,
+                        width: 175,
+                        decoration: BoxDecoration(
+                            color: Colors.yellow,  //PARA PROBAR CONTAINER
+                            borderRadius: BorderRadius.circular(10.0),
+                            image: DecorationImage(
+                              image: NetworkImage("${ServiciosData[index]["Imagen"].toString()}"),
+                              fit: BoxFit.cover,
+                            ),
+                            boxShadow: const[
+                              BoxShadow(
+                                //SOMBRA
+                                color: Color(0xffA4A4A4),
+                                offset: Offset(1.0, 5.0),
+                                blurRadius: 3.0,
+                              ),
+                            ]
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                            "Cantidad de personas: ",
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            )
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Cantidad"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Costo: ",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "\$"+ServiciosData[index]["Costo"].toString()+".00",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Ciudad:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Ciudad"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Descuento:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "\$"+ServiciosData[index]["Descuento"].toString()+".00",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      Container(
+                        margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                        alignment: Alignment.centerLeft,
+                        child: const Text(
+                          "Calificacion:",
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        child:Container(
+                          margin: const EdgeInsets.only(left:16, right: 16, top: 5, bottom: 20),
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            ServiciosData[index]["Calificacion"].toString(),
+                            style: const TextStyle(
+                              fontWeight: FontWeight.normal,
+                              fontSize: 18,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                    ],
+                  ),
+                ),
+              );
+            }
+        )
+    );
+  }
+
 }

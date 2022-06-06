@@ -196,7 +196,7 @@ class _Perfil extends State<Perfil>{
               children: <Widget>[
 
                 Container(
-                  margin: const EdgeInsets.only(bottom: 40),
+                  margin: const EdgeInsets.only(top:20, bottom: 40),
                   width: 90,
                   height: 90,
                   // color: const Color.fromRGBO(32, 32, 32, 0.7),
@@ -211,17 +211,6 @@ class _Perfil extends State<Perfil>{
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    "Correo Electrónico",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                Container(
                   width: double.infinity,
                   height: 40,
                   margin: const EdgeInsets.only(left:12, right: 12),
@@ -231,37 +220,27 @@ class _Perfil extends State<Perfil>{
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     controller: _emailInputTextController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '...Correo...',
                       border: InputBorder.none,
                     ),
                   ),
                 ),
                 Container(
-                  margin: const EdgeInsets.only(left:12, right: 12, bottom: 10),
-                  alignment: Alignment.centerLeft,
-                  child: const Text(
-                    "Contraseña",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w400,
-                      fontSize: 15,
-                    ),
-                  ),
-                ),
-                Container(
                   width: double.infinity,
                   height: 40,
-                  margin: const EdgeInsets.only(left:12, right: 12),
+                  margin: const EdgeInsets.only(left:12, right: 12, top: 30),
                   decoration: BoxDecoration(
                     color: Color.fromRGBO(93, 93, 93, 0.1), borderRadius: BorderRadius.circular(50),
                   ),
                   child: TextFormField(
                     textAlign: TextAlign.center,
                     controller: _passwordInputTextController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       hintText: '...Contraseña...',
                       border: InputBorder.none,
                     ),
+                    obscureText: true,
                   ),
                 ),
 
@@ -314,7 +293,7 @@ class _Perfil extends State<Perfil>{
 
                 Container(
                   width: Theme.of(context).textTheme.bodyText1!.fontSize! * 30,
-                  margin: const EdgeInsets.only(left:16, right: 16, top: 10),
+                  margin: const EdgeInsets.only(left:16, right: 16, top: 10, bottom: 30),
 
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(

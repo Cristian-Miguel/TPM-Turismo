@@ -18,7 +18,7 @@ class sesionFunctions{
     var tipo;
 
     var urlUsers = Uri.parse('http://localhost:4000/Usuarios/LogIn/');
-    //var urlUsers = Uri.parse('http://10.0.2.2:4000/Usuarios/LogIn/');
+    // var urlUsers = Uri.parse('http://10.0.2.2:4000/Usuarios/LogIn/');
     late List users = [];
     var response;
 
@@ -82,6 +82,11 @@ class sesionFunctions{
     session.set("user", "0");
     session.set("idUser", 0);
     session.set("tipo", "Turista");
+    Navigator.pushAndRemoveUntil(
+      context,
+      MaterialPageRoute(builder: (context) => BarraInferior()), // this mainpage is your page to refresh
+          (Route<dynamic> route) => false,
+    );
     _alert('Sesión cerrada',context);
   }
 
