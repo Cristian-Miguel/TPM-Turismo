@@ -17,6 +17,7 @@ class Descubrir extends StatefulWidget{
 class _Descubrir extends State<Descubrir>{
 
   late List ServiciosData = [];
+  late List ServiciosData2 = [];
   late List ServiciosH = [];
   late List ServiciosV = [];
   late List ServiciosR = [];
@@ -50,6 +51,7 @@ class _Descubrir extends State<Descubrir>{
   //obtenemos los datos de la api
   getReservas() async {
     var desc = barra.desc;
+    var buscar = barra.buscar.text;
 
     //para telefono
     // var urlH = Uri.parse('http://10.0.2.2:4000/servicios/Hoteles');
@@ -88,12 +90,12 @@ class _Descubrir extends State<Descubrir>{
     }
 
     if(desc == 0){
+      ServiciosData2.addAll(ServiciosH);
+      ServiciosData2.addAll(ServiciosV);
+      ServiciosData2.addAll(ServiciosR);
+      ServiciosData2.addAll(ServiciosT);
+      ServiciosData2.addAll(ServiciosP);
       setState(() {
-        ServiciosData.addAll(ServiciosH);
-        ServiciosData.addAll(ServiciosV);
-        ServiciosData.addAll(ServiciosR);
-        ServiciosData.addAll(ServiciosT);
-        ServiciosData.addAll(ServiciosP);
         _costoNetoInputTextController.text = "\$0.00";
         _costoTotalInputTextController.text = "\$30.00";
       });
@@ -101,17 +103,20 @@ class _Descubrir extends State<Descubrir>{
     if(desc == 1){
       setState(() {ServiciosData.addAll(ServiciosH);});
     }
-    if(desc == 2){
-      setState(() {ServiciosData.addAll(ServiciosV);});
-    }
-    if(desc == 3){
-      setState(() {ServiciosData.addAll(ServiciosR);});
-    }
-    if(desc == 4){
-      setState(() {ServiciosData.addAll(ServiciosT);});
-    }
-    if(desc == 5){
-      setState(() {ServiciosData.addAll(ServiciosP);});
+
+    if(buscar != ""){
+      for(int i = 0; i < ServiciosData2.length; i++){
+        if(ServiciosData2[i]["Nombre"].toString().contains(buscar)){
+          ServiciosData.add(ServiciosData2[i]);
+        }
+      }
+      setState(() {
+        ServiciosData;
+      });
+    }else{
+      setState(() {
+        ServiciosData.addAll(ServiciosData2);
+      });
     }
 
   }
