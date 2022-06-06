@@ -247,8 +247,9 @@ class _Descubrir extends State<Descubrir>{
   var nombre = "";
   var apellidoP = "";
   var id = 0;
+  var TipoReserva = "";
 
-  void getUserInfo(index,tipo) async{
+  void getUserInfo(index, tipo) async{
     var id = 0;
     var columna = "";
     var tabla = "";
@@ -256,7 +257,7 @@ class _Descubrir extends State<Descubrir>{
     if(tipo == "idHotel"){
       id = ServiciosData[index]["idHotel"];
       columna = "idHotel";
-      tabla = "hotel";
+      tabla = TipoReserva = "hotel" ;
     }
     if(tipo == "idViaje"){
       id = ServiciosData[index]["idViaje"];
@@ -876,7 +877,9 @@ class _Descubrir extends State<Descubrir>{
                         onPrimary: Colors.white,
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
-                      onPressed: (){},
+                      onPressed: (){
+
+                      },
                       child: const Text(
                         'Confirmar Reserva',
                         style: TextStyle(
