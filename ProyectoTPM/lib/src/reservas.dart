@@ -507,6 +507,10 @@ class _Reservas extends State<Reservas> {
     );
   }
 
+  void searchFolio(){
+
+  }
+
   void getUserInfo(index,tipo) async{
     var id = 0;
     var columna = "";
