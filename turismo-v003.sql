@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Turismo`.`Turista` (
   `idTurista` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(50) NULL,
-  `Apellido Paterno` VARCHAR(50) NULL,
+  `ApellidoPaterno` VARCHAR(50) NULL,
   `ApellidoMaterno` VARCHAR(50) NULL,
   PRIMARY KEY (`idTurista`))
 ENGINE = InnoDB;
