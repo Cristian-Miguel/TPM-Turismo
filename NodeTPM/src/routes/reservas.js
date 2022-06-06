@@ -105,7 +105,6 @@ router.post('/reservas/restauranteN', (req, res) => {
 router.post('/reservas/eliminar', (req, res) => { 
     const {id} = req.body;
     let sql;
-
     sql = "DELETE FROM organizador WHERE idReserva = "+id+";";
     Organizador.eliminarReserva(res, sql);
     sql = "DELETE FROM reserva_servicio WHERE idReserva = "+id+";";
@@ -114,9 +113,10 @@ router.post('/reservas/eliminar', (req, res) => {
 
 router.post('/reservas/Folio', (req, res, next) => {
     const {id} = req.body;
-    let sql = "SELECT * FROM (reserva_servicio AS R INNER JOIN turista AS T ON R.idTurista = T.idTurista)"+
-    +"INNER JOIN  organizador AS O ON O.idReserva = R.idReserva WHERE R.idReserva = "+id;
-    Organizador.Buscarfolio(res, sql);
+    let sql = "SELECT O.*, T.Nombre, T.ApellidoPaterno, T.ApellidoMaterno  FROM "+
+    "reserva_servicio AS R INNER JOIN turista AS T ON R.idTurista = T.idTurista "+ 
+    "INNER JOIN organizador AS O ON O.idReserva = R.idReserva WHERE R.idReserva = " +id;
+    Organizador.Buscarfolio(res, sql, id);
 });
 
 router.post('/reservas/confirmar', (req, res) => { 

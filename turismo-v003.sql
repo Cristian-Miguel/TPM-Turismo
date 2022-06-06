@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Turismo`.`Turista` (
   `idTurista` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(50) NULL,
-  `Apellido Paterno` VARCHAR(50) NULL,
+  `ApellidoPaterno` VARCHAR(50) NULL,
   `ApellidoMaterno` VARCHAR(50) NULL,
   PRIMARY KEY (`idTurista`))
 ENGINE = InnoDB;
@@ -400,7 +400,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Turismo`;
-INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `Apellido Paterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
+INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `ApellidoPaterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
 
 COMMIT;
 

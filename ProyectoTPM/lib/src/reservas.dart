@@ -493,7 +493,12 @@ class _Reservas extends State<Reservas> {
                 onPrimary: Colors.white,
                 // side: BorderSide(color: Colors.red, width: 1),
               ),
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  var folio = _folioInputTextController.value.text;
+                  searchFolio( folio );
+                });
+              },
               child: const Text(
                 'Buscar',
                 style: TextStyle(
@@ -507,8 +512,28 @@ class _Reservas extends State<Reservas> {
     );
   }
 
-  void searchFolio(){
+  searchFolio( id ) async {
+    //para telefono
+    // var url = Uri.parse('http://10.0.2.2:4000/reservas/Folio');
+    print("-------->"+id.toString());
+    // para web
+    var url = Uri.parse('http://localhost:4000/reservas/Folio');
 
+    var response = await http.post(url, body: {'id': '$id'});
+
+    if(json.decode(response.body)['row'].toString() != 'null'){
+      ReservasH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+    }
+
+    setState(() {
+      ReservasData.addAll(ReservasH);
+      if(ReservasData[0]["idHotel"] != null)       _onChangeReserva(0,"idHotel");
+      if(ReservasData[0]["idViaje"] != null)       _onChangeReserva(0,"idViaje");
+      if(ReservasData[0]["idRestaurante"] != null) _onChangeReserva(0,"idRestaurante");
+      if(ReservasData[0]["idTour"] != null)        _onChangeReserva(0,"idTour");
+      if(ReservasData[0]["idPaquete"] != null)     _onChangeReserva(0,"idPaquete");
+      // _onChangeReserva( ReservasData[0]['id'], ReservasData[0]['id']);
+    });
   }
 
   void getUserInfo(index,tipo) async{
@@ -566,20 +591,18 @@ class _Reservas extends State<Reservas> {
             builder: (context) {
               final CarouselController _controller = CarouselController();
               final List<String>  images = [
-                'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/3601456/pexels-photo-3601456.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://www.eluniversal.com.mx/sites/default/files/2019/05/17/playas-maruata-costa-michoacana.jpeg',
-                'https://images.pexels.com/photos/3601369/pexels-photo-3601369.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/4602279/pexels-photo-4602279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/163872/italy-cala-gonone-air-sky-163872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/412681/pexels-photo-412681.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
               ];
 
               final List<String> descripimages = [
-                'https://images.pexels.com/photos/1172518/pexels-photo-1172518.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/2403840/pexels-photo-2403840.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/4318913/pexels-photo-4318913.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-                'https://images.pexels.com/photos/462024/pexels-photo-462024.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
               ];
 
               return Scaffold(
@@ -610,22 +633,6 @@ class _Reservas extends State<Reservas> {
                         },
                       ),
                       const SizedBox(height: 10,),
-                      //buildIndicator(images),
-                      /*
-                      Padding(
-                          padding: EdgeInsets.only(left: 0, top: 0),
-                        child: Center(
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: activeIndex,
-                            count:  images.length,
-                            effect:  const WormEffect(
-                              dotWidth:  35.0,
-                              dotHeight:  10.0,
-                            ),  // your preferred effect
-                          ),
-                        ),
-                      ),
-                      */
                       Expanded(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
