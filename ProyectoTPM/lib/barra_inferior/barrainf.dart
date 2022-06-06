@@ -30,6 +30,7 @@ var tipo = "";
 bool isLogin = false;
 var user = "";
 var idUser = 0;
+var buscar = TextEditingController();
 
 var desc = 0;
 class BarraInferiorMenu extends State<BarraInferior>{
@@ -150,14 +151,14 @@ class BarraInferiorMenu extends State<BarraInferior>{
           child: Center(
             child: TextField(
               textAlign: TextAlign.center,
+              controller: buscar,
               decoration: InputDecoration(
                   suffixIcon: IconButton(
                     // icon: Icon(Icons.clear),
                     icon: Icon(Icons.search),
                     color: Colors.pinkAccent,
                     onPressed: () {
-                      // FocusScope.of(context).dispose();
-                      // Navigator.of(context).pop();
+                      onTapTapped(1,true);
                     },
                   ),
                   hintText: '¿Qué quieres vivir?...',
@@ -171,6 +172,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
       body: colorChange ? widgetsChildren[indexPage] : widgetsChildren[indexTap],
       bottomNavigationBar: BottomNavigationBar(
           onTap: (index) => {
+              if(index == 1) buscar = TextEditingController.fromValue(TextEditingValue.empty),
               desc = 0,
               setState(() {
                 indexTap = index;
