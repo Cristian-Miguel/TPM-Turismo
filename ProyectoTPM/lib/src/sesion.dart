@@ -17,8 +17,8 @@ class sesionFunctions{
     var idUser;
     var tipo;
 
-    //var urlUsers = Uri.parse('http://localhost:4000/Usuarios/LogIn/');
-    var urlUsers = Uri.parse('http://10.0.2.2:4000/Usuarios/LogIn/');
+    var urlUsers = Uri.parse('http://localhost:4000/Usuarios/LogIn/');
+    //var urlUsers = Uri.parse('http://10.0.2.2:4000/Usuarios/LogIn/');
     late List users = [];
     var response;
 
