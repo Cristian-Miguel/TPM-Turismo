@@ -516,26 +516,33 @@ class _Reservas extends State<Reservas> {
     //para telefono
     // var url = Uri.parse('http://10.0.2.2:4000/reservas/Folio');
     var identificador = id.toString();
+    late List Reservas = [];
+
     // para web
     var url = Uri.parse('http://localhost:4000/reservas/Folio');
 
     var response = await http.post(url, body: {'id': '$identificador'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
-      ReservasH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+      Reservas = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
     }
+
     if(ReservasData.isNotEmpty){
       ReservasData.removeAt(0);
     }
 
     setState(() {
-      ReservasData.addAll(ReservasH);
-      if(ReservasData[0]["idHotel"] != null)       _onChangeReserva(0,"idHotel");
-      if(ReservasData[0]["idViaje"] != null)       _onChangeReserva(0,"idViaje");
-      if(ReservasData[0]["idRestaurante"] != null) _onChangeReserva(0,"idRestaurante");
-      if(ReservasData[0]["idTour"] != null)        _onChangeReserva(0,"idTour");
-      if(ReservasData[0]["idPaquete"] != null)     _onChangeReserva(0,"idPaquete");
-      // _onChangeReserva( ReservasData[0]['id'], ReservasData[0]['id']);
+      ReservasData.addAll(Reservas);
+      if(Reservas.isNotEmpty){
+        if(ReservasData[0]["idHotel"] != null)       _onChangeReserva(0,"idHotel");
+        if(ReservasData[0]["idViaje"] != null)       _onChangeReserva(0,"idViaje");
+        if(ReservasData[0]["idRestaurante"] != null) _onChangeReserva(0,"idRestaurante");
+        if(ReservasData[0]["idTour"] != null)        _onChangeReserva(0,"idTour");
+        if(ReservasData[0]["idPaquete"] != null)     _onChangeReserva(0,"idPaquete");
+      }else{
+        _SinDatos();
+        print('Hola');
+      }
     });
   }
 
@@ -789,6 +796,20 @@ class _Reservas extends State<Reservas> {
             }
         )
     );
+    });
+  }
+
+  void _SinDatos(){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text("Folio incorrecto o inexistente", style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
     });
   }
 

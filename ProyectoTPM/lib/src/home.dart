@@ -207,8 +207,8 @@ class _Home extends State<Home>{
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.only(left: 30, right:30),
-                      shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(8.0),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                       primary: Colors.white,
                       onPrimary: Colors.black12,
