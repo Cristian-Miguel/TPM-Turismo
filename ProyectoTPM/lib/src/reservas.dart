@@ -516,10 +516,11 @@ class _Reservas extends State<Reservas> {
     //para telefono
     // var url = Uri.parse('http://10.0.2.2:4000/reservas/Folio');
     print("-------->"+id.toString());
+    var identificador = id.toString();
     // para web
     var url = Uri.parse('http://localhost:4000/reservas/Folio');
 
-    var response = await http.post(url, body: {'id': '$id'});
+    var response = await http.post(url, body: {'id': '$identificador'});
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ReservasH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
@@ -583,7 +584,7 @@ class _Reservas extends State<Reservas> {
     var calificacion = ReservasData[index]["Calificacion"];
     var descripcion = ReservasData[index]["Descripcion"];
     var costo = ReservasData[index]["Costo"];
-    print(ReservasData[index].toString());
+    // print(ReservasData[index].toString());
 
     Future.delayed(Duration(milliseconds: 100), () {
     Navigator.of(context).push(
@@ -591,6 +592,8 @@ class _Reservas extends State<Reservas> {
             builder: (context) {
               final CarouselController _controller = CarouselController();
               final List<String>  images = [
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
                 ReservasData[index]["Imagen"],
                 ReservasData[index]["Imagen"],
                 ReservasData[index]["Imagen"],
