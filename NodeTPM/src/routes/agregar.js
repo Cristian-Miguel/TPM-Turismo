@@ -5,6 +5,7 @@ const Viajes = require('../models/Viaje');
 const Restaurantes = require('../models/Restaurante');
 const Tours = require('../models/Tour');
 const Paquetes = require('../models/Paquete');
+const Reservas = require('../models/Reserva');
 
 router.post('/Agregar/Hotel/', (req, res, next) => { 
     const {nombre} = req.body;
@@ -82,5 +83,18 @@ router.post('/Agregar/Paquete', (req, res, next) => {
     let sql = "INSERT INTO paquetes(Nombre, Descripcion, NumeroPaquetes, Costo, idUsuario) VALUES ('"+nombre+"','"+descripcion+"',"+numeroPaquete+","+costo+","+idUser+")";
     Paquetes.Agregar(res,sql);
 });
+
+router.post('/Agregar/Reserva', (req, res, next) => {
+    const {fechaEntrada} = req.body;
+    const {fechaSalida} = req.body;
+    const {costoNeto} = req.body;
+    const {costoTotal} = req.body;
+    const {idUser} = req.body;
+
+    console.log(req.body);
+    let sql = "INSERT INTO reserva_servicio(Nombre, Descripcion, NumeroPaquetes, Costo, idUsuario) VALUES ('"+nombre+"','"+descripcion+"',"+numeroPaquete+","+costo+","+idUser+")";
+    Reservas.Agregar(res,sql);
+});
+
 
 module.exports = router;

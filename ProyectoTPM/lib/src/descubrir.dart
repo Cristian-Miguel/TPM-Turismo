@@ -26,11 +26,119 @@ class _Descubrir extends State<Descubrir>{
   final _fechaSalidaInputTextController = TextEditingController();
   final _costoNetoInputTextController = TextEditingController();
   final _costoTotalInputTextController = TextEditingController();
+  var tipoService = '';
   Object _personasInputTextController = "";
   // String CostoNeto = "0";
   // String CostoTotal = "30";
 
   Object PersonselectedValue = "1";
+
+  void _sendControllers(tipo){
+  _updateControllers(tipo);
+  }
+
+  void _updateControllers(tipo){
+    var controllers = [
+      _fechaEntradaInputTextController.value.text,
+      _fechaSalidaInputTextController.value.text,
+      _costoNetoInputTextController.value.text,
+      _costoTotalInputTextController.value.text,
+      _personasInputTextController.toString(),
+      tipoService = tipo,
+    ];
+    agregarReserva(controllers);
+  }
+
+  void agregarReserva(controllers) async {
+    var fechaEntrada = controllers[0];
+    var fechaSalida = controllers[1];
+    var costoNeto = controllers[2];
+    var costoTotal = controllers[3];
+    var Personas = controllers[4];
+    var tipoS = controllers[5];
+
+    //var urlReserva = Uri.parse('http://10.0.2.2:4000/Agregar/Reserva');
+
+    var urlReserva = Uri.parse('http://localhost:4000/Agregar/Reserva');
+
+    late List reservas = [];
+    var response;
+    var idUser = barra.idUser;
+
+    var idTurista = '';
+
+    if(_verifyData(fechaEntrada,fechaSalida,costoNeto,costoTotal,context)){
+      try{
+
+        if(idUser != ''){
+          response = await http.post(urlReserva, body: {'Tipo de servicio': '$tipoS','fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
+            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','idUser': '$idUser'
+          });
+
+          if(json.decode(response.body)['row'].toString() != 'null'){
+            reservas = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+          }
+          if(!_personasInputTextController.toString().isEmpty){
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder:(context)
+                    {
+                      return barra.BarraInferior();
+                      //return listaT.ListarTours();
+                    }
+                )
+            );
+          }
+          _alert('Reserva agregada',context);
+        }
+        else{
+          response = await http.post(urlReserva, body: {'fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
+            'costoNEto': '$costoNeto','costoTotal': '$costoTotal','idTutista': '$idTurista'
+          });
+
+          if(json.decode(response.body)['row'].toString() != 'null'){
+            reservas = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+          }
+          if(!_personasInputTextController.toString().isEmpty){
+            Navigator.of(context).push(
+                MaterialPageRoute(
+                    builder:(context)
+                    {
+                      return barra.BarraInferior();
+                      //return listaT.ListarTours();
+                    }
+                )
+            );
+          }
+          _alert('Reserva agregada',context);
+        }
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(fechaEntrada,fechaSalida,costoNeto,costoTotal,context){
+    if(fechaEntrada == '' || fechaSalida == '' || costoNeto == '' || costoTotal == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
+  }
+
   List<DropdownMenuItem<String>> get PersondropdownItems{
     const List<DropdownMenuItem<String>> menuItems = [
       DropdownMenuItem(child: Text("1"),  value: "1"),
@@ -511,7 +619,7 @@ class _Descubrir extends State<Descubrir>{
                                                       fontSize: 16.0,
                                                     ),
                                                   ),
-                                                  onPressed: () { _onPressReserva(id);}),
+                                                  onPressed: () { _onPressReserva(id,tipo);}),
                                             ),
                                           ],
                                         ),
@@ -531,7 +639,7 @@ class _Descubrir extends State<Descubrir>{
     });
   }
 
-  void _onPressReserva(index) {
+  void _onPressReserva(index, tipo) {
     Navigator.of(context).push(
       MaterialPageRoute(
       builder: (context) {
@@ -876,7 +984,8 @@ class _Descubrir extends State<Descubrir>{
                         onPrimary: Colors.white,
                         // side: BorderSide(color: Colors.red, width: 1),
                       ),
-                      onPressed: (){},
+                      onPressed:(){_sendControllers (tipo);} ,
+
                       child: const Text(
                         'Confirmar Reserva',
                         style: TextStyle(
