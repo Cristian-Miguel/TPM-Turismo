@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarHotel.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarPaquete.dart';
 import 'package:proyectotmp/src/EmpresaViews/ListarReservaciones.dart';
+import 'package:proyectotmp/src/EmpresaViews/ListarUsuarios.dart';
 import 'package:proyectotmp/src/descubrir.dart';
 import 'package:proyectotmp/src/favoritos.dart';
 import 'package:proyectotmp/src/home.dart';
@@ -54,6 +55,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
     ListarTours(),
     ListarPaquetes(),
     ListarReservaciones(),
+    ListarUsuarios(),
     LogIn(),
   ];
 
@@ -123,6 +125,7 @@ class BarraInferiorMenu extends State<BarraInferior>{
                 ),
                 if(isLogin) favoritosBoton(),
                 if(tipo == "Administrador" || tipo == "Empresa") panelEmpresa() as Column,
+                if(tipo == "Administrador") panelAdministrador() as Column,
 
                 Container(
                   alignment: Alignment.centerLeft,
@@ -302,6 +305,30 @@ class BarraInferiorMenu extends State<BarraInferior>{
         title: const Text('Reservaciones'),
         onTap: () => {
           onTapTapped(11,true),
+          Navigator.of(context).pop()
+        },
+      ),
+    ],);
+  }
+
+  panelAdministrador(){
+    return Column(children: <Widget>[
+      Container(
+        alignment: Alignment.centerLeft,
+        margin: const EdgeInsets.only(left: 20),
+        child: const Text(
+          "Administrador",
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      ListTile(
+        leading: Icon(Icons.account_circle),
+        title: const Text('Usuarios'),
+        onTap: () => {
+          onTapTapped(12,true),
           Navigator.of(context).pop()
         },
       ),

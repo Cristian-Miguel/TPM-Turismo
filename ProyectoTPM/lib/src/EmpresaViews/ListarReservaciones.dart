@@ -24,7 +24,10 @@ class _ListarReservaciones extends State<ListarReservaciones> {
     var tipo = barra.tipo;
 
     //para telefono
-    // var urlH = Uri.parse('http://10.0.2.2:4000/reservas/hotelN');
+    //var urlH = Uri.parse('http://10.0.2.2:4000/reservas/hotelN');
+    //var urlV = Uri.parse('http://10.0.2.2:4000/reservas/viajeN');
+    //var urlT = Uri.parse('http://10.0.2.2:4000/reservas/tourN');
+    //var urlR = Uri.parse('http://10.0.2.2:4000/reservas/restauranteN');
 
     // para web
     var urlH = Uri.parse('http://localhost:4000/reservas/hotelN');
