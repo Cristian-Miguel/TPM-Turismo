@@ -1,4 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../../barra_inferior/barrainf.dart';
+import '../../barra_inferior/barrainf.dart' as barra;
 
 class AgregarRestaurante extends StatefulWidget{
   @override
@@ -23,6 +30,82 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
+
+  void _sendControllers(){
+    _updateControllers();
+  }
+
+  void _updateControllers(){
+    var controllers = [
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
+      _costoInputTextController.value.text,
+      _categoriaInputTextController
+    ];
+    agregarRestaurante(controllers);
+  }
+
+  void agregarRestaurante(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var costo = controllers[2];
+    var categoria = controllers[3].toString().isEmpty? "Buffet":controllers[5];
+
+    //var urlRestaurante = Uri.parse('http://10.0.2.2:4000/Agregar/Restaurante');
+
+    var urlRestaurante = Uri.parse('http://localhost:4000/Agregar/Restaurante');
+
+    late List restaurantes = [];
+    var response;
+    var idUser = barra.idUser;
+
+    if(_verifyData(nombre,descripcion,costo,categoria,context)){
+      try{
+        response = await http.post(urlRestaurante, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'costo': '$costo','categoria': '$categoria','idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          restaurantes = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+        if(!costo.toString().isEmpty){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder:(context)
+                  {
+                    return barra.BarraInferior();
+                  }
+              )
+          );
+        }
+        _alert('Restaurante agregado',context);
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,costo,categoria,context){
+    if(nombre == '' || descripcion == '' || costo == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
+  }
 
   Object CatselectedValue = "Buffet";
   List<DropdownMenuItem<String>> get CatdropdownItems{
@@ -130,7 +213,7 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Costo",
+                "Categoria",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -139,23 +222,40 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
             ),
             Container(
               alignment: Alignment.centerLeft,
-              padding: const EdgeInsets.only(left: 13, right: 13),
               margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(93, 93, 93, 0.1),
-                borderRadius: BorderRadius.circular(30),
-              ),
-              child: TextField(
-                textAlign: TextAlign.left,
-                controller: _costoInputTextController,
-                decoration: const InputDecoration(
-                  hintText: '...',
-                  border: InputBorder.none,
-                ),
+              child: DropdownButtonFormField(
+                  decoration: InputDecoration(
+                    enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: Color.fromRGBO(93, 93, 93, 0.1),
+                          width: 0
+                      ),
+                      borderRadius: BorderRadius.circular(30),
+                    ),
+                    border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                        // color: Color.fromRGBO(93, 93, 93, 0.1),
+                          width: 0
+                      ),
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    filled: true,
+                    fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
+                  ),
+                  dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
+                  value: CatselectedValue,
+                  onChanged: (Object? value) {
+                    setState(() {
+                      CatselectedValue = value!;
+                      _categoriaInputTextController = value;
+                    });
+                  },
+                  items: CatdropdownItems
               ),
             )
           ],
         ),
+
 
         Column(
           children: <Widget>[
@@ -356,7 +456,7 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
               alignment: Alignment.centerLeft,
               margin: const EdgeInsets.only(left: 28, top:10),
               child: const Text(
-                "Categoria",
+                "Costo",
                 style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w300
@@ -365,39 +465,25 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
             ),
             Container(
               alignment: Alignment.centerLeft,
+              padding: const EdgeInsets.only(left: 13, right: 13),
               margin: const EdgeInsets.only(left: 20, right: 20, top:5, bottom: 20),
-              child: DropdownButtonFormField(
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                          color: Color.fromRGBO(93, 93, 93, 0.1),
-                          width: 0
-                      ),
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                    border: OutlineInputBorder(
-                      borderSide: const BorderSide(
-                        // color: Color.fromRGBO(93, 93, 93, 0.1),
-                          width: 0
-                      ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    filled: true,
-                    fillColor: const Color.fromRGBO(93, 93, 93, 0.1),
-                  ),
-                  dropdownColor: const Color.fromRGBO(234, 234, 234, 1.0),
-                  value: CatselectedValue,
-                  onChanged: (Object? value) {
-                    setState(() {
-                      CatselectedValue = value!;
-                      _categoriaInputTextController = value;
-                    });
-                  },
-                  items: CatdropdownItems
+              decoration: BoxDecoration(
+                color: const Color.fromRGBO(93, 93, 93, 0.1),
+                borderRadius: BorderRadius.circular(30),
+              ),
+              child: TextField(
+                textAlign: TextAlign.left,
+                controller: _costoInputTextController,
+                decoration: const InputDecoration(
+                  hintText: '...',
+                  border: InputBorder.none,
+                ),
               ),
             )
           ],
         ),
+
+
 
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -415,7 +501,16 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: () =>{
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder:(context)
+                          {
+                            return BarraInferior();
+                          }
+                      )
+                  )
+                },
                 child: const Text(
                   'Cancelar',
                   style: TextStyle(
@@ -436,7 +531,7 @@ class _AgregarRestaurante extends State<AgregarRestaurante>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: _sendControllers,
                 child: const Text(
                   'Agregar',
                   style: TextStyle(

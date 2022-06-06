@@ -1,4 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+
+import 'package:http/http.dart' as http;
+
+import '../../barra_inferior/barrainf.dart';
+
+import '../../barra_inferior/barrainf.dart' as barra;
 
 class AgregarPaquete extends StatefulWidget{
   @override
@@ -23,6 +31,82 @@ class _AgregarPaquete extends State<AgregarPaquete>{
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
     'https://th.bing.com/th/id/OIP.WgE46Tyz1KrK3qnuZnwi2wAAAA?pid=ImgDet&rs=1',
   ];
+
+  void _sendControllers(){
+    _updateControllers();
+  }
+
+  void _updateControllers(){
+    var controllers = [
+      _nombreInputTextController.value.text,
+      _descripcionInputTextController.value.text,
+      _costoInputTextController.value.text,
+      _numeropaquetesInputTextController.value.text
+    ];
+    agregarPaquete(controllers);
+  }
+
+  void agregarPaquete(controllers) async {
+    var nombre = controllers[0];
+    var descripcion = controllers[1];
+    var costo = controllers[2];
+    var numeroPaquete = controllers[3];
+
+    //var urlPaquete = Uri.parse('http://10.0.2.2:4000/Agregar/Paquete');
+
+    var urlPaquete = Uri.parse('http://localhost:4000/Agregar/Paquete');
+
+    late List paquetes = [];
+    var response;
+    var idUser = barra.idUser;
+
+    if(_verifyData(nombre,descripcion,costo,numeroPaquete,context)){
+      try{
+        response = await http.post(urlPaquete, body: {'nombre': '$nombre', 'descripcion': '$descripcion',
+          'costo': '$costo','numeroPaquete': '$numeroPaquete','idUser': '$idUser'
+        });
+
+        if(json.decode(response.body)['row'].toString() != 'null'){
+          paquetes = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+        }
+        if(!numeroPaquete.toString().isEmpty){
+          Navigator.of(context).push(
+              MaterialPageRoute(
+                  builder:(context)
+                  {
+                    return barra.BarraInferior();
+                  }
+              )
+          );
+        }
+        _alert('Paquete agregado',context);
+
+      }catch(_){
+        _alert('Datos incorrectos',context);
+      }
+    }
+  }
+
+  bool _verifyData(nombre,descripcion,costo,numeroPaquete,context){
+    if(nombre == '' || descripcion == '' || costo == '' || numeroPaquete == ''){
+      _alert('Los campos no pueden estar vacios',context);
+      return false;
+    }else return true;
+  }
+
+  void _alert(message,context){
+    showDialog(context: context, builder: (BuildContext context){
+      return AlertDialog(
+        title: Text(message, style: Theme.of(context).textTheme.headline6),
+        actions: <Widget>[
+          TextButton(
+            child: const Text('Volver'),
+            onPressed: () => Navigator.pop(context, 'Cancel'),
+          ),
+        ],
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -373,7 +457,16 @@ class _AgregarPaquete extends State<AgregarPaquete>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: () =>{
+                  Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder:(context)
+                          {
+                            return BarraInferior();
+                          }
+                      )
+                  )
+                },
                 child: const Text(
                   'Cancelar',
                   style: TextStyle(
@@ -394,7 +487,7 @@ class _AgregarPaquete extends State<AgregarPaquete>{
                   onPrimary: Colors.white,
                   // side: BorderSide(color: Colors.red, width: 1),
                 ),
-                onPressed: (){},
+                onPressed: _sendControllers,
                 child: const Text(
                   'Agregar',
                   style: TextStyle(
