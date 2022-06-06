@@ -29,6 +29,7 @@ class _Descubrir extends State<Descubrir>{
   final _costoTotalInputTextController = TextEditingController();
   var tipoService = '';
   Object _personasInputTextController = "";
+  var idDestino = 0;
   // String CostoNeto = "0";
   // String CostoTotal = "30";
 
@@ -73,12 +74,22 @@ class _Descubrir extends State<Descubrir>{
 
         if(idUser != ''){
           response = await http.post(urlReserva, body: {'TipoServicio': '$tipoS','fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
-            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','CantPersonas': '$Personas','idUser': '$idUser'
+            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','CantPersonas': '$Personas','idUser': '$idUser','idDestino': '$idDestino'
           });
 
           if(json.decode(response.body)['row'].toString() != 'null'){
             reservas = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
           }
+
+          var url2 = Uri.parse('http://localhost:4000/Agregar/Prueba');
+          response = await http.post(url2, body: {'TipoServicio': '$tipoS','fechaEntrada': '$fechaEntrada', 'fechaSalida': '$fechaSalida',
+            'costoNeto': '$costoNeto','costoTotal': '$costoTotal','CantPersonas': '$Personas','idUser': '$idUser','idDestino': '$idDestino'
+          });
+
+          if(json.decode(response.body)['row'].toString() != 'null'){
+            reservas = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+          }
+
           if(!_personasInputTextController.toString().isEmpty){
             Navigator.of(context).push(
                 MaterialPageRoute(
@@ -269,11 +280,11 @@ class _Descubrir extends State<Descubrir>{
                   color: Colors.white,
 
                   onPressed: (){
-                      if(ServiciosData[i]["idHotel"] != null) _onChangeReserva(i,"idHotel");
-                      if(ServiciosData[i]["idViaje"] != null) _onChangeReserva(i,"idViaje");
-                      if(ServiciosData[i]["idRestaurante"] != null) _onChangeReserva(i,"idRestaurante");
-                      if(ServiciosData[i]["idTour"] != null) _onChangeReserva(i,"idTour");
-                      if(ServiciosData[i]["idPaquete"] != null) _onChangeReserva(i,"idPaquete");
+                      if(ServiciosData[i]["idHotel"] != null){_onChangeReserva(i,"idHotel"); idDestino = ServiciosData[i]["idHotel"];}
+                      if(ServiciosData[i]["idViaje"] != null) {_onChangeReserva(i,"idViaje"); idDestino = ServiciosData[i]["idViaje"];}
+                      if(ServiciosData[i]["idRestaurante"] != null) {_onChangeReserva(i,"idRestaurante"); idDestino = ServiciosData[i]["idRestaurante"];}
+                      if(ServiciosData[i]["idTour"] != null) {_onChangeReserva(i,"idTour"); idDestino = ServiciosData[i]["idTour"];}
+                      if(ServiciosData[i]["idPaquete"] != null) {_onChangeReserva(i,"idPaquete"); idDestino = ServiciosData[i]["idPaquete"];}
                     },
                   // child: Card(
                 child: Container(

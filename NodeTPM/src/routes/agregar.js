@@ -92,11 +92,32 @@ router.post('/Agregar/Reserva', (req, res, next) => {
     const {costoTotal} = req.body;
     const {CantPersonas} = req.body;
     const {idUser} = req.body;
+    const {idDestino} = req.body;
 
-    console.log(req.body);
-    let sql = "INSERT INTO reserva_servicio(TipoServicio, FechaEntrada, FechaSalida, FormaPago, CostoTotal, CantPersonas,confirmado,idUsuario) VALUES ('"+TipoServicio+"','"+fechaEntrada+"','"+fechaSalida+"','Efectivo',"+costoTotal+","+CantPersonas+",'0',"+idUser+")";
-    //let sql2 = "INSERT INTO organizador(TipoGuardado,idReserva,idHotel,idViaje,idRestaurante,idTour) VALUES();"
+    let sql;
+    sql = "INSERT INTO reserva_servicio(TipoServicio, FechaEntrada, FechaSalida, FormaPago, CostoTotal, CantPersonas,confirmado,idUsuario) VALUES ('"+TipoServicio+"','"+fechaEntrada+"','"+fechaSalida+"','Efectivo',"+costoTotal+","+CantPersonas+",'0',"+idUser+")";
     Reservas.Agregar(res,sql);
+    
+    sql = "SELECT idReserva FROM reserva_servicio ORDER BY idReserva DESC LIMIT 1";
+    Reservas.temp(res,sql,TipoServicio,idDestino);
+});
+
+router.post('/Agregar/Prueba', (req, res, next) => {
+    const {TipoServicio} = req.body;
+    const {fechaEntrada} = req.body;
+    const {fechaSalida} = req.body;
+    const {costoNeto} = req.body;
+    const {costoTotal} = req.body;
+    const {CantPersonas} = req.body;
+    const {idUser} = req.body;
+    const {idDestino} = req.body;
+
+    let sql;
+    sql = "INSERT INTO reserva_servicio(TipoServicio, FechaEntrada, FechaSalida, FormaPago, CostoTotal, CantPersonas,confirmado,idUsuario) VALUES ('"+TipoServicio+"','"+fechaEntrada+"','"+fechaSalida+"','Efectivo',"+costoTotal+","+CantPersonas+",'0',"+idUser+")";
+    //Reservas.Agregar(res,sql);
+    
+    sql = "SELECT idReserva FROM reserva_servicio ORDER BY idReserva DESC LIMIT 1";
+    Reservas.temp(res,sql,TipoServicio,idDestino);
 });
 
 

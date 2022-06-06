@@ -47,6 +47,13 @@ router.post('/Usuarios/Listar/', (req, res, next) => {
     //res.json(req.body);
 });
 
+router.post('/Usuarios/Borrar/', (req, res, next) => {
+    console.log(req.body);
+    let sql = "SELECT idUsuario,Usuario,Email,TipoUsuario FROM usuarios WHERE TipoUsuario != 'Administrador'";
+    Usuarios.registrar(res,sql);
+    //res.json(req.body);
+});
+
 module.exports = router;
 //node src/index.js
 //nodemon src/index.js
