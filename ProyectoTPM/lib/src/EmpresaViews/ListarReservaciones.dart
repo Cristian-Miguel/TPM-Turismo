@@ -132,28 +132,15 @@ class _ListarReservaciones extends State<ListarReservaciones> {
             DataCell(
                 Row(
                   children: <Widget>[
+                    confirmado(index),
                     IconButton(
                       alignment: Alignment.centerLeft,
-                      onPressed: (){},
-                      icon: const Icon(
-                        Icons.info_outline,
-                        color: Colors.grey,
-                        size: 25,
-                      ),
-                    ),
-                    IconButton(
-                      alignment: Alignment.centerLeft,
-                      onPressed: (){},
-                      icon: const Icon(
-                        Icons.edit,
-                        color: Colors.grey,
-                        size: 25,
-                      ),
-                    ),
-
-                    IconButton(
-                      alignment: Alignment.centerLeft,
-                      onPressed: (){eliminar(index);},
+                      onPressed: (){
+                          eliminar(index);
+                          setState(() {
+                            ServiciosData.removeAt(index);
+                          });
+                        },
                       icon: const Icon(
                         Icons.delete_forever,
                         color: Colors.red,
@@ -169,14 +156,30 @@ class _ListarReservaciones extends State<ListarReservaciones> {
     );
   }
 
+  confirmar(index) async{
+    var id = ServiciosData[index]["idReserva"];
+    var url = Uri.parse('http://localhost:4000/reservas/confirmar');
+    var responseH = await http.post(url, body: {'id': '$id'});
+
+    var idU = ServiciosData[index]["idUsuario"];
+    var urlU = Uri.parse('http://localhost:4000/reservas/email');
+    http.post(urlU, body: {'id': '$idU'});
+
+    alerta("Reserva confirmada");
+  }
+
   eliminar(index) async{
     var id = ServiciosData[index]["idReserva"];
     var url = Uri.parse('http://localhost:4000/reservas/eliminar');
     var responseH = await http.post(url, body: {'id': '$id'});
 
+    alerta("Reserva eliminada");
+  }
+
+  alerta(mensaje){
     showDialog(context: context, builder: (BuildContext context){
       return AlertDialog(
-        title: Text("Reserva eliminada", style: Theme.of(context).textTheme.headline6),
+        title: Text(mensaje, style: Theme.of(context).textTheme.headline6),
         actions: <Widget>[
           TextButton(
             child: const Text('Volver'),
@@ -185,5 +188,34 @@ class _ListarReservaciones extends State<ListarReservaciones> {
         ],
       );
     });
+  }
+
+  IconButton confirmado(index){
+    if(ServiciosData[index]["confirmado"] == 0){
+      return IconButton(
+        alignment: Alignment.centerLeft,
+        onPressed: (){
+          confirmar(index);
+          setState(() {
+            ServiciosData[index]["confirmado"] = 1;
+          });
+        },
+        icon: const Icon(
+          Icons.check_circle_outline,
+          color: Colors.grey,
+          size: 25,
+        ),
+      );
+    }else{
+      return IconButton(
+        alignment: Alignment.centerLeft,
+        onPressed: (){alerta("Reserva ya confirmada");},
+        icon: const Icon(
+          Icons.check_circle,
+          color: Colors.grey,
+          size: 25,
+        ),
+      );
+    }
   }
 }
