@@ -400,7 +400,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Turismo`;
-INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `Apellido Paterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
+INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `ApellidoPaterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
 
 COMMIT;
 
