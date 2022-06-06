@@ -493,7 +493,12 @@ class _Reservas extends State<Reservas> {
                 onPrimary: Colors.white,
                 // side: BorderSide(color: Colors.red, width: 1),
               ),
-              onPressed: (){},
+              onPressed: (){
+                setState(() {
+                  var folio = _folioInputTextController.value.text;
+                  searchFolio( folio );
+                });
+              },
               child: const Text(
                 'Buscar',
                 style: TextStyle(
@@ -505,6 +510,33 @@ class _Reservas extends State<Reservas> {
         ],
       ),
     );
+  }
+
+  searchFolio( id ) async {
+    //para telefono
+    // var url = Uri.parse('http://10.0.2.2:4000/reservas/Folio');
+    var identificador = id.toString();
+    // para web
+    var url = Uri.parse('http://localhost:4000/reservas/Folio');
+
+    var response = await http.post(url, body: {'id': '$identificador'});
+
+    if(json.decode(response.body)['row'].toString() != 'null'){
+      ReservasH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+    }
+    if(ReservasData.isNotEmpty){
+      ReservasData.removeAt(0);
+    }
+
+    setState(() {
+      ReservasData.addAll(ReservasH);
+      if(ReservasData[0]["idHotel"] != null)       _onChangeReserva(0,"idHotel");
+      if(ReservasData[0]["idViaje"] != null)       _onChangeReserva(0,"idViaje");
+      if(ReservasData[0]["idRestaurante"] != null) _onChangeReserva(0,"idRestaurante");
+      if(ReservasData[0]["idTour"] != null)        _onChangeReserva(0,"idTour");
+      if(ReservasData[0]["idPaquete"] != null)     _onChangeReserva(0,"idPaquete");
+      // _onChangeReserva( ReservasData[0]['id'], ReservasData[0]['id']);
+    });
   }
 
   void getUserInfo(index,tipo) async{
@@ -554,7 +586,7 @@ class _Reservas extends State<Reservas> {
     var calificacion = ReservasData[index]["Calificacion"];
     var descripcion = ReservasData[index]["Descripcion"];
     var costo = ReservasData[index]["Costo"];
-    print(ReservasData[index].toString());
+    // print(ReservasData[index].toString());
 
     Future.delayed(Duration(milliseconds: 100), () {
     Navigator.of(context).push(
@@ -562,20 +594,20 @@ class _Reservas extends State<Reservas> {
             builder: (context) {
               final CarouselController _controller = CarouselController();
               final List<String>  images = [
-                'https://images.pexels.com/photos/3601425/pexels-photo-3601425.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/3601456/pexels-photo-3601456.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://www.eluniversal.com.mx/sites/default/files/2019/05/17/playas-maruata-costa-michoacana.jpeg',
-                'https://images.pexels.com/photos/3601369/pexels-photo-3601369.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/4602279/pexels-photo-4602279.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/163872/italy-cala-gonone-air-sky-163872.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
-                'https://images.pexels.com/photos/412681/pexels-photo-412681.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940',
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
               ];
 
               final List<String> descripimages = [
-                'https://images.pexels.com/photos/1172518/pexels-photo-1172518.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/2403840/pexels-photo-2403840.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
-                'https://images.pexels.com/photos/4318913/pexels-photo-4318913.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500',
-                'https://images.pexels.com/photos/462024/pexels-photo-462024.jpeg?auto=compress&cs=tinysrgb&h=650&w=940',
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
+                ReservasData[index]["Imagen"],
               ];
 
               return Scaffold(
@@ -606,23 +638,7 @@ class _Reservas extends State<Reservas> {
                         },
                       ),
                       const SizedBox(height: 10,),
-                      //buildIndicator(images),
-                      /*
-                      Padding(
-                          padding: EdgeInsets.only(left: 0, top: 0),
-                        child: Center(
-                          child: AnimatedSmoothIndicator(
-                            activeIndex: activeIndex,
-                            count:  images.length,
-                            effect:  const WormEffect(
-                              dotWidth:  35.0,
-                              dotHeight:  10.0,
-                            ),  // your preferred effect
-                          ),
-                        ),
-                      ),
-                      */
-                      Expanded(
+                      SizedBox(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -635,7 +651,7 @@ class _Reservas extends State<Reservas> {
                                       Container(
                                         child: Text(
                                           ReservasData[index]["Nombre"],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -660,7 +676,7 @@ class _Reservas extends State<Reservas> {
                                                     top: 2),
                                                 child: Text(
                                                   "$calificacion",
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 10,
                                                   ),
                                                 )
@@ -678,7 +694,7 @@ class _Reservas extends State<Reservas> {
                                                 "Experiencia ofrecida \n"
                                                     "por $nombre $apellidoP",
                                                 textAlign: TextAlign.start,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 18,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -707,7 +723,7 @@ class _Reservas extends State<Reservas> {
                                             ),
                                         child: Text(
                                           "Costo: $costo",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 11,
                                           ),
                                         ),
@@ -736,7 +752,7 @@ class _Reservas extends State<Reservas> {
                                         child: Text(
                                           "$descripcion",
                                           textAlign: TextAlign.justify,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 11,
                                           ),
                                         ),

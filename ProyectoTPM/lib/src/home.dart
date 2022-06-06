@@ -51,10 +51,7 @@ class _Home extends State<Home>{
                         barra.desc = 1;
                         Navigator.of(context).push(
                             MaterialPageRoute(
-                                builder:(context)
-                                {
-                                  return Descubrir();
-                                }
+                                builder:(context) {return Descubrir();}
                             )
                         );
                       },

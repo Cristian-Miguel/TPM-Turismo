@@ -62,7 +62,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `Turismo`.`Turista` (
   `idTurista` INT NOT NULL AUTO_INCREMENT,
   `Nombre` VARCHAR(50) NULL,
-  `Apellido Paterno` VARCHAR(50) NULL,
+  `ApellidoPaterno` VARCHAR(50) NULL,
   `ApellidoMaterno` VARCHAR(50) NULL,
   PRIMARY KEY (`idTurista`))
 ENGINE = InnoDB;
@@ -133,6 +133,8 @@ CREATE TABLE IF NOT EXISTS `Turismo`.`Reserva_Servicio` (
   `FechaEntrada` DATE NULL,
   `FechaSalida` DATE NULL,
   `FormaPago` VARCHAR(45) NULL COMMENT 'Forma de pago del la reservacion, solo hay, con tarjeta de debito y de credito.',
+  `CostoTotal` DECIMAL(6,2) NULL,
+  `CantPersonas` INT NULL,  
   `confirmado` TINYINT NULL,
   `idTurista` INT NULL,
   `idUsuario` INT NULL,
@@ -268,11 +270,11 @@ CREATE TABLE IF NOT EXISTS `Turismo`.`Organizador` (
   `idRestaurante` INT NULL,
   `idTour` INT NULL,
   PRIMARY KEY (`idOrganizador`),
-  INDEX `Foreign_idReserva_idx` (`idReserva` ASC) ,
-  INDEX `Foreign_idFavorito_idx` (`idFavoritos` ASC) ,
-  INDEX `Foreign_idPaquete_idx` (`idPaquete` ASC) ,
-  INDEX `Foreign_idHotel_idx` (`idHotel` ASC) ,
-  INDEX `Foreign_idViaje_idx` (`idViaje` ASC) ,
+  INDEX `Foreign_idReserva_idx` (`idReserva` ASC),
+  INDEX `Foreign_idFavorito_idx` (`idFavoritos` ASC),
+  INDEX `Foreign_idPaquete_idx` (`idPaquete` ASC),
+  INDEX `Foreign_idHotel_idx` (`idHotel` ASC),
+  INDEX `Foreign_idViaje_idx` (`idViaje` ASC),
   INDEX `Foreign_idRestaurante_idx` (`idRestaurante` ASC),
   INDEX `Foreign_idTour_idx` (`idTour` ASC),
   CONSTRAINT `Foreign_idReserva`
@@ -398,7 +400,7 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Turismo`;
-INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `Apellido Paterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
+INSERT INTO `Turismo`.`Turista` (`idTurista`, `Nombre`, `ApellidoPaterno`, `ApellidoMaterno`) VALUES (1, 'Mike', 'Paterno', 'Materno');
 
 COMMIT;
 
@@ -447,17 +449,17 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `Turismo`;
-INSERT INTO `reserva_servicio` (`idReserva`, `Tipo de servicio`, `FechaEntrada`, `FechaSalida`, `FormaPago`, `confirmado`, `idTurista`, `idUsuario`) VALUES 
-(1,'Restaurante','2022-05-05','2022-05-15','Efectivo',1,1,NULL),
-(2,'Hotel','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(3,'Tour','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(4,'Restaurante','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(5,'Hotel','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(6,'Tour','2022-05-05','2022-05-15','Efectivo',1,1,NULL),
-(7,'Restaurante','2022-05-05','2022-05-15','Efectivo',1,1,NULL),
-(8,'Hotel','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(9,'Tour','2022-05-05','2022-05-15','Efectivo',1,NULL,1),
-(10,'Restaurante','2022-05-05','2022-05-15','Efectivo',1,NULL,1);
+INSERT INTO `reserva_servicio` (`idReserva`, `Tipo de servicio`, `FechaEntrada`, `FechaSalida`, `FormaPago`, `CostoTotal`, `CantPersonas`, `confirmado`, `idTurista`, `idUsuario`) VALUES 
+(1,'Restaurante',  '2022-05-05', '2022-05-15', 'Efectivo', 3000.00, 1, 1,    1, NULL),
+(2,'Hotel',        '2022-05-05', '2022-05-15', 'Efectivo', 1500.00, 1, 1, NULL,    1),
+(3,'Tour',         '2022-05-05', '2022-05-15', 'Efectivo', 2500.00, 1, 1, NULL,    1),
+(4,'Restaurante',  '2022-05-05', '2022-05-15', 'Efectivo', 3000.00, 2, 1, NULL,    1),
+(5,'Hotel',        '2022-05-05', '2022-05-15', 'Efectivo', 3200.00, 2, 1, NULL,    1),
+(6,'Tour',         '2022-05-05', '2022-05-15', 'Efectivo', 4400.00, 4, 1,    1, NULL),
+(7,'Restaurante',  '2022-05-05', '2022-05-15', 'Efectivo', 5000.00, 5, 1,    1, NULL),
+(8,'Hotel',        '2022-05-05', '2022-05-15', 'Efectivo', 3440.00, 3, 1, NULL,    1),
+(9,'Tour',         '2022-05-05', '2022-05-15', 'Efectivo', 4000.00, 2, 1, NULL,    1),
+(10,'Restaurante', '2022-05-05', '2022-05-15', 'Efectivo', 3259.00, 2, 1, NULL,    1);
 COMMIT;
 
 
