@@ -515,7 +515,6 @@ class _Reservas extends State<Reservas> {
   searchFolio( id ) async {
     //para telefono
     // var url = Uri.parse('http://10.0.2.2:4000/reservas/Folio');
-    print("-------->"+id.toString());
     var identificador = id.toString();
     // para web
     var url = Uri.parse('http://localhost:4000/reservas/Folio');
@@ -524,6 +523,9 @@ class _Reservas extends State<Reservas> {
 
     if(json.decode(response.body)['row'].toString() != 'null'){
       ReservasH = List<Map<String, dynamic>>.from(json.decode(response.body)['row']);
+    }
+    if(ReservasData.isNotEmpty){
+      ReservasData.removeAt(0);
     }
 
     setState(() {
@@ -636,7 +638,7 @@ class _Reservas extends State<Reservas> {
                         },
                       ),
                       const SizedBox(height: 10,),
-                      Expanded(
+                      SizedBox(
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -649,7 +651,7 @@ class _Reservas extends State<Reservas> {
                                       Container(
                                         child: Text(
                                           ReservasData[index]["Nombre"],
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 30,
                                             fontWeight: FontWeight.bold,
                                           ),
@@ -674,7 +676,7 @@ class _Reservas extends State<Reservas> {
                                                     top: 2),
                                                 child: Text(
                                                   "$calificacion",
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                     fontSize: 10,
                                                   ),
                                                 )
@@ -692,7 +694,7 @@ class _Reservas extends State<Reservas> {
                                                 "Experiencia ofrecida \n"
                                                     "por $nombre $apellidoP",
                                                 textAlign: TextAlign.start,
-                                                style: TextStyle(
+                                                style: const TextStyle(
                                                     fontSize: 18,
                                                   fontWeight: FontWeight.w700,
                                                 ),
@@ -721,7 +723,7 @@ class _Reservas extends State<Reservas> {
                                             ),
                                         child: Text(
                                           "Costo: $costo",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 11,
                                           ),
                                         ),
@@ -750,7 +752,7 @@ class _Reservas extends State<Reservas> {
                                         child: Text(
                                           "$descripcion",
                                           textAlign: TextAlign.justify,
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontSize: 11,
                                           ),
                                         ),
